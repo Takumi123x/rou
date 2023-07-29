@@ -8,5 +8,15 @@
 - ln -s ~/rou/toolbox.sh ~/
 - mkdir ~/storage/shared/build-kitchen
 
+# If root mode
+- cd /data/data/com.termux/files/home/
+- rm -rf ./.suroot
+- ln -s ./ ./.suroot
+- termux-setup-storage
+- cd ~
+- chmod +x ~/rou/toolbox.sh
+- ln -s ~/rou/toolbox.sh ~/
+- mkdir ~/storage/shared/build-kitchen
+
 # Run this tool
 ~/toolbox.sh
