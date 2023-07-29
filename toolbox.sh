@@ -312,7 +312,7 @@ else
 ~/rou/bin/lpunpack ~/storage/shared/build-kitchen/$filesuper ~/storage/shared/build-kitchen/$filesupersp
 fi
 rm -rf ~/storage/shared/build-kitchen/$filesuper
-lpdump ~/storage/shared/build-kitchen/$filesupersp > ~/kitchen-tmp/super_map.txt
+~/rou/bin/lpdump ~/storage/shared/build-kitchen/$filesupersp > ~/kitchen-tmp/super_map.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
 ~/rou/bin/lpunpack ~/storage/shared/build-kitchen/$filesupersp ~/storage/shared/build-kitchen/
@@ -322,7 +322,7 @@ extract_root (){
 if [ "$(id -u)" != "0" ]; then
 echo "This script must be run as root" 1>&2
 else
-lpdump /dev/block/by-name/super > ~/kitchen-tmp/super_map.txt
+~/rou/bin/lpdump /dev/block/by-name/super > ~/kitchen-tmp/super_map.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
 ~/rou/bin/lpunpack /dev/block/by-name/super ~/storage/shared/build-kitchen/
