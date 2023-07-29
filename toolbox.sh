@@ -313,7 +313,7 @@ printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print
 ~/rou/bin/lpunpack ~/storage/shared/build-kitchen/super.img ~/storage/shared/build-kitchen/
 else
 ~/rou/bin/simg2img ~/storage/shared/build-kitchen/super.img ~/storage/shared/build-kitchen/super_raw.img
-rm -rf ~/storage/shared/build-kitchen/super_raw.img
+rm -rf ~/storage/shared/build-kitchen/super.img
 ~/rou/bin/lpdump ~/storage/shared/build-kitchen/super_raw.img > ~/kitchen-tmp/super_map.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
