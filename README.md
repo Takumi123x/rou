@@ -8,7 +8,7 @@
 - ln -s ~/rou/toolbox.sh ~/
 - mkdir ~/storage/shared/build-kitchen
 
-# If ROOT mode
+# If root mode
 - tsu
 - cd /data/data/com.termux/files/home/
 - rm -rf ./.suroot
