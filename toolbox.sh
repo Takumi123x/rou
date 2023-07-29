@@ -266,6 +266,15 @@ printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print
 Build_rom
 }
 
+a03core_profile (){
+fileds=a03core.txt
+cp -rf ~/rou/fake/profile/$fileds ~/kitchen-tmp/
+mv -f ~/kitchen-tmp/$fileds ~/kitchen-tmp/super_map.txt
+printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
+printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
+Build_rom
+}
+
 #custom profile
 clear
       E='echo -e';e='echo -en';trap "R;exit" 2
@@ -291,9 +300,10 @@ clear
            if [[ $key = $ESC[A ]];then echo up;fi
            if [[ $key = $ESC[B ]];then echo dn;fi;}
      M0(){ TPUT 16 $MU_X; $e "A03S                            ";$ff;}
-     M1(){ TPUT 18 $MU_X; $e "A01 core                        ";$ff;}
-     M2(){ TPUT 20 $MU_X; $e "Exit                            ";$ff;}
-      LM=2
+     M1(){ TPUT 18 $MU_X; $e "A03 core                        ";$ff;}
+     M2(){ TPUT 20 $MU_X; $e "A01 core                        ";$ff;}
+     M3(){ TPUT 22 $MU_X; $e "Exit                            ";$ff;}
+      LM=3
    MENU(){ for each in $(seq 0 $LM);do M${each};done;}
     POS(){ if [[ $cur == up ]];then ((i--));fi
            if [[ $cur == dn ]];then ((i++));fi
@@ -310,8 +320,9 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
    ES(){ MARK;$e "ENTER = main menu ";$b;read;INIT;};INIT
   while [[ "$O" != " " ]]; do case $i in
         0) S=M0;SC;if [[ $cur == "" ]];then R;clear;a03s_profile;INIT;fi;;
-        1) S=M1;SC;if [[ $cur == "" ]];then R;clear;a01core_profile;INIT;fi;;
-        2) S=M2;SC;if [[ $cur == "" ]];then R;clear;main_main;INIT;fi;;
+        1) S=M1;SC;if [[ $cur == "" ]];then R;clear;a03core_profile;INIT;fi;;
+        2) S=M2;SC;if [[ $cur == "" ]];then R;clear;a01core_profile;INIT;fi;;
+        3) S=M3;SC;if [[ $cur == "" ]];then R;clear;main_main;INIT;fi;;
  esac;POS;done
 fi
 }
