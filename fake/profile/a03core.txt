@@ -1,0 +1,56 @@
+Slot 0:
+Metadata version: 10.0
+Metadata size: 592 bytes
+Metadata max size: 65536 bytes
+Metadata slot count: 2
+Header flags: none
+Partition table:
+------------------------
+  Name: system
+  Group: group_unisoc
+  Attributes: readonly
+  Extents:
+    0 .. 2217023 linear super 2048
+------------------------
+  Name: system_ext
+  Group: group_unisoc
+  Attributes: readonly
+  Extents:
+    0 .. 167935 linear super 2220032
+------------------------
+  Name: vendor
+  Group: group_unisoc
+  Attributes: readonly
+  Extents:
+    0 .. 805327 linear super 2387968
+------------------------
+  Name: product
+  Group: group_unisoc
+  Attributes: readonly
+  Extents:
+    0 .. 1571095 linear super 3194880
+------------------------
+Super partition layout:
+------------------------
+super: 2048 .. 2219072: system (2217024 sectors)
+super: 2220032 .. 2387968: system_ext (167936 sectors)
+super: 2387968 .. 3193296: vendor (805328 sectors)
+super: 3194880 .. 4765976: product (1571096 sectors)
+------------------------
+Block device table:
+------------------------
+  Partition name: super
+  First sector: 2048
+  Size: 3303014400 bytes
+  Flags: none
+------------------------
+Group table:
+------------------------
+  Name: default
+  Maximum size: 0 bytes
+  Flags: none
+------------------------
+  Name: group_unisoc
+  Maximum size: 3298820096 bytes
+  Flags: none
+------------------------
