@@ -9,6 +9,7 @@
 - mkdir ~/storage/shared/build-kitchen
 
 # If root mode
+- tsu
 - cd /data/data/com.termux/files/home/
 - rm -rf ./.suroot
 - ln -s ./ ./.suroot
