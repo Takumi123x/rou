@@ -45,6 +45,19 @@ ______________________
  ||||||||||||||||||||||"
 
 Build_rom (){
+super_info="
+______________________
+ | |Super image info :
+ | |
+ | |Super size : $(<~/kitchen-tmp/super.txt)
+ | |For logical size : $(<~/kitchen-tmp/main.txt)
+ | |System size : $(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}')
+ | |Vendor size : $(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}')
+ | |Product size : $(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}')
+ | |System ext size : $(ls -nl ~/storage/shared/build-kitchen/system_ext.img | awk '{print $5}')
+ | |Odm size : $(ls -nl ~/storage/shared/build-kitchen/odm.img | awk '{print $5}')
+||||||||||||||||||||||"
+
 if [ -e ~/kitchen-tmp/super_map.txt ]
 then
 build_done (){
@@ -85,7 +98,7 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
            if [[ $j -lt $i      ]];then UNMARK;M$before;else UNMARK;M$after;fi
            if [[ $after -eq 0 ]] || [ $before -eq $LM ];then
            UNMARK; M$before; M$after;fi;j=$i;UNMARK;M$before;M$after;}
-   INIT(){ clear;set_info=$build_done;R;HEAD;FOOT2;FOOT;MENU;}
+   INIT(){ clear;set_info=$Build_done;R;HEAD;FOOT2;FOOT;MENU;}
      SC(){ REFRESH;MARK;$S;$b;cur=`ARROW`;}
    ES(){ MARK;$e "ENTER = main menu ";$b;read;INIT;};INIT
   while [[ "$O" != " " ]]; do case $i in
