@@ -1,4 +1,3 @@
-# rou
 # Clone this repo
 apt install git -y
 git clone https://github.com/Takumi123x/rou.git
