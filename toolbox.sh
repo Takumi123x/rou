@@ -305,17 +305,18 @@ fi
 
 Extract_rom (){
 extract_internal (){
-if [ 1 == "$(find ~/storage/shared/build-kitchen/$filesuper -type f ! -size 0 -printf '%S\n' | sed 's/\.[0-9]*//')"]
+if [ "1" == "$(find ~/storage/shared/build-kitchen/$filesuper -type f ! -size 0 -printf '%S\n' | sed 's/\.[0-9]*//')" ]
 then
-mv -f ~/storage/shared/build-kitchen/$filesuper ~/storage/shared/build-kitchen/$filesupersp
+filesupersp=super.img
+filesuper=" "
 else
 ~/rou/bin/simg2img ~/storage/shared/build-kitchen/$filesuper ~/storage/shared/build-kitchen/$filesupersp
-fi
 if [ -e ~/storage/shared/build-kitchen/$filesupersp ]
 then
 rm -rf ~/storage/shared/build-kitchen/$filesuper
 else
 echo " "
+fi
 fi
 ~/rou/bin/lpdump ~/storage/shared/build-kitchen/$filesupersp > ~/kitchen-tmp/super_map.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
