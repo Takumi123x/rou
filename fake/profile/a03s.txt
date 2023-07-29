@@ -1,0 +1,56 @@
+Slot 0:
+Metadata version: 10.0
+Metadata size: 592 bytes
+Metadata max size: 65536 bytes
+Metadata slot count: 2
+Header flags: none
+Partition table:
+------------------------
+  Name: system
+  Group: main
+  Attributes: readonly
+  Extents:
+    0 .. 7381951 linear super 2048
+------------------------
+  Name: odm
+  Group: main
+  Attributes: readonly
+  Extents:
+    0 .. 8495 linear super 7385088
+------------------------
+  Name: product
+  Group: main
+  Attributes: readonly
+  Extents:
+    0 .. 2413207 linear super 7395328
+------------------------
+  Name: vendor
+  Group: main
+  Attributes: readonly
+  Extents:
+    0 .. 1484815 linear super 9809920
+------------------------
+Super partition layout:
+------------------------
+super: 2048 .. 7384000: system (7381952 sectors)
+super: 7385088 .. 7393584: odm (8496 sectors)
+super: 7395328 .. 9808536: product (2413208 sectors)
+super: 9809920 .. 11294736: vendor (1484816 sectors)
+------------------------
+Block device table:
+------------------------
+  Partition name: super
+  First sector: 2048
+  Size: 6106906624 bytes
+  Flags: none
+------------------------
+Group table:
+------------------------
+  Name: default
+  Maximum size: 0 bytes
+  Flags: none
+------------------------
+  Name: main
+  Maximum size: 6102712320 bytes
+  Flags: none
+------------------------
