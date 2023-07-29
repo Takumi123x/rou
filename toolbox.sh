@@ -78,7 +78,7 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Kitchen Tools Termux GUI Test           ";}
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";}
    FOOT2(){ UNMARK;TPUT 3 45
    printf "$set_info";}
   ARROW(){ read -s -n3 key 2>/dev/null >&2
@@ -216,7 +216,7 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Kitchen Tools Termux GUI Test           ";}
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";}
    FOOT2(){ UNMARK;TPUT 3 45
    printf "$set_info";}
   ARROW(){ read -s -n3 key 2>/dev/null >&2
@@ -293,7 +293,7 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Kitchen Tools Termux GUI Test           ";}
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";}
    FOOT2(){ UNMARK;TPUT 3 45
    printf "$set_info";}
   ARROW(){ read -s -n3 key 2>/dev/null >&2
@@ -303,7 +303,7 @@ clear
      M1(){ TPUT 18 $MU_X; $e "A03 core                        ";$ff;}
      M2(){ TPUT 20 $MU_X; $e "A01 core                        ";$ff;}
      M3(){ TPUT 22 $MU_X; $e "Exit                            ";$ff;}
-      LM=2
+      LM=3
    MENU(){ for each in $(seq 0 $LM);do M${each};done;}
     POS(){ if [[ $cur == up ]];then ((i--));fi
            if [[ $cur == dn ]];then ((i++));fi
@@ -386,7 +386,7 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Kitchen Tools Termux GUI Test           ";}
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";}
    FOOT2(){ UNMARK;TPUT 3 45
    printf "$set_info";}
   ARROW(){ read -s -n3 key 2>/dev/null >&2
@@ -437,7 +437,7 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Kitchen Tools Termux GUI Test           ";}
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";}
    FOOT2(){ UNMARK;TPUT 3 45
    printf "$set_info";}
   ARROW(){ read -s -n3 key 2>/dev/null >&2
@@ -497,7 +497,7 @@ MU_X=5
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Kitchen Tools Termux GUI Test           ";}
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";}
    FOOT2(){ UNMARK;TPUT 3 45
    printf "$set_info";}
   ARROW(){ read -s -n3 key 2>/dev/null >&2
