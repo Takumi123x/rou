@@ -21,3 +21,13 @@
 
 # Run this tool
 ~/toolbox.sh
+
+# If you dont have super.img
+- Select Build ROM
+- Choose profile
+- Open file manager
+- Paste vendor and Odm in build-kitchen
+* if unisoc paste vendor only
+- Paste GSI system.img in build-kitchen
+- Back to termux and select Build
+- Result will super.tar then you can flash it with odin or heimdall
