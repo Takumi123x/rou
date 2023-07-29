@@ -436,6 +436,7 @@ internal_tmp=~/storage/shared/build-kitchen
 main_tmp=~/kitchen-tmp
 mkdir ~/kitchen-tmp
 ln -s ~/storage/shared/build-kitchen ~/
+chmod +x ~/rou/bin/*
 clear
  
 clear
