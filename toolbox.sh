@@ -320,12 +320,11 @@ lpunpack ~/storage/shared/build-kitchen/$filesupersp ~/storage/shared/build-kitc
 extract_root (){
 if [ "$(id -u)" != "0" ]; then
 echo "This script must be run as root" 1>&2
+else
 lpdump /dev/block/by-name/super > ~/kitchen-tmp/super_map.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
 lpunpack /dev/block/by-name/super ~/storage/shared/build-kitchen/
-else
-echo "No root permission dude"
 fi
 }
 
@@ -358,7 +357,7 @@ clear
      M0(){ TPUT 16 $MU_X; $e "Extract from current phone(root)";$ff;}
      M1(){ TPUT 18 $MU_X; $e "Extract from internal           ";$ff;}
      M2(){ TPUT 20 $MU_X; $e "Exit                            ";$ff;}
-      LM=3
+      LM=2 
    MENU(){ for each in $(seq 0 $LM);do M${each};done;}
     POS(){ if [[ $cur == up ]];then ((i--));fi
            if [[ $cur == dn ]];then ((i++));fi
