@@ -305,23 +305,19 @@ fi
 
 Extract_rom (){
 extract_internal (){
-if [ "1" == "$(find ~/storage/shared/build-kitchen/$filesuper -type f ! -size 0 -printf '%S\n' | sed 's/\.[0-9]*//')" ]
+if [ "$(find ~/storage/shared/build-kitchen/$filesuper -type f ! -size 0 -printf '%S\n' | sed 's/\.[0-9]*//')" -lt 1 ]
 then
-filesupersp=super.img
-filesuper=" "
-else
-~/rou/bin/simg2img ~/storage/shared/build-kitchen/$filesuper ~/storage/shared/build-kitchen/$filesupersp
-if [ -e ~/storage/shared/build-kitchen/$filesupersp ]
-then
-rm -rf ~/storage/shared/build-kitchen/$filesuper
-else
-echo " "
-fi
-fi
-~/rou/bin/lpdump ~/storage/shared/build-kitchen/$filesupersp > ~/kitchen-tmp/super_map.txt
+~/rou/bin/lpdump ~/storage/shared/build-kitchen/super.img > ~/kitchen-tmp/super_map.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
-~/rou/bin/lpunpack ~/storage/shared/build-kitchen/$filesupersp ~/storage/shared/build-kitchen/
+~/rou/bin/lpunpack ~/storage/shared/build-kitchen/super.img ~/storage/shared/build-kitchen/
+else
+~/rou/bin/simg2img ~/storage/shared/build-kitchen/super.img ~/storage/shared/build-kitchen/super_raw.img
+~/rou/bin/lpdump ~/storage/shared/build-kitchen/super_raw.img > ~/kitchen-tmp/super_map.txt
+printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
+printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
+~/rou/bin/lpunpack ~/storage/shared/build-kitchen/super_raw.img ~/storage/shared/build-kitchen/
+fi
 }
 
 extract_root (){
@@ -334,9 +330,6 @@ printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print
 ~/rou/bin/lpunpack /dev/block/by-name/super ~/storage/shared/build-kitchen/
 fi
 }
-
-filesuper=super.img
-filesupersp=super_raw.img
 
 super_info="
 ______________________
