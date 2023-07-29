@@ -309,9 +309,14 @@ if [ 1 == "$(find ~/storage/shared/build-kitchen/$filesuper -type f ! -size 0 -p
 then
 mv -f ~/storage/shared/build-kitchen/$filesuper ~/storage/shared/build-kitchen/$filesupersp
 else
-~/rou/bin/lpunpack ~/storage/shared/build-kitchen/$filesuper ~/storage/shared/build-kitchen/$filesupersp
+~/rou/bin/simg2img ~/storage/shared/build-kitchen/$filesuper ~/storage/shared/build-kitchen/$filesupersp
 fi
+if [ -e ~/storage/shared/build-kitchen/$filesupersp ]
+then
 rm -rf ~/storage/shared/build-kitchen/$filesuper
+else
+echo " "
+fi
 ~/rou/bin/lpdump ~/storage/shared/build-kitchen/$filesupersp > ~/kitchen-tmp/super_map.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
