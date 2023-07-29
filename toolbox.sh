@@ -4,19 +4,6 @@ UNMARK;TPUT 1 1; $E " "
 
 ff=Fullscreen_force
 
-super_info="
-______________________
- | |Super image info :
- | |
- | |Super size : $(<~/kitchen-tmp/super.txt)
- | |For logical size : $(<~/kitchen-tmp/main.txt)
- | |System size : $(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}')
- | |Vendor size : $(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}')
- | |Product size : $(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}')
- | |System ext size : $(ls -nl ~/storage/shared/build-kitchen/system_ext.img | awk '{print $5}')
- | |Odm size : $(ls -nl ~/storage/shared/build-kitchen/odm.img | awk '{print $5}')
-||||||||||||||||||||||"
-
 
 Case_universal="
 ______________________
@@ -185,6 +172,19 @@ rm -rf ./super.img
 build_done
 }
 
+super_info="
+______________________
+ | |Super image info :
+ | |
+ | |Super size : $(<~/kitchen-tmp/super.txt)
+ | |For logical size : $(<~/kitchen-tmp/main.txt)
+ | |System size : $(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}')
+ | |Vendor size : $(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}')
+ | |Product size : $(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}')
+ | |System ext size : $(ls -nl ~/storage/shared/build-kitchen/system_ext.img | awk '{print $5}')
+ | |Odm size : $(ls -nl ~/storage/shared/build-kitchen/odm.img | awk '{print $5}')
+||||||||||||||||||||||"
+
 cd ~/storage/shared/build-kitchen/
 clear
       E='echo -e';e='echo -en';trap "R;exit" 2
@@ -337,7 +337,20 @@ fi
 
 filesuper=super.img
 filesupersp=super_raw.img
- 
+
+super_info="
+______________________
+ | |Super image info :
+ | |
+ | |Super size : $(<~/kitchen-tmp/super.txt)
+ | |For logical size : $(<~/kitchen-tmp/main.txt)
+ | |System size : $(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}')
+ | |Vendor size : $(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}')
+ | |Product size : $(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}')
+ | |System ext size : $(ls -nl ~/storage/shared/build-kitchen/system_ext.img | awk '{print $5}')
+ | |Odm size : $(ls -nl ~/storage/shared/build-kitchen/odm.img | awk '{print $5}')
+||||||||||||||||||||||"
+
 clear
       E='echo -e';e='echo -en';trap "R;exit" 2
     ESC=$( $e "\e")
@@ -445,7 +458,7 @@ mkdir ~/kitchen-tmp
 ln -s ~/storage/shared/build-kitchen ~/
 chmod +x ~/rou/bin/*
 clear
- 
+super_info=" "
 clear
 MU_X=5
       E='echo -e';e='echo -en';trap "R;exit" 2
