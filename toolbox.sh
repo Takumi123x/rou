@@ -118,6 +118,12 @@ cp -rf ~/rou/fake/product.img ~/storage/shared/build-kitchen/
 fi
 ~/rou/bin/lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}'):main --image system=~/storage/shared/build-kitchen/system.img --partition vendor:readonly:$(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=~/storage/shared/build-kitchen/vendor.img --partition product:readonly:$(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}'):main --image product=~/storage/shared/build-kitchen/product.img --partition odm:readonly:$(ls -nl ~/storage/shared/build-kitchen/odm.img | awk '{print $5}'):main --image odm=~/storage/shared/build-kitchen/odm.img --sparse --output super.img
 else
+if [ -e ~/storage/shared/build-kitchen/product.img ]
+then
+echo " "
+else
+cp -rf ~/rou/fake/product.img ~/storage/shared/build-kitchen/
+fi
 if [ -e ~/storage/shared/build-kitchen/system_ext.img ]
 then
 echo " "
@@ -143,6 +149,12 @@ cp -rf ~/rou/fake/product.img ~/storage/shared/build-kitchen/
 fi
 ~/rou/bin/lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}'):main --image system=~/storage/shared/build-kitchen/system.img --partition vendor:readonly:$(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=~/storage/shared/build-kitchen/vendor.img --partition product:readonly:$(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}'):main --image product=~/storage/shared/build-kitchen/product.img --partition odm:readonly:$(ls -nl ~/storage/shared/build-kitchen/odm.img | awk '{print $5}'):main --image odm=~/storage/shared/build-kitchen/odm.img --sparse --output super.img
 else
+if [ -e ~/storage/shared/build-kitchen/product.img ]
+then
+echo " "
+else
+cp -rf ~/rou/fake/product.img ~/storage/shared/build-kitchen/
+fi
 if [ -e ~/storage/shared/build-kitchen/system_ext.img ]
 then
 echo " "
@@ -171,6 +183,12 @@ cp -rf ~/rou/fake/product.img ~/storage/shared/build-kitchen/
 fi
 ~/rou/bin/lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}'):main --image system=~/storage/shared/build-kitchen/system.img --partition vendor:readonly:$(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=~/storage/shared/build-kitchen/vendor.img --partition product:readonly:$(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}'):main --image product=~/storage/shared/build-kitchen/product.img --partition odm:readonly:$(ls -nl ~/storage/shared/build-kitchen/odm.img | awk '{print $5}'):main --image odm=~/storage/shared/build-kitchen/odm.img --sparse --output super.img
 else
+if [ -e ~/storage/shared/build-kitchen/product.img ]
+then
+echo " "
+else
+cp -rf ~/rou/fake/product.img ~/storage/shared/build-kitchen/
+fi
 if [ -e ~/storage/shared/build-kitchen/system_ext.img ]
 then
 echo " "
