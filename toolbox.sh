@@ -387,8 +387,8 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
      SC(){ REFRESH;MARK;$S;$b;cur=`ARROW`;}
    ES(){ MARK;$e "ENTER = main menu ";$b;read;INIT;};INIT
   while [[ "$O" != " " ]]; do case $i in
-        0) S=M0;SC;if [[ $cur == "" ]];then R;clear;extract_root;INIT;fi;;
-        1) S=M1;SC;if [[ $cur == "" ]];then R;clear;extract_internal;INIT;fi;;
+        0) S=M0;SC;if [[ $cur == "" ]];then R;clear;extract_root;Extract_rom;INIT;fi;;
+        1) S=M1;SC;if [[ $cur == "" ]];then R;clear;extract_internal;Extract_rom;INIT;fi;;
         2) S=M2;SC;if [[ $cur == "" ]];then R;clear;main_main;fi;;
  esac;POS;done
 }
