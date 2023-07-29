@@ -280,7 +280,7 @@ clear
      M0(){ TPUT 16 $MU_X; $e "A03S                            ";$ff;}
      M1(){ TPUT 18 $MU_X; $e "A01 core                        ";$ff;}
      M2(){ TPUT 20 $MU_X; $e "Exit                            ";$ff;}
-      LM=3
+      LM=2
    MENU(){ for each in $(seq 0 $LM);do M${each};done;}
     POS(){ if [[ $cur == up ]];then ((i--));fi
            if [[ $cur == dn ]];then ((i++));fi
