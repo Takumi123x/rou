@@ -381,7 +381,7 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
 }
 
 clear_kitchen (){
-rm ~/kitchen-tmp
+rm -rf ~/kitchen-tmp
 
 clear
       E='echo -e';e='echo -en';trap "R;exit" 2
