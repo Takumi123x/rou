@@ -1,5 +1,5 @@
 # Clone this repo
-- apt install git -y
+- apt install git android-tools
 - git clone https://github.com/Takumi123x/rou.git
 
 # Run this command
