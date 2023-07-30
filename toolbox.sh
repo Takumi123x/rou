@@ -497,6 +497,7 @@ dpkg -i ~/rou/deb/libprotobuff.deb
 dpkg -i ~/rou/deb/lz4.deb
 dpkg -i ~/rou/deb/libusb.deb
 dpkg -i ~/rou/deb/zstd.deb
+echo "binary installed" > ~/rou/complete.txt
 fi
 
 cd ~/
