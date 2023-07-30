@@ -489,14 +489,14 @@ if [ -e ~/rou/complete.txt ]
 then
 echo " "
 else
-pkg -i ~/rou/deb/android-tools.deb
-pkg -i ~/rou/deb/abseil-cpp.deb
-pkg -i ~/rou/deb/brotli.deb
-pkg -i ~/rou/deb/liblz4.deb
-pkg -i ~/rou/deb/libprotobuff.deb
-pkg -i ~/rou/deb/lz4.deb
-pkg -i ~/rou/deb/libusb.deb
-pkg -i ~/rou/deb/zstd.deb
+dpkg -i ~/rou/deb/android-tools.deb
+dpkg -i ~/rou/deb/abseil-cpp.deb
+dpkg -i ~/rou/deb/brotli.deb
+dpkg -i ~/rou/deb/liblz4.deb
+dpkg -i ~/rou/deb/libprotobuff.deb
+dpkg -i ~/rou/deb/lz4.deb
+dpkg -i ~/rou/deb/libusb.deb
+dpkg -i ~/rou/deb/zstd.deb
 fi
 
 cd ~/
