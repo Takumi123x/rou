@@ -450,7 +450,7 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
 
 clear_kitchen (){
 Build_remove (){
-rm -rf ~/kitchen-tmp
+rm -rf ~/build-kitchen/*
 
 clear
       E='echo -e';e='echo -en';trap "R;exit" 2
