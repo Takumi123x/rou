@@ -163,7 +163,7 @@ fi
 tar -cvf ~/storage/shared/build-kitchen/super.tar super.img
 rm -rf ./super.img
 
-if [ "$(ls -nl ~/storage/shared/build-kitchen/super.tar | awk '{print $5}')" -lt 1000 ]
+if [ "$(ls -nl ~/storage/shared/build-kitchen/super.tar | awk '{print $5}')" -lt 10000 ]
 then
 failed_build
 else
@@ -203,7 +203,7 @@ tar -cvf ~/storage/shared/build-kitchen/super.tar super.img.lz4
 rm -rf ./super.img.lz4
 rm -rf ./super.img
 
-if [ "$(ls -nl ~/storage/shared/build-kitchen/super.tar | awk '{print $5}')" -lt 1000 ]
+if [ "$(ls -nl ~/storage/shared/build-kitchen/super.tar | awk '{print $5}')" -lt 10000 ]
 then
 failed_build
 else
@@ -240,7 +240,7 @@ fi
 tar --xz -cvf ~/storage/shared/build-kitchen/super.tar.xz super.img
 rm -rf ./super.img
 
-if [ "$(ls -nl ~/storage/shared/build-kitchen/super.tar.xz | awk '{print $5}')" -lt 1000 ]
+if [ "$(ls -nl ~/storage/shared/build-kitchen/super.tar.xz | awk '{print $5}')" -lt 10000 ]
 then
 failed_build
 else
