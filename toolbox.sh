@@ -56,6 +56,20 @@ ______________________
  | |
  | |
  ||||||||||||||||||||||"
+ 
+failed_build="
+______________________
+ | |Super image kitchen GUI
+ | |> Failed to Build
+ | |- Size IMG too big
+ | |
+ | |
+ | |
+ | |
+ | |
+ | |
+ ||||||||||||||||||||||
+"
 
 Build_rom (){
 super_info="
@@ -148,7 +162,13 @@ fi
 
 tar -cvf ~/storage/shared/build-kitchen/super.tar super.img
 rm -rf ./super.img
+
+if [ "$(ls -nl ~/storage/shared/build-kitchen/super.tar | awk '{print $5}')" -lt 1000 ]
+then
+failed_build
+else
 build_done
+fi
 }
 
 build_lz4 (){
@@ -182,7 +202,13 @@ lz4 super.img
 tar -cvf ~/storage/shared/build-kitchen/super.tar super.img.lz4
 rm -rf ./super.img.lz4
 rm -rf ./super.img
+
+if [ "$(ls -nl ~/storage/shared/build-kitchen/super.tar | awk '{print $5}')" -lt 1000 ]
+then
+failed_build
+else
 build_done
+fi
 }
 
 build_xz (){
@@ -213,7 +239,13 @@ fi
 
 tar --xz -cvf ~/storage/shared/build-kitchen/super.tar.xz super.img
 rm -rf ./super.img
+
+if [ "$(ls -nl ~/storage/shared/build-kitchen/super.tar.xz | awk '{print $5}')" -lt 1000 ]
+then
+failed_build
+else
 build_done
+fi
 }
 
 super_info="
