@@ -363,11 +363,11 @@ dirf=~/rou/fake/profile
 TPUT  6 1;ls -x $dirf
 MARK
 TPUT  1 1;$e " |Profile| ";
-MARK;TPUT 3 1;$e "	__________________________________________________________________________________________________________________________________________________________________
+MARK;TPUT 3 1;$e "	______________________
 "
 TPUT  3 1;$e "| write "exit" for cancel |";
 UNMARK
-MARK;TPUT 47 1;$e "	                                                                                                                                                                  
+MARK;TPUT 47 1;$e "	                        
 ";TPUT 47 1;$e "Select profile from list:";read p;UNMARK;
 case $p in
 "")
