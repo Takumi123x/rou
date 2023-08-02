@@ -361,7 +361,7 @@ else
 clear
 dirf=~/rou/fake/profile
 TPUT  6 1;ls -x $dirf
-MARK
+UNMARK
 TPUT  1 1;$e " |Profile| ";
 MARK;TPUT 3 1;$e "	______________________
 "
