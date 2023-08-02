@@ -367,8 +367,7 @@ MARK;TPUT 3 1;$e "	______________________
 "
 TPUT  3 1;$e "| write "exit" for cancel |";
 UNMARK
-MARK;TPUT 47 1;$e "	                        
-";TPUT 47 1;$e "Select profile from list:";read p;UNMARK;
+MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select profile from list:";read p;UNMARK;
 case $p in
 "")
 echo "Select in menu or exit"
