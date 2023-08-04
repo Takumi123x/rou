@@ -71,7 +71,7 @@ ______________________
  ||||||||||||||||||||||
 "
 
-Extract_done"
+Extract_done="
 ______________________
  | |Super image kitchen GUI
  | |> Extract Done
@@ -664,7 +664,7 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
 }
 
 main_main (){
-if [ "$(getprop ro.product.cpu.abi )" == "armeabi-v7a" ]
+if [ "$(getprop ro.product.cpu.abi)" == "armeabi-v7a" ]
 then
 if [ -e ~/rou/complete.txt ]
 then
