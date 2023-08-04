@@ -71,6 +71,20 @@ ______________________
  ||||||||||||||||||||||
 "
 
+Extract_done"
+______________________
+ | |Super image kitchen GUI
+ | |> Extract Done
+ | |
+ | |
+ | |
+ | |
+ | |
+ | |
+ | |
+ ||||||||||||||||||||||
+"
+
 Build_rom (){
 super_info="
 ______________________
@@ -389,6 +403,79 @@ fi
 }
 
 Extract_rom (){
+save_profile (){
+dirf=~/rou/fake/profile
+TPUT  6 1;ls -x $dirf
+UNMARK
+TPUT  1 1;$e " |Profile| ";
+MARK;TPUT 3 1;$e "	______________________
+"
+TPUT  3 1;$e "| write "exit" for cancel |";
+UNMARK
+MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select profile from list:";read p;UNMARK;
+case $p in
+"")
+echo "Select in menu or exit"
+;;
+"exit")
+clear
+fontceti
+;;
+*)
+cp -rf ~/kitchen-tmp/super_map.txt ~/rou/fake/profile/$p
+clear
+Build_rom
+;;
+esac
+}
+
+extract_done (){
+clear
+      E='echo -e';e='echo -en';trap "R;exit" 2
+    ESC=$( $e "\e")
+   TPUT(){ $e "\e[${1};${2}H";}
+  CLEAR(){ $e "\ec";}
+  CIVIS(){ $e "\e[?25l";}
+   DRAW(){ $e "\e%@\e(0";}
+  WRITE(){ $e "\e(B";}
+      R(){ CLEAR ;stty sane;$e "\ec\e[37;00m\e[J";};
+   HEAD(){ DRAW
+           for each in $(seq 45 25);do
+           $E "   x                                          x"
+           done
+           WRITE;MARK;TPUT 1 1
+           $E " ";UNMARK;}
+           i=0; CLEAR; CIVIS;NULL=/dev/null
+   FOOT(){ MARK;TPUT 47 2
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";}
+   FOOT2(){ UNMARK;TPUT 3 45
+   printf "$set_info";}
+  ARROW(){ read -s -n3 key 2>/dev/null >&2
+           if [[ $key = $ESC[A ]];then echo up;fi
+           if [[ $key = $ESC[B ]];then echo dn;fi;}
+     M0(){ TPUT 16 $MU_X; $e "Back to Extract menu              ";$ff;}
+     M1(){ TPUT 18 $MU_X; $e "Save this profile                 ";$ff;}
+      LM=1
+   MENU(){ for each in $(seq 0 $LM);do M${each};done;}
+    POS(){ if [[ $cur == up ]];then ((i--));fi
+           if [[ $cur == dn ]];then ((i++));fi
+           if [[ $i -lt 0   ]];then i=$LM;fi
+           if [[ $i -gt $LM ]];then i=0;fi;}
+REFRESH(){ after=$((i+1)); before=$((i-1))
+           if [[ $before -lt 0  ]];then before=$LM;fi
+           if [[ $after -gt $LM ]];then after=0;fi
+           if [[ $j -lt $i      ]];then UNMARK;M$before;else UNMARK;M$after;fi
+           if [[ $after -eq 0 ]] || [ $before -eq $LM ];then
+           UNMARK; M$before; M$after;fi;j=$i;UNMARK;M$before;M$after;}
+   INIT(){ clear;set_info=$Extract_done;R;HEAD;FOOT2;FOOT;MENU;}
+     SC(){ REFRESH;MARK;$S;$b;cur=`ARROW`;}
+   ES(){ MARK;$e "ENTER = main menu ";$b;read;INIT;};INIT
+  while [[ "$O" != " " ]]; do case $i in
+        0) S=M0;SC;if [[ $cur == "" ]];then R;clear;Extract_rom;INIT;fi;;
+        1) S=M1;SC;if [[ $cur == "" ]];then R;clear;main_main;INIT;fi;;
+ esac;POS;done
+}
+
 extract_internal (){
 if [ "$(find ~/storage/shared/build-kitchen/super.img -type f ! -size 0 -printf '%S\n' | sed 's/\.[0-9]*//')" -lt 1 ]
 then
@@ -404,6 +491,7 @@ printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > 
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
 lpunpack ~/storage/shared/build-kitchen/super_raw.img ~/storage/shared/build-kitchen/
 fi
+extract_done
 }
 
 extract_root (){
@@ -415,6 +503,7 @@ printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > 
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
 lpunpack /dev/block/by-name/super ~/storage/shared/build-kitchen/
 fi
+extract_done
 }
 
 super_info="
@@ -575,19 +664,37 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
 }
 
 main_main (){
+if [ "$(getprop ro.product.cpu.abi )" == "armeabi-v7a" ]
+then
 if [ -e ~/rou/complete.txt ]
 then
 echo " "
 else
-dpkg -i ~/rou/deb/android-tools.deb
-dpkg -i ~/rou/deb/abseil-cpp.deb
-dpkg -i ~/rou/deb/brotli.deb
-dpkg -i ~/rou/deb/liblz4.deb
-dpkg -i ~/rou/deb/libprotobuff.deb
-dpkg -i ~/rou/deb/lz4.deb
-dpkg -i ~/rou/deb/libusb.deb
-dpkg -i ~/rou/deb/zstd.deb
+dpkg -i ~/rou/deb/arm32/android-tools.deb
+dpkg -i ~/rou/deb/arm32/abseil-cpp.deb
+dpkg -i ~/rou/deb/arm32/brotli.deb
+dpkg -i ~/rou/deb/arm32/liblz4.deb
+dpkg -i ~/rou/deb/arm32/libprotobuff.deb
+dpkg -i ~/rou/deb/arm32/lz4.deb
+dpkg -i ~/rou/deb/arm32/libusb.deb
+dpkg -i ~/rou/deb/arm32/zstd.deb
 echo "binary installed" > ~/rou/complete.txt
+fi
+else
+if [ -e ~/rou/complete.txt ]
+then
+echo " "
+else
+dpkg -i ~/rou/deb/arm64/android-tools.deb
+dpkg -i ~/rou/deb/arm64/abseil-cpp.deb
+dpkg -i ~/rou/deb/arm64/brotli.deb
+dpkg -i ~/rou/deb/arm64/liblz4.deb
+dpkg -i ~/rou/deb/arm64/libprotobuff.deb
+dpkg -i ~/rou/deb/arm64/lz4.deb
+dpkg -i ~/rou/deb/arm64/libusb.deb
+dpkg -i ~/rou/deb/arm64/zstd.deb
+echo "binary installed" > ~/rou/complete.txt
+fi
 fi
 
 cd ~/
