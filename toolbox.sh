@@ -477,6 +477,27 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
 }
 
 extract_internal (){
+if [ -e ~/storage/shared/build-kitchen/AP_*.tar.md5 ]
+then
+cd ~
+mkdir ~/storage/shared/build-kitchen/AP
+7z e ~/storage/shared/build-kitchen/AP_*.tar.md5 -o$(pwd)/storage/shared/build-kitchen/AP/
+if [ -e ~/storage/shared/build-kitchen/AP/super.img.lz4 ]
+then
+mv -f ~/storage/shared/build-kitchen/AP/super.img.lz4 ~/storage/shared/build-kitchen/
+else
+echo " "
+fi
+else
+echo " "
+fi
+rm -rf ~/storage/shared/build-kitchen/AP/
+if [ -e ~/storage/shared/build-kitchen/super.img.lz4 ]
+then
+unlz4 --rm ~/storage/shared/build-kitchen/super.img.lz4
+else
+echo " "
+fi
 if [ "$(find ~/storage/shared/build-kitchen/super.img -type f ! -size 0 -printf '%S\n' | sed 's/\.[0-9]*//')" -lt 1 ]
 then
 lpdump ~/storage/shared/build-kitchen/super.img > ~/kitchen-tmp/super_map.txt
@@ -678,6 +699,7 @@ dpkg -i ~/rou/deb/arm32/libprotobuff.deb
 dpkg -i ~/rou/deb/arm32/lz4.deb
 dpkg -i ~/rou/deb/arm32/libusb.deb
 dpkg -i ~/rou/deb/arm32/zstd.deb
+dpkg -i ~/rou/deb/arm32/p7zip.deb
 echo "binary installed" > ~/rou/complete.txt
 fi
 else
@@ -693,6 +715,7 @@ dpkg -i ~/rou/deb/arm64/libprotobuff.deb
 dpkg -i ~/rou/deb/arm64/lz4.deb
 dpkg -i ~/rou/deb/arm64/libusb.deb
 dpkg -i ~/rou/deb/arm64/zstd.deb
+dpkg -i ~/rou/deb/arm64/p7zip.deb
 echo "binary installed" > ~/rou/complete.txt
 fi
 fi
