@@ -195,7 +195,13 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
  esac;POS;done
 }
 
-build_now (){
+build_super (){
+if [ "$(find ~/storage/shared/build-kitchen/system.img -type f ! -size 0 -printf '%S\n' | sed 's/\.[0-9]*//')" -lt 1 ]
+then
+echo " "
+else
+simg2img ~/storage/shared/build-kitchen/system.img ~/storage/shared/build-kitchen/system.raw.img
+fi
 if [ -e ~/storage/shared/build-kitchen/odm.img ]
 then
 if [ -e ~/storage/shared/build-kitchen/product.img ]
@@ -220,6 +226,10 @@ cp -rf ~/rou/fake/system_ext.img ~/storage/shared/build-kitchen/
 fi
 lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}'):main --image system=~/storage/shared/build-kitchen/system.img --partition vendor:readonly:$(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=~/storage/shared/build-kitchen/vendor.img --partition product:readonly:$(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}'):main --image product=~/storage/shared/build-kitchen/product.img --partition system_ext:readonly:$(ls -nl ~/storage/shared/build-kitchen/system_ext.img | awk '{print $5}'):main --image system_ext=~/storage/shared/build-kitchen/system_ext.img --sparse --output super.img
 fi
+}
+
+build_now (){
+build_super
 
 tar -cvf ~/storage/shared/build-kitchen/super.tar super.img
 rm -rf ./super.img
@@ -233,31 +243,7 @@ fi
 }
 
 build_lz4 (){
-if [ -e ~/storage/shared/build-kitchen/odm.img ]
-then
-if [ -e ~/storage/shared/build-kitchen/product.img ]
-then
-echo " "
-else
-cp -rf ~/rou/fake/product.img ~/storage/shared/build-kitchen/
-fi
-lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}'):main --image system=~/storage/shared/build-kitchen/system.img --partition vendor:readonly:$(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=~/storage/shared/build-kitchen/vendor.img --partition product:readonly:$(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}'):main --image product=~/storage/shared/build-kitchen/product.img --partition odm:readonly:$(ls -nl ~/storage/shared/build-kitchen/odm.img | awk '{print $5}'):main --image odm=~/storage/shared/build-kitchen/odm.img --sparse --output super.img
-else
-if [ -e ~/storage/shared/build-kitchen/product.img ]
-then
-echo " "
-else
-cp -rf ~/rou/fake/product.img ~/storage/shared/build-kitchen/
-fi
-if [ -e ~/storage/shared/build-kitchen/system_ext.img ]
-then
-echo " "
-else
-echo ""
-cp -rf ~/rou/fake/system_ext.img ~/storage/shared/build-kitchen/
-fi
-lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}'):main --image system=~/storage/shared/build-kitchen/system.img --partition vendor:readonly:$(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=~/storage/shared/build-kitchen/vendor.img --partition product:readonly:$(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}'):main --image product=~/storage/shared/build-kitchen/product.img --partition system_ext:readonly:$(ls -nl ~/storage/shared/build-kitchen/system_ext.img | awk '{print $5}'):main --image system_ext=~/storage/shared/build-kitchen/system_ext.img --sparse --output super.img
-fi
+build_super
 
 lz4 super.img
 tar -cvf ~/storage/shared/build-kitchen/super.tar super.img.lz4
@@ -273,30 +259,7 @@ fi
 }
 
 build_xz (){
-if [ -e ~/storage/shared/build-kitchen/odm.img ]
-then
-if [ -e ~/storage/shared/build-kitchen/product.img ]
-then
-echo " "
-else
-cp -rf ~/rou/fake/product.img ~/storage/shared/build-kitchen/
-fi
-lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}'):main --image system=~/storage/shared/build-kitchen/system.img --partition vendor:readonly:$(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=~/storage/shared/build-kitchen/vendor.img --partition product:readonly:$(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}'):main --image product=~/storage/shared/build-kitchen/product.img --partition odm:readonly:$(ls -nl ~/storage/shared/build-kitchen/odm.img | awk '{print $5}'):main --image odm=~/storage/shared/build-kitchen/odm.img --sparse --output super.img
-else
-if [ -e ~/storage/shared/build-kitchen/product.img ]
-then
-echo " "
-else
-cp -rf ~/rou/fake/product.img ~/storage/shared/build-kitchen/
-fi
-if [ -e ~/storage/shared/build-kitchen/system_ext.img ]
-then
-echo " "
-else
-cp -rf ~/rou/fake/system_ext.img ~/storage/shared/build-kitchen/
-fi
-lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}'):main --image system=~/storage/shared/build-kitchen/system.img --partition vendor:readonly:$(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=~/storage/shared/build-kitchen/vendor.img --partition product:readonly:$(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}'):main --image product=~/storage/shared/build-kitchen/product.img --partition system_ext:readonly:$(ls -nl ~/storage/shared/build-kitchen/system_ext.img | awk '{print $5}'):main --image system_ext=~/storage/shared/build-kitchen/system_ext.img --sparse --output super.img
-fi
+build_super
 
 tar --xz -cvf ~/storage/shared/build-kitchen/super.tar.xz super.img
 rm -rf ./super.img
@@ -310,30 +273,7 @@ fi
 }
 
 build_gz (){
-if [ -e ~/storage/shared/build-kitchen/odm.img ]
-then
-if [ -e ~/storage/shared/build-kitchen/product.img ]
-then
-echo " "
-else
-cp -rf ~/rou/fake/product.img ~/storage/shared/build-kitchen/
-fi
-lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}'):main --image system=~/storage/shared/build-kitchen/system.img --partition vendor:readonly:$(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=~/storage/shared/build-kitchen/vendor.img --partition product:readonly:$(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}'):main --image product=~/storage/shared/build-kitchen/product.img --partition odm:readonly:$(ls -nl ~/storage/shared/build-kitchen/odm.img | awk '{print $5}'):main --image odm=~/storage/shared/build-kitchen/odm.img --sparse --output super.img
-else
-if [ -e ~/storage/shared/build-kitchen/product.img ]
-then
-echo " "
-else
-cp -rf ~/rou/fake/product.img ~/storage/shared/build-kitchen/
-fi
-if [ -e ~/storage/shared/build-kitchen/system_ext.img ]
-then
-echo " "
-else
-cp -rf ~/rou/fake/system_ext.img ~/storage/shared/build-kitchen/
-fi
-lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}'):main --image system=~/storage/shared/build-kitchen/system.img --partition vendor:readonly:$(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=~/storage/shared/build-kitchen/vendor.img --partition product:readonly:$(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}'):main --image product=~/storage/shared/build-kitchen/product.img --partition system_ext:readonly:$(ls -nl ~/storage/shared/build-kitchen/system_ext.img | awk '{print $5}'):main --image system_ext=~/storage/shared/build-kitchen/system_ext.img --sparse --output super.img
-fi
+build_super
 
 tar -zcvf ~/storage/shared/build-kitchen/super.tar.gz super.img
 rm -rf ./super.img
@@ -347,30 +287,7 @@ fi
 }
 
 build_7z (){
-if [ -e ~/storage/shared/build-kitchen/odm.img ]
-then
-if [ -e ~/storage/shared/build-kitchen/product.img ]
-then
-echo " "
-else
-cp -rf ~/rou/fake/product.img ~/storage/shared/build-kitchen/
-fi
-lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}'):main --image system=~/storage/shared/build-kitchen/system.img --partition vendor:readonly:$(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=~/storage/shared/build-kitchen/vendor.img --partition product:readonly:$(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}'):main --image product=~/storage/shared/build-kitchen/product.img --partition odm:readonly:$(ls -nl ~/storage/shared/build-kitchen/odm.img | awk '{print $5}'):main --image odm=~/storage/shared/build-kitchen/odm.img --sparse --output super.img
-else
-if [ -e ~/storage/shared/build-kitchen/product.img ]
-then
-echo " "
-else
-cp -rf ~/rou/fake/product.img ~/storage/shared/build-kitchen/
-fi
-if [ -e ~/storage/shared/build-kitchen/system_ext.img ]
-then
-echo " "
-else
-cp -rf ~/rou/fake/system_ext.img ~/storage/shared/build-kitchen/
-fi
-lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}'):main --image system=~/storage/shared/build-kitchen/system.img --partition vendor:readonly:$(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=~/storage/shared/build-kitchen/vendor.img --partition product:readonly:$(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}'):main --image product=~/storage/shared/build-kitchen/product.img --partition system_ext:readonly:$(ls -nl ~/storage/shared/build-kitchen/system_ext.img | awk '{print $5}'):main --image system_ext=~/storage/shared/build-kitchen/system_ext.img --sparse --output super.img
-fi
+build_super
 
 7z a ~/storage/shared/build-kitchen/super.7z ~/storage/shared/build-kitchen/super.img
 rm -rf ./super.img
