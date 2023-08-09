@@ -309,6 +309,80 @@ build_done
 fi
 }
 
+build_gz (){
+if [ -e ~/storage/shared/build-kitchen/odm.img ]
+then
+if [ -e ~/storage/shared/build-kitchen/product.img ]
+then
+echo " "
+else
+cp -rf ~/rou/fake/product.img ~/storage/shared/build-kitchen/
+fi
+lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}'):main --image system=~/storage/shared/build-kitchen/system.img --partition vendor:readonly:$(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=~/storage/shared/build-kitchen/vendor.img --partition product:readonly:$(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}'):main --image product=~/storage/shared/build-kitchen/product.img --partition odm:readonly:$(ls -nl ~/storage/shared/build-kitchen/odm.img | awk '{print $5}'):main --image odm=~/storage/shared/build-kitchen/odm.img --sparse --output super.img
+else
+if [ -e ~/storage/shared/build-kitchen/product.img ]
+then
+echo " "
+else
+cp -rf ~/rou/fake/product.img ~/storage/shared/build-kitchen/
+fi
+if [ -e ~/storage/shared/build-kitchen/system_ext.img ]
+then
+echo " "
+else
+cp -rf ~/rou/fake/system_ext.img ~/storage/shared/build-kitchen/
+fi
+lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}'):main --image system=~/storage/shared/build-kitchen/system.img --partition vendor:readonly:$(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=~/storage/shared/build-kitchen/vendor.img --partition product:readonly:$(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}'):main --image product=~/storage/shared/build-kitchen/product.img --partition system_ext:readonly:$(ls -nl ~/storage/shared/build-kitchen/system_ext.img | awk '{print $5}'):main --image system_ext=~/storage/shared/build-kitchen/system_ext.img --sparse --output super.img
+fi
+
+tar -zcvf ~/storage/shared/build-kitchen/super.tar.gz super.img
+rm -rf ./super.img
+
+if [ "$(ls -nl ~/storage/shared/build-kitchen/super.tar.gz | awk '{print $5}')" -lt 100000 ]
+then
+failed_build
+else
+build_done
+fi
+}
+
+build_7z (){
+if [ -e ~/storage/shared/build-kitchen/odm.img ]
+then
+if [ -e ~/storage/shared/build-kitchen/product.img ]
+then
+echo " "
+else
+cp -rf ~/rou/fake/product.img ~/storage/shared/build-kitchen/
+fi
+lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}'):main --image system=~/storage/shared/build-kitchen/system.img --partition vendor:readonly:$(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=~/storage/shared/build-kitchen/vendor.img --partition product:readonly:$(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}'):main --image product=~/storage/shared/build-kitchen/product.img --partition odm:readonly:$(ls -nl ~/storage/shared/build-kitchen/odm.img | awk '{print $5}'):main --image odm=~/storage/shared/build-kitchen/odm.img --sparse --output super.img
+else
+if [ -e ~/storage/shared/build-kitchen/product.img ]
+then
+echo " "
+else
+cp -rf ~/rou/fake/product.img ~/storage/shared/build-kitchen/
+fi
+if [ -e ~/storage/shared/build-kitchen/system_ext.img ]
+then
+echo " "
+else
+cp -rf ~/rou/fake/system_ext.img ~/storage/shared/build-kitchen/
+fi
+lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}'):main --image system=~/storage/shared/build-kitchen/system.img --partition vendor:readonly:$(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=~/storage/shared/build-kitchen/vendor.img --partition product:readonly:$(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}'):main --image product=~/storage/shared/build-kitchen/product.img --partition system_ext:readonly:$(ls -nl ~/storage/shared/build-kitchen/system_ext.img | awk '{print $5}'):main --image system_ext=~/storage/shared/build-kitchen/system_ext.img --sparse --output super.img
+fi
+
+7z a ~/storage/shared/build-kitchen/super.7z ~/storage/shared/build-kitchen/super.img
+rm -rf ./super.img
+
+if [ "$(ls -nl ~/storage/shared/build-kitchen/super.7z | awk '{print $5}')" -lt 100000 ]
+then
+failed_build
+else
+build_done
+fi
+}
+
 super_info="
 ______________________
  | |Super image info :
@@ -321,6 +395,57 @@ ______________________
  | |System ext size : $(ls -nl ~/storage/shared/build-kitchen/system_ext.img | awk '{print $5}')
  | |Odm size : $(ls -nl ~/storage/shared/build-kitchen/odm.img | awk '{print $5}')
 ||||||||||||||||||||||"
+
+Build_archive (){
+clear
+      E='echo -e';e='echo -en';trap "R;exit" 2
+    ESC=$( $e "\e")
+   TPUT(){ $e "\e[${1};${2}H";}
+  CLEAR(){ $e "\ec";}
+  CIVIS(){ $e "\e[?25l";}
+   DRAW(){ $e "\e%@\e(0";}
+  WRITE(){ $e "\e(B";}
+      R(){ CLEAR ;stty sane;$e "\ec\e[37;00m\e[J";};
+   HEAD(){ DRAW
+           for each in $(seq 45 25);do
+           $E "   x                                          x"
+           done
+           WRITE;MARK;TPUT 1 1
+           $E " ";UNMARK;}
+           i=0; CLEAR; CIVIS;NULL=/dev/null
+   FOOT(){ MARK;TPUT 47 2
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";}
+   FOOT2(){ UNMARK;TPUT 3 45
+   printf "$set_info";}
+  ARROW(){ read -s -n3 key 2>/dev/null >&2
+           if [[ $key = $ESC[A ]];then echo up;fi
+           if [[ $key = $ESC[B ]];then echo dn;fi;}
+     M0(){ TPUT 16 $MU_X; $e "Build with tar.gz               ";$ff;}
+     M1(){ TPUT 18 $MU_X; $e "Build with tar.xz               ";$ff;}
+     M2(){ TPUT 20 $MU_X; $e "Build with 7z                   ";$ff;}
+     M3(){ TPUT 22 $MU_X; $e "exit                            ";$ff;}
+      LM=3
+   MENU(){ for each in $(seq 0 $LM);do M${each};done;}
+    POS(){ if [[ $cur == up ]];then ((i--));fi
+           if [[ $cur == dn ]];then ((i++));fi
+           if [[ $i -lt 0   ]];then i=$LM;fi
+           if [[ $i -gt $LM ]];then i=0;fi;}
+REFRESH(){ after=$((i+1)); before=$((i-1))
+           if [[ $before -lt 0  ]];then before=$LM;fi
+           if [[ $after -gt $LM ]];then after=0;fi
+           if [[ $j -lt $i      ]];then UNMARK;M$before;else UNMARK;M$after;fi
+           if [[ $after -eq 0 ]] || [ $before -eq $LM ];then
+           UNMARK; M$before; M$after;fi;j=$i;UNMARK;M$before;M$after;}
+   INIT(){ clear;set_info=$super_info;R;HEAD;FOOT2;FOOT;MENU;}
+     SC(){ REFRESH;MARK;$S;$b;cur=`ARROW`;}
+   ES(){ MARK;$e "ENTER = main menu ";$b;read;INIT;};INIT
+  while [[ "$O" != " " ]]; do case $i in
+        0) S=M0;SC;if [[ $cur == "" ]];then R;clear;build_gz;INIT;fi;;
+        1) S=M1;SC;if [[ $cur == "" ]];then R;clear;build_xz;INIT;fi;;
+        2) S=M2;SC;if [[ $cur == "" ]];then R;clear;build_7z;INIT;fi;;
+        3) S=M3;SC;if [[ $cur == "" ]];then R;clear;Build_rom;fi;;
+ esac;POS;done
+ }
 
 cd ~/storage/shared/build-kitchen/
 clear
@@ -348,7 +473,7 @@ clear
            if [[ $key = $ESC[B ]];then echo dn;fi;}
      M0(){ TPUT 16 $MU_X; $e "Build                           ";$ff;}
      M1(){ TPUT 18 $MU_X; $e "Build with lz4.tar              ";$ff;}
-     M2(){ TPUT 20 $MU_X; $e "Build with tar.xz               ";$ff;}
+     M2(){ TPUT 20 $MU_X; $e "Build tar with extra archive    ";$ff;}
      M3(){ TPUT 22 $MU_X; $e "exit                            ";$ff;}
       LM=3
    MENU(){ for each in $(seq 0 $LM);do M${each};done;}
@@ -368,7 +493,7 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
   while [[ "$O" != " " ]]; do case $i in
         0) S=M0;SC;if [[ $cur == "" ]];then R;clear;build_now;INIT;fi;;
         1) S=M1;SC;if [[ $cur == "" ]];then R;clear;build_lz4;INIT;fi;;
-        2) S=M2;SC;if [[ $cur == "" ]];then R;clear;build_xz;INIT;fi;;
+        2) S=M2;SC;if [[ $cur == "" ]];then R;clear;Build_archive;INIT;fi;;
         3) S=M3;SC;if [[ $cur == "" ]];then R;clear;main_main;fi;;
  esac;POS;done
 else
