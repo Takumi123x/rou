@@ -443,7 +443,7 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
         0) S=M0;SC;if [[ $cur == "" ]];then R;clear;build_gz;INIT;fi;;
         1) S=M1;SC;if [[ $cur == "" ]];then R;clear;build_xz;INIT;fi;;
         2) S=M2;SC;if [[ $cur == "" ]];then R;clear;build_7z;INIT;fi;;
-        3) S=M3;SC;if [[ $cur == "" ]];then R;clear;main_main;fi;;
+        3) S=M3;SC;if [[ $cur == "" ]];then R;clear;Build_rom;fi;;
  esac;POS;done
  }
 
