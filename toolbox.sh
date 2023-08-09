@@ -540,7 +540,7 @@ unlz4 --rm ~/storage/shared/build-kitchen/super.img.lz4
 else
 echo " "
 fi
-if [ "$(find ~/storage/shared/build-kitchen/super.img -type f ! -size 0 -printf '%S\n' | sed 's/\.[0-9]*//')" -lt 1 ]
+if [ "$(find ~/storage/shared/build-kitchen/super.img -type f ! -size 0 -printf '%S\n' | sed 's/\.[0-9]*//')" == 1 ]
 then
 lpdump ~/storage/shared/build-kitchen/super.img > ~/kitchen-tmp/super_map.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
