@@ -372,8 +372,7 @@ fi
 lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}'):main --image system=~/storage/shared/build-kitchen/system.img --partition vendor:readonly:$(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=~/storage/shared/build-kitchen/vendor.img --partition product:readonly:$(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}'):main --image product=~/storage/shared/build-kitchen/product.img --partition system_ext:readonly:$(ls -nl ~/storage/shared/build-kitchen/system_ext.img | awk '{print $5}'):main --image system_ext=~/storage/shared/build-kitchen/system_ext.img --sparse --output super.img
 fi
 
-tar -cvf ~/storage/shared/build-kitchen/super.tar super.img
-7z a ~/storage/shared/build-kitchen/super.7z ~/storage/shared/build-kitchen/super.tar
+7z a ~/storage/shared/build-kitchen/super.7z ~/storage/shared/build-kitchen/super.img
 rm -rf ./super.img
 
 if [ "$(ls -nl ~/storage/shared/build-kitchen/super.7z | awk '{print $5}')" -lt 100000 ]
