@@ -196,7 +196,7 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
 }
 
 build_super (){
-if [ "$(find ~/storage/shared/build-kitchen/system.img -type f ! -size 0 -printf '%S\n' | sed 's/\.[0-9]*//')" -lt 1 ]
+if [ "$(find ~/storage/shared/build-kitchen/system.img -type f ! -size 0 -printf '%S\n' | sed 's/\.[0-9]*//')" == 1 ]
 then
 echo " "
 else
