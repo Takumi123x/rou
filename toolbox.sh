@@ -528,7 +528,7 @@ if [ -e ~/storage/shared/build-kitchen/AP/super.img.lz4 ]
 then
 mv -f ~/storage/shared/build-kitchen/AP/super.img.lz4 ~/storage/shared/build-kitchen/
 else
-echo " "
+mv -f ~/storage/shared/build-kitchen/AP/super.img ~/storage/shared/build-kitchen/
 fi
 else
 echo " "
@@ -540,14 +540,14 @@ unlz4 --rm ~/storage/shared/build-kitchen/super.img.lz4
 else
 echo " "
 fi
-if [ "$(find ~/storage/shared/build-kitchen/super.img -type f ! -size 0 -printf '%S\n' | sed 's/\.[0-9]*//')" -lt 1 ]
+simg2img ~/storage/shared/build-kitchen/super.img ~/storage/shared/build-kitchen/super_raw.img
+if [ "$(ls -nl ~/storage/shared/build-kitchen/super_raw.img | awk '{print $5}')" -lt 100000 ]
 then
 lpdump ~/storage/shared/build-kitchen/super.img > ~/kitchen-tmp/super_map.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
 lpunpack ~/storage/shared/build-kitchen/super.img ~/storage/shared/build-kitchen/
 else
-simg2img ~/storage/shared/build-kitchen/super.img ~/storage/shared/build-kitchen/super_raw.img
 rm -rf ~/storage/shared/build-kitchen/super.img
 lpdump ~/storage/shared/build-kitchen/super_raw.img > ~/kitchen-tmp/super_map.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
