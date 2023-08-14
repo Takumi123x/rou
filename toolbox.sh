@@ -514,7 +514,7 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
    ES(){ MARK;$e "ENTER = main menu ";$b;read;INIT;};INIT
   while [[ "$O" != " " ]]; do case $i in
         0) S=M0;SC;if [[ $cur == "" ]];then R;clear;Extract_rom;INIT;fi;;
-        1) S=M1;SC;if [[ $cur == "" ]];then R;clear;main_main;INIT;fi;;
+        1) S=M1;SC;if [[ $cur == "" ]];then R;clear;save_profile;INIT;fi;;
  esac;POS;done
 }
 
@@ -543,6 +543,7 @@ fi
 simg2img ~/storage/shared/build-kitchen/super.img ~/storage/shared/build-kitchen/super_raw.img
 if [ "$(ls -nl ~/storage/shared/build-kitchen/super_raw.img | awk '{print $5}')" -lt 100000 ]
 then
+rm -rf ~/storage/shared/build-kitchen/super_raw.img 
 lpdump ~/storage/shared/build-kitchen/super.img > ~/kitchen-tmp/super_map.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
