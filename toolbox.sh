@@ -828,9 +828,9 @@ if [ -e $dirf/$p ]
 then
 echo "$dirf/$p" > ~/rou/pc.txt
 internal_root="$(echo "$(<~/rou/pc.txt)")"
+chmod +x ~/rou/deb/PC/*
 cp ~/rou/deb/PC/* /bin
-chmod +x /bin/lpmake
-chmod +x /bin/lpunpack
+apt install android-sdk-libsparse-utils
 echo "binary installed" > ~/rou/complete.txt
 else
 echo "False"
@@ -839,7 +839,6 @@ fi
 ;;
 esac
 else
-cp -f ~/rou/deb/PC/* /bin
 clear
 dirf=/mnt
 TPUT  6 1;ls -x $dirf
@@ -864,9 +863,9 @@ if [ -e $dirf/$p ]
 then
 echo "$dirf/$p" > ~/rou/pc.txt
 internal_root="$(echo "$(<~/rou/pc.txt)")"
+chmod +x ~/rou/deb/PC/*
 cp ~/rou/deb/PC/* /bin
-chmod +x /bin/lpmake
-chmod +x /bin/lpunpack
+apt install android-sdk-libsparse-utils
 echo "binary installed" > ~/rou/complete.txt
 else
 main_main
