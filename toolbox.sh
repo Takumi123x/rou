@@ -883,6 +883,8 @@ main_tmp=~/kitchen-tmp
 mkdir ~/kitchen-tmp
 ln -s $internal_root/build-kitchen ~/
 ln -s ~/rou/toolbox.sh ~/
+ln -s ~/rou/toolbox.sh /bin
+ln -s ~/rou/toolbox.sh /data/data/com.termux/files/usr/bin
 clear
 super_info=" "
 clear
