@@ -1,9 +1,13 @@
+tset=/data/tbm-set
+
 Fullscreen_force(){
 UNMARK;TPUT 1 1; $E " "
 }
 
 ff=Fullscreen_force
 
+MARK(){ $e "\e[7m\e[3$(( $RANDOM * 6 / 32767 + 1 ))m";}
+UNMARK(){ $e "\e[27m";}
 
 Case_universal="
 ______________________
@@ -17,7 +21,7 @@ ______________________
  | |
  | |
  ||||||||||||||||||||||"
- 
+
 Build_done="
 ______________________
  | |Super image kitchen GUI
@@ -92,11 +96,11 @@ ______________________
  | |
  | |Super size : $(<~/kitchen-tmp/super.txt)
  | |For logical size : $(<~/kitchen-tmp/main.txt)
- | |System size : $(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}')
- | |Vendor size : $(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}')
- | |Product size : $(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}')
- | |System ext size : $(ls -nl ~/storage/shared/build-kitchen/system_ext.img | awk '{print $5}')
- | |Odm size : $(ls -nl ~/storage/shared/build-kitchen/odm.img | awk '{print $5}')
+ | |System size : $(ls -nl $internal_root/build-kitchen/system.img | awk '{print $5}')
+ | |Vendor size : $(ls -nl $internal_root/build-kitchen/vendor.img | awk '{print $5}')
+ | |Product size : $(ls -nl $internal_root/build-kitchen/product.img | awk '{print $5}')
+ | |System ext size : $(ls -nl $internal_root/build-kitchen/system_ext.img | awk '{print $5}')
+ | |Odm size : $(ls -nl $internal_root/build-kitchen/odm.img | awk '{print $5}')
 ||||||||||||||||||||||"
 
 if [ -e ~/kitchen-tmp/super_map.txt ]
@@ -196,45 +200,45 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
 }
 
 build_super (){
-if [ "$(find ~/storage/shared/build-kitchen/system.img -type f ! -size 0 -printf '%S\n' | sed 's/\.[0-9]*//')" == 1 ]
+if [ "$(find $internal_root/build-kitchen/system.img -type f ! -size 0 -printf '%S\n' | sed 's/\.[0-9]*//')" == 1 ]
 then
 echo " "
 else
-simg2img ~/storage/shared/build-kitchen/system.img ~/storage/shared/build-kitchen/system.raw.img
+simg2img $internal_root/build-kitchen/system.img $internal_root/build-kitchen/system.raw.img
 fi
-if [ -e ~/storage/shared/build-kitchen/odm.img ]
+if [ -e $internal_root/build-kitchen/odm.img ]
 then
-if [ -e ~/storage/shared/build-kitchen/product.img ]
-then
-echo " "
-else
-cp -rf ~/rou/fake/product.img ~/storage/shared/build-kitchen/
-fi
-lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}'):main --image system=~/storage/shared/build-kitchen/system.img --partition vendor:readonly:$(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=~/storage/shared/build-kitchen/vendor.img --partition product:readonly:$(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}'):main --image product=~/storage/shared/build-kitchen/product.img --partition odm:readonly:$(ls -nl ~/storage/shared/build-kitchen/odm.img | awk '{print $5}'):main --image odm=~/storage/shared/build-kitchen/odm.img --sparse --output super.img
-else
-if [ -e ~/storage/shared/build-kitchen/product.img ]
+if [ -e $internal_root/build-kitchen/product.img ]
 then
 echo " "
 else
-cp -rf ~/rou/fake/product.img ~/storage/shared/build-kitchen/
+cp -rf ~/rou/fake/product.img $internal_root/build-kitchen/
 fi
-if [ -e ~/storage/shared/build-kitchen/system_ext.img ]
+lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl $internal_root/build-kitchen/system.img | awk '{print $5}'):main --image system=$internal_root/build-kitchen/system.img --partition vendor:readonly:$(ls -nl $internal_root/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=$internal_root/build-kitchen/vendor.img --partition product:readonly:$(ls -nl $internal_root/build-kitchen/product.img | awk '{print $5}'):main --image product=$internal_root/build-kitchen/product.img --partition odm:readonly:$(ls -nl $internal_root/build-kitchen/odm.img | awk '{print $5}'):main --image odm=$internal_root/build-kitchen/odm.img --sparse --output super.img
+else
+if [ -e $internal_root/build-kitchen/product.img ]
 then
 echo " "
 else
-cp -rf ~/rou/fake/system_ext.img ~/storage/shared/build-kitchen/
+cp -rf ~/rou/fake/product.img $internal_root/build-kitchen/
 fi
-lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}'):main --image system=~/storage/shared/build-kitchen/system.img --partition vendor:readonly:$(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=~/storage/shared/build-kitchen/vendor.img --partition product:readonly:$(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}'):main --image product=~/storage/shared/build-kitchen/product.img --partition system_ext:readonly:$(ls -nl ~/storage/shared/build-kitchen/system_ext.img | awk '{print $5}'):main --image system_ext=~/storage/shared/build-kitchen/system_ext.img --sparse --output super.img
+if [ -e $internal_root/build-kitchen/system_ext.img ]
+then
+echo " "
+else
+cp -rf ~/rou/fake/system_ext.img $internal_root/build-kitchen/
+fi
+lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl $internal_root/build-kitchen/system.img | awk '{print $5}'):main --image system=$internal_root/build-kitchen/system.img --partition vendor:readonly:$(ls -nl $internal_root/build-kitchen/vendor.img | awk '{print $5}'):main --image vendor=$internal_root/build-kitchen/vendor.img --partition product:readonly:$(ls -nl $internal_root/build-kitchen/product.img | awk '{print $5}'):main --image product=$internal_root/build-kitchen/product.img --partition system_ext:readonly:$(ls -nl $internal_root/build-kitchen/system_ext.img | awk '{print $5}'):main --image system_ext=$internal_root/build-kitchen/system_ext.img --sparse --output super.img
 fi
 }
 
 build_now (){
 build_super
 
-tar -cvf ~/storage/shared/build-kitchen/super.tar super.img
+tar -cvf $internal_root/build-kitchen/super.tar super.img
 rm -rf ./super.img
 
-if [ "$(ls -nl ~/storage/shared/build-kitchen/super.tar | awk '{print $5}')" -lt 100000 ]
+if [ "$(ls -nl $internal_root/build-kitchen/super.tar | awk '{print $5}')" -lt 100000 ]
 then
 failed_build
 else
@@ -246,11 +250,11 @@ build_lz4 (){
 build_super
 
 lz4 super.img
-tar -cvf ~/storage/shared/build-kitchen/super.tar super.img.lz4
+tar -cvf $internal_root/build-kitchen/super.tar super.img.lz4
 rm -rf ./super.img.lz4
 rm -rf ./super.img
 
-if [ "$(ls -nl ~/storage/shared/build-kitchen/super.tar | awk '{print $5}')" -lt 100000 ]
+if [ "$(ls -nl $internal_root/build-kitchen/super.tar | awk '{print $5}')" -lt 100000 ]
 then
 failed_build
 else
@@ -261,10 +265,10 @@ fi
 build_xz (){
 build_super
 
-tar --xz -cvf ~/storage/shared/build-kitchen/super.tar.xz super.img
+tar --xz -cvf $internal_root/build-kitchen/super.tar.xz super.img
 rm -rf ./super.img
 
-if [ "$(ls -nl ~/storage/shared/build-kitchen/super.tar.xz | awk '{print $5}')" -lt 100000 ]
+if [ "$(ls -nl $internal_root/build-kitchen/super.tar.xz | awk '{print $5}')" -lt 100000 ]
 then
 failed_build
 else
@@ -275,10 +279,10 @@ fi
 build_gz (){
 build_super
 
-tar -zcvf ~/storage/shared/build-kitchen/super.tar.gz super.img
+tar -zcvf $internal_root/build-kitchen/super.tar.gz super.img
 rm -rf ./super.img
 
-if [ "$(ls -nl ~/storage/shared/build-kitchen/super.tar.gz | awk '{print $5}')" -lt 100000 ]
+if [ "$(ls -nl $internal_root/build-kitchen/super.tar.gz | awk '{print $5}')" -lt 100000 ]
 then
 failed_build
 else
@@ -289,10 +293,10 @@ fi
 build_7z (){
 build_super
 
-7z a ~/storage/shared/build-kitchen/super.7z ~/storage/shared/build-kitchen/super.img
+7z a $internal_root/build-kitchen/super.7z $internal_root/build-kitchen/super.img
 rm -rf ./super.img
 
-if [ "$(ls -nl ~/storage/shared/build-kitchen/super.7z | awk '{print $5}')" -lt 100000 ]
+if [ "$(ls -nl $internal_root/build-kitchen/super.7z | awk '{print $5}')" -lt 100000 ]
 then
 failed_build
 else
@@ -306,11 +310,11 @@ ______________________
  | |
  | |Super size : $(<~/kitchen-tmp/super.txt)
  | |For logical size : $(<~/kitchen-tmp/main.txt)
- | |System size : $(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}')
- | |Vendor size : $(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}')
- | |Product size : $(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}')
- | |System ext size : $(ls -nl ~/storage/shared/build-kitchen/system_ext.img | awk '{print $5}')
- | |Odm size : $(ls -nl ~/storage/shared/build-kitchen/odm.img | awk '{print $5}')
+ | |System size : $(ls -nl $internal_root/build-kitchen/system.img | awk '{print $5}')
+ | |Vendor size : $(ls -nl $internal_root/build-kitchen/vendor.img | awk '{print $5}')
+ | |Product size : $(ls -nl $internal_root/build-kitchen/product.img | awk '{print $5}')
+ | |System ext size : $(ls -nl $internal_root/build-kitchen/system_ext.img | awk '{print $5}')
+ | |Odm size : $(ls -nl $internal_root/build-kitchen/odm.img | awk '{print $5}')
 ||||||||||||||||||||||"
 
 Build_archive (){
@@ -364,7 +368,7 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
  esac;POS;done
  }
 
-cd ~/storage/shared/build-kitchen/
+cd $internal_root/build-kitchen/
 clear
       E='echo -e';e='echo -en';trap "R;exit" 2
     ESC=$( $e "\e")
@@ -519,41 +523,41 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
 }
 
 extract_internal (){
-if [ -e ~/storage/shared/build-kitchen/AP_*.tar.md5 ]
+if [ -e $internal_root/build-kitchen/AP_*.tar.md5 ]
 then
 cd ~
-mkdir ~/storage/shared/build-kitchen/AP
-7z e ~/storage/shared/build-kitchen/AP_*.tar.md5 -o$(pwd)/storage/shared/build-kitchen/AP/
-if [ -e ~/storage/shared/build-kitchen/AP/super.img.lz4 ]
+mkdir $internal_root/build-kitchen/AP
+7z e $internal_root/build-kitchen/AP_*.tar.md5 -o$(pwd)/storage/shared/build-kitchen/AP/
+if [ -e $internal_root/build-kitchen/AP/super.img.lz4 ]
 then
-mv -f ~/storage/shared/build-kitchen/AP/super.img.lz4 ~/storage/shared/build-kitchen/
+mv -f $internal_root/build-kitchen/AP/super.img.lz4 $internal_root/build-kitchen/
 else
-mv -f ~/storage/shared/build-kitchen/AP/super.img ~/storage/shared/build-kitchen/
+mv -f $internal_root/build-kitchen/AP/super.img $internal_root/build-kitchen/
 fi
 else
 echo " "
 fi
-rm -rf ~/storage/shared/build-kitchen/AP/
-if [ -e ~/storage/shared/build-kitchen/super.img.lz4 ]
+rm -rf $internal_root/build-kitchen/AP/
+if [ -e $internal_root/build-kitchen/super.img.lz4 ]
 then
-unlz4 --rm ~/storage/shared/build-kitchen/super.img.lz4
+unlz4 --rm $internal_root/build-kitchen/super.img.lz4
 else
 echo " "
 fi
-simg2img ~/storage/shared/build-kitchen/super.img ~/storage/shared/build-kitchen/super_raw.img
-if [ "$(ls -nl ~/storage/shared/build-kitchen/super_raw.img | awk '{print $5}')" -lt 100000 ]
+simg2img $internal_root/build-kitchen/super.img $internal_root/build-kitchen/super_raw.img
+if [ "$(ls -nl $internal_root/build-kitchen/super_raw.img | awk '{print $5}')" -lt 100000 ]
 then
-rm -rf ~/storage/shared/build-kitchen/super_raw.img 
-lpdump ~/storage/shared/build-kitchen/super.img > ~/kitchen-tmp/super_map.txt
+rm -rf $internal_root/build-kitchen/super_raw.img 
+lpdump $internal_root/build-kitchen/super.img > ~/kitchen-tmp/super_map.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
-lpunpack ~/storage/shared/build-kitchen/super.img ~/storage/shared/build-kitchen/
+lpunpack $internal_root/build-kitchen/super.img $internal_root/build-kitchen/
 else
-rm -rf ~/storage/shared/build-kitchen/super.img
-lpdump ~/storage/shared/build-kitchen/super_raw.img > ~/kitchen-tmp/super_map.txt
+rm -rf $internal_root/build-kitchen/super.img
+lpdump $internal_root/build-kitchen/super_raw.img > ~/kitchen-tmp/super_map.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
-lpunpack ~/storage/shared/build-kitchen/super_raw.img ~/storage/shared/build-kitchen/
+lpunpack $internal_root/build-kitchen/super_raw.img $internal_root/build-kitchen/
 fi
 extract_done
 }
@@ -565,7 +569,7 @@ else
 lpdump /dev/block/by-name/super > ~/kitchen-tmp/super_map.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
-lpunpack /dev/block/by-name/super ~/storage/shared/build-kitchen/
+lpunpack /dev/block/by-name/super $internal_root/build-kitchen/
 fi
 extract_done
 }
@@ -576,11 +580,11 @@ ______________________
  | |
  | |Super size : $(<~/kitchen-tmp/super.txt)
  | |For logical size : $(<~/kitchen-tmp/main.txt)
- | |System size : $(ls -nl ~/storage/shared/build-kitchen/system.img | awk '{print $5}')
- | |Vendor size : $(ls -nl ~/storage/shared/build-kitchen/vendor.img | awk '{print $5}')
- | |Product size : $(ls -nl ~/storage/shared/build-kitchen/product.img | awk '{print $5}')
- | |System ext size : $(ls -nl ~/storage/shared/build-kitchen/system_ext.img | awk '{print $5}')
- | |Odm size : $(ls -nl ~/storage/shared/build-kitchen/odm.img | awk '{print $5}')
+ | |System size : $(ls -nl $internal_root/build-kitchen/system.img | awk '{print $5}')
+ | |Vendor size : $(ls -nl $internal_root/build-kitchen/vendor.img | awk '{print $5}')
+ | |Product size : $(ls -nl $internal_root/build-kitchen/product.img | awk '{print $5}')
+ | |System ext size : $(ls -nl $internal_root/build-kitchen/system_ext.img | awk '{print $5}')
+ | |Odm size : $(ls -nl $internal_root/build-kitchen/odm.img | awk '{print $5}')
 ||||||||||||||||||||||"
 
 clear
@@ -727,58 +731,10 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
  esac;POS;done
 }
 
-main_main (){
-if [ "$(getprop ro.product.cpu.abi)" == "armeabi-v7a" ]
-then
-if [ -e ~/rou/complete.txt ]
-then
-echo " "
-else
-dpkg -i ~/rou/deb/arm32/android-tools.deb
-dpkg -i ~/rou/deb/arm32/abseil-cpp.deb
-dpkg -i ~/rou/deb/arm32/brotli.deb
-dpkg -i ~/rou/deb/arm32/liblz4.deb
-dpkg -i ~/rou/deb/arm32/libprotobuff.deb
-dpkg -i ~/rou/deb/arm32/lz4.deb
-dpkg -i ~/rou/deb/arm32/libusb.deb
-dpkg -i ~/rou/deb/arm32/zstd.deb
-dpkg -i ~/rou/deb/arm32/p7zip.deb
-echo "binary installed" > ~/rou/complete.txt
-fi
-else
-if [ -e ~/rou/complete.txt ]
-then
-echo " "
-else
-dpkg -i ~/rou/deb/arm64/android-tools.deb
-dpkg -i ~/rou/deb/arm64/abseil-cpp.deb
-dpkg -i ~/rou/deb/arm64/brotli.deb
-dpkg -i ~/rou/deb/arm64/liblz4.deb
-dpkg -i ~/rou/deb/arm64/libprotobuff.deb
-dpkg -i ~/rou/deb/arm64/lz4.deb
-dpkg -i ~/rou/deb/arm64/libusb.deb
-dpkg -i ~/rou/deb/arm64/zstd.deb
-dpkg -i ~/rou/deb/arm64/p7zip.deb
-echo "binary installed" > ~/rou/complete.txt
-fi
-fi
-
-cd ~/
-mkdir ~/kitchen-tmp
-mkdir ~/storage/shared/build-kitchen
-internal_tmp=~/storage/shared/build-kitchen
-main_tmp=~/kitchen-tmp
-mkdir ~/kitchen-tmp
-ln -s ~/storage/shared/build-kitchen ~/
-ln -s ~/rou/toolbox.sh ~/
+main_main(){
 clear
-super_info=" "
-clear
-MU_X=5
       E='echo -e';e='echo -en';trap "R;exit" 2
     ESC=$( $e "\e")
-   MARK(){ $e "\e[7m\e[3$(( $RANDOM * 7 / 32767 + 1 ))m";}
- UNMARK(){ $e "\e[27m";}
    TPUT(){ $e "\e[${1};${2}H";}
   CLEAR(){ $e "\ec";}
   CIVIS(){ $e "\e[?25l";}
@@ -796,6 +752,144 @@ MU_X=5
            printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";}
    FOOT2(){ UNMARK;TPUT 3 45
    printf "$set_info";}
+   
+if [ -e ~/rou/complete.txt ]
+then
+if [ "$(getprop ro.product.cpu.abi)" == "armeabi-v7a" ]
+then
+internal_root=~/storage/shared
+else
+if [ "$(getprop ro.product.cpu.abi)" == "arm64-v8a" ]
+then
+internal_root=~/storage/shared
+else
+if [ "$(dpkg --print-architecture)" == "amd64" ]
+then
+internal_root="$(echo "$(<~/rou/pc.txt)")"
+else
+echo "False"
+main_main
+fi
+fi
+fi
+else
+if [ "$(getprop ro.product.cpu.abi)" == "armeabi-v7a" ]
+then
+dpkg -i ~/rou/deb/arm32/android-tools.deb
+dpkg -i ~/rou/deb/arm32/abseil-cpp.deb
+dpkg -i ~/rou/deb/arm32/brotli.deb
+dpkg -i ~/rou/deb/arm32/liblz4.deb
+dpkg -i ~/rou/deb/arm32/libprotobuff.deb
+dpkg -i ~/rou/deb/arm32/lz4.deb
+dpkg -i ~/rou/deb/arm32/libusb.deb
+dpkg -i ~/rou/deb/arm32/zstd.deb
+dpkg -i ~/rou/deb/arm32/p7zip.deb
+internal_root=~/storage/shared
+echo "binary installed" > ~/rou/complete.txt
+else
+if [ "$(getprop ro.product.cpu.abi)" == "arm64-v8a" ]
+then
+dpkg -i ~/rou/deb/arm64/android-tools.deb
+dpkg -i ~/rou/deb/arm64/abseil-cpp.deb
+dpkg -i ~/rou/deb/arm64/brotli.deb
+dpkg -i ~/rou/deb/arm64/liblz4.deb
+dpkg -i ~/rou/deb/arm64/libprotobuff.deb
+dpkg -i ~/rou/deb/arm64/lz4.deb
+dpkg -i ~/rou/deb/arm64/libusb.deb
+dpkg -i ~/rou/deb/arm64/zstd.deb
+dpkg -i ~/rou/deb/arm64/p7zip.deb
+internal_root=~/storage/shared
+echo "binary installed" > ~/rou/complete.txt
+else
+if [ "$(dpkg --print-architecture)" == "amd64" ]
+then
+cp -f ~/rou/deb/PC/* /bin
+clear
+dirf=/mnt
+TPUT  6 1;ls -x $dirf
+UNMARK
+TPUT  1 1;$e " |Drive| ";
+MARK;TPUT 3 1;$e "	______________________
+"
+TPUT  3 1;$e "| write "exit" for cancel |";
+UNMARK
+MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select drive from list:";read p;UNMARK;
+case $p in
+"")
+echo "not select anything exit"
+exit
+;;
+"exit")
+clear
+exit
+;;
+*)
+if [ -e $dirf/$p ]
+then
+echo "$dirf/$p" > ~/rou/pc.txt
+internal_root="$(echo "$(<~/rou/pc.txt)")"
+cp ~/rou/deb/PC/* /bin
+echo "binary installed" > ~/rou/complete.txt
+else
+echo "False"
+main_main
+fi
+;;
+esac
+else
+cp -f ~/rou/deb/PC/* /bin
+clear
+dirf=/mnt
+TPUT  6 1;ls -x $dirf
+UNMARK
+TPUT  1 1;$e " |Drive| ";
+MARK;TPUT 3 1;$e "	______________________
+"
+TPUT  3 1;$e "| write "exit" for cancel |";
+UNMARK
+MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select drive from list:";read p;UNMARK;
+case $p in
+"")
+echo "not select anything exit"
+exit
+;;
+"exit")
+clear
+exit
+;;
+*)
+if [ -e $dirf/$p ]
+then
+echo "$dirf/$p" > ~/rou/pc.txt
+internal_root="$(echo "$(<~/rou/pc.txt)")"
+cp ~/rou/deb/PC/* /bin
+echo "binary installed" > ~/rou/complete.txt
+else
+echo "False"
+main_main
+fi
+;;
+esac
+fi
+fi
+fi
+fi
+
+cd ~/
+mkdir ~/kitchen-tmp
+mkdir $internal_root/build-kitchen
+internal_tmp=$internal_root/build-kitchen
+main_tmp=~/kitchen-tmp
+mkdir ~/kitchen-tmp
+ln -s $internal_root/build-kitchen ~/
+ln -s ~/rou/toolbox.sh ~/
+clear
+super_info=" "
+clear
+MU_X=5
+
+#Device info
+
   ARROW(){ read -s -n3 key 2>/dev/null >&2
            if [[ $key = $ESC[A ]];then echo up;fi
            if [[ $key = $ESC[B ]];then echo dn;fi;}
@@ -815,7 +909,7 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
            if [[ $j -lt $i      ]];then UNMARK;M$before;else UNMARK;M$after;fi
            if [[ $after -eq 0 ]] || [ $before -eq $LM ];then
            UNMARK; M$before; M$after;fi;j=$i;UNMARK;M$before;M$after;}
-   INIT(){ clear;set_info=$Case_universal;R;HEAD;FOOT2;FOOT;MENU;}
+   INIT(){ clear;set_info=$Case_universal;R;HEAD;FOOT2;FOOT;UNMARK;TPUT  3 2; $e "$internal_root/build-kitchen";MARK;MENU;}
      SC(){ REFRESH;MARK;$S;$b;cur=`ARROW`;}
    ES(){ MARK;$e "ENTER = main menu ";$b;read;INIT;};INIT
   while [[ "$O" != " " ]]; do case $i in
@@ -826,4 +920,6 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
  esac;POS;done
 }
 
+
 main_main
+
