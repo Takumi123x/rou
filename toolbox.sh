@@ -830,6 +830,10 @@ echo "$dirf/$p" > ~/rou/pc.txt
 internal_root="$(echo "$(<~/rou/pc.txt)")"
 chmod +x ~/rou/deb/PC/*
 cp ~/rou/deb/PC/* /bin
+chmod +x /bin/lpmake
+chmod +x /bin/lpunpack
+chmod +x /bin/lpadd
+chmod +x /bin/lpdump
 apt install android-sdk-libsparse-utils
 echo "binary installed" > ~/rou/complete.txt
 else
@@ -865,6 +869,10 @@ echo "$dirf/$p" > ~/rou/pc.txt
 internal_root="$(echo "$(<~/rou/pc.txt)")"
 chmod +x ~/rou/deb/PC/*
 cp ~/rou/deb/PC/* /bin
+chmod +x /bin/lpmake
+chmod +x /bin/lpunpack
+chmod +x /bin/lpadd
+chmod +x /bin/lpdump
 apt install android-sdk-libsparse-utils
 echo "binary installed" > ~/rou/complete.txt
 else
