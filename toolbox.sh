@@ -829,6 +829,8 @@ then
 echo "$dirf/$p" > ~/rou/pc.txt
 internal_root="$(echo "$(<~/rou/pc.txt)")"
 cp ~/rou/deb/PC/* /bin
+chmod +x /bin/lpmake
+chmod +x /bin/lpunpack
 echo "binary installed" > ~/rou/complete.txt
 else
 echo "False"
@@ -863,9 +865,10 @@ then
 echo "$dirf/$p" > ~/rou/pc.txt
 internal_root="$(echo "$(<~/rou/pc.txt)")"
 cp ~/rou/deb/PC/* /bin
+chmod +x /bin/lpmake
+chmod +x /bin/lpunpack
 echo "binary installed" > ~/rou/complete.txt
 else
-echo "False"
 main_main
 fi
 ;;
