@@ -835,6 +835,9 @@ chmod +x /bin/lpunpack
 chmod +x /bin/lpadd
 chmod +x /bin/lpdump
 apt install android-sdk-libsparse-utils
+sudo apt-get update --fix-missing
+sudo apt-get install --fix-missing
+apt install android-sdk-libsparse-utils
 echo "binary installed" > ~/rou/complete.txt
 else
 echo "False"
@@ -873,6 +876,9 @@ chmod +x /bin/lpmake
 chmod +x /bin/lpunpack
 chmod +x /bin/lpadd
 chmod +x /bin/lpdump
+apt install android-sdk-libsparse-utils
+sudo apt-get update --fix-missing
+sudo apt-get install --fix-missing
 apt install android-sdk-libsparse-utils
 echo "binary installed" > ~/rou/complete.txt
 else
