@@ -838,6 +838,8 @@ apt install android-sdk-libsparse-utils
 sudo apt-get update --fix-missing
 sudo apt-get install --fix-missing
 apt install android-sdk-libsparse-utils
+apt install p7zip-full
+apt install lz4
 echo "binary installed" > ~/rou/complete.txt
 else
 echo "False"
