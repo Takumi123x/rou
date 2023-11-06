@@ -21,7 +21,6 @@
 - cd ~
 - chmod +x ~/rou/toolbox.sh
 - ln -s ~/rou/toolbox.sh ~/
-- mkdir ~/storage/shared/build-kitchen
 
 # Run this tool
 ~/toolbox.sh
