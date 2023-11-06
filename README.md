@@ -10,7 +10,6 @@
 - termux-setup-storage (skip this if desktop)
 - chmod +x ~/rou/toolbox.sh
 - ln -s ~/rou/toolbox.sh ~/
-- mkdir ~/storage/shared/build-kitchen
 
 # If root mode
 - tsu
