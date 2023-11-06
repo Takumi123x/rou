@@ -7,7 +7,7 @@
 - git clone https://github.com/Takumi123x/rou.git
 
 # Run this command
-- termux-setup-storage (skip this if desktop)
+- termux-setup-storage (skip this if wsl)
 - chmod +x ~/rou/toolbox.sh
 - ln -s ~/rou/toolbox.sh ~/
 
