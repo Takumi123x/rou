@@ -527,7 +527,7 @@ if [ -e $internal_root/build-kitchen/AP_*.tar.md5 ]
 then
 cd ~
 mkdir $internal_root/build-kitchen/AP
-7z e $internal_root/build-kitchen/AP_*.tar.md5 -o $internal_root/build-kitchen/AP/
+7z e $internal_root/build-kitchen/AP_*.tar.md5 -o$(pwd)/storage/shared/build-kitchen/AP/
 if [ -e $internal_root/build-kitchen/AP/super.img.lz4 ]
 then
 mv -f $internal_root/build-kitchen/AP/super.img.lz4 $internal_root/build-kitchen/
