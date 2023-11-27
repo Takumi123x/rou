@@ -535,7 +535,20 @@ else
 mv -f $internal_root/build-kitchen/AP/super.img $internal_root/build-kitchen/
 fi
 else
+if [ -e $internal_root/build-kitchen/AP_*.tar ]
+then
+cd ~
+mkdir $internal_root/build-kitchen/AP
+7z e $internal_root/build-kitchen/AP_*.tar -o$internal_root/build-kitchen/AP
+if [ -e $internal_root/build-kitchen/AP/super.img.lz4 ]
+then
+mv -f $internal_root/build-kitchen/AP/super.img.lz4 $internal_root/build-kitchen/
+else
+mv -f $internal_root/build-kitchen/AP/super.img $internal_root/build-kitchen/
+fi
+else
 echo " "
+fi
 fi
 rm -rf $internal_root/build-kitchen/AP/
 if [ -e $internal_root/build-kitchen/super.img.lz4 ]
@@ -547,17 +560,37 @@ fi
 simg2img $internal_root/build-kitchen/super.img $internal_root/build-kitchen/super_raw.img
 if [ "$(ls -nl $internal_root/build-kitchen/super_raw.img | awk '{print $5}')" -lt 100000 ]
 then
+if [ -e ~/rou/only_mode.txt ]
+then
+rm -rf $internal_root/build-kitchen/super_raw.img 
+lpdump $internal_root/build-kitchen/super.img > ~/kitchen-tmp/super_map.txt
+printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
+printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
+lpunpack -p vendor $internal_root/build-kitchen/super.img $internal_root/build-kitchen/
+lpunpack -p odm $internal_root/build-kitchen/super.img $internal_root/build-kitchen/
+else
 rm -rf $internal_root/build-kitchen/super_raw.img 
 lpdump $internal_root/build-kitchen/super.img > ~/kitchen-tmp/super_map.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
 lpunpack $internal_root/build-kitchen/super.img $internal_root/build-kitchen/
+fi
+else
+if [ -e ~/rou/only_mode.txt ]
+then
+rm -rf $internal_root/build-kitchen/super.img
+lpdump $internal_root/build-kitchen/super_raw.img > ~/kitchen-tmp/super_map.txt
+printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
+printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
+lpunpack -p vendor $internal_root/build-kitchen/super_raw.img $internal_root/build-kitchen/
+lpunpack -p odm $internal_root/build-kitchen/super_raw.img $internal_root/build-kitchen/
 else
 rm -rf $internal_root/build-kitchen/super.img
 lpdump $internal_root/build-kitchen/super_raw.img > ~/kitchen-tmp/super_map.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
 lpunpack $internal_root/build-kitchen/super_raw.img $internal_root/build-kitchen/
+fi
 fi
 extract_done
 }
@@ -566,10 +599,19 @@ extract_root (){
 if [ "$(id -u)" != "0" ]; then
 echo "This script must be run as root" 1>&2
 else
+if [ -e ~/rou/only_mode.txt ]
+then
+lpdump /dev/block/by-name/super > ~/kitchen-tmp/super_map.txt
+printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
+printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
+dd if=/dev/block/mapper/vendor of=$internal_root/build-kitchen/vendor.img
+dd if=/dev/block/mapper/odm of=$internal_root/build-kitchen/odm.img
+else
 lpdump /dev/block/by-name/super > ~/kitchen-tmp/super_map.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
 lpunpack /dev/block/by-name/super $internal_root/build-kitchen/
+fi
 fi
 extract_done
 }
@@ -679,10 +721,11 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
      SC(){ REFRESH;MARK;$S;$b;cur=`ARROW`;}
    ES(){ MARK;$e "ENTER = main menu ";$b;read;INIT;};INIT
   while [[ "$O" != " " ]]; do case $i in
-        0) S=M1;SC;if [[ $cur == "" ]];then R;clear;main_main;INIT;fi;;
+        0) S=M1;SC;if [[ $cur == "" ]];then R;clear;clear_kitchen;INIT;fi;;
  esac;POS;done
  }
 
+profile_remove (){
 rm -rf ~/kitchen-tmp
 
 clear
@@ -727,7 +770,110 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
    ES(){ MARK;$e "ENTER = main menu ";$b;read;INIT;};INIT
   while [[ "$O" != " " ]]; do case $i in
         0) S=M0;SC;if [[ $cur == "" ]];then R;clear;Build_remove;INIT;fi;;
-        1) S=M1;SC;if [[ $cur == "" ]];then R;clear;main_main;INIT;fi;;
+        1) S=M1;SC;if [[ $cur == "" ]];then R;clear;clear_kitchen;INIT;fi;;
+ esac;POS;done
+}
+ 
+Change_path (){
+if [ "$(getprop ro.product.cpu.abi)" == "armeabi-v7a" ]
+then
+echo "This only for WSL"
+else
+if [ "$(getprop ro.product.cpu.abi)" == "arm64-v8a" ]
+then
+echo "This only for WSL"
+else
+clear
+dirf=/mnt
+TPUT  6 1;ls -x $dirf
+UNMARK
+TPUT  1 1;$e " |Drive| ";
+MARK;TPUT 3 1;$e "	______________________
+"
+TPUT  3 1;$e "| write "exit" for cancel |";
+UNMARK
+MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select drive from list:";read p;UNMARK;
+case $p in
+"")
+echo "not select anything"
+read -p " "
+Change_path
+;;
+"exit")
+clear
+clear_kitchen
+;;
+*)
+if [ -e $dirf/$p ]
+then
+echo "$dirf/$p" > ~/rou/pc.txt
+internal_root="$(echo "$(<~/rou/pc.txt)")"
+echo "binary installed" > ~/rou/complete.txt
+else
+main_main
+fi
+;;
+esac
+fi
+fi
+}
+
+switch_unpack (){
+if [ -e ~/rou/only_mode.txt ]
+then
+rm -rf ~/rou/only_mode.txt
+else
+echo " " > ~/rou/only_mode.txt
+fi
+}
+
+clear
+      E='echo -e';e='echo -en';trap "R;exit" 2
+    ESC=$( $e "\e")
+   TPUT(){ $e "\e[${1};${2}H";}
+  CLEAR(){ $e "\ec";}
+  CIVIS(){ $e "\e[?25l";}
+   DRAW(){ $e "\e%@\e(0";}
+  WRITE(){ $e "\e(B";}
+      R(){ CLEAR ;stty sane;$e "\ec\e[37;00m\e[J";};
+   HEAD(){ DRAW
+           for each in $(seq 45 25);do
+           $E "   x                                          x"
+           done
+           WRITE;MARK;TPUT 1 1
+           $E " ";UNMARK;}
+           i=0; CLEAR; CIVIS;NULL=/dev/null
+   FOOT(){ MARK;TPUT 47 2
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";TPUT  8 5; $e "Profile :$(if [ -e ~/kitchen-tmp/super.txt ];then echo "Exist";else echo "No";fi)";TPUT  10 5; $e "Extract odm vendor only :$(if [ -e ~/rou/only_mode.txt ];then echo "Yes";else echo "No";fi)";}
+   FOOT2(){ UNMARK;TPUT 3 45
+   printf "$set_info";}
+  ARROW(){ read -s -n3 key 2>/dev/null >&2
+           if [[ $key = $ESC[A ]];then echo up;fi
+           if [[ $key = $ESC[B ]];then echo dn;fi;}
+     M0(){ TPUT 16 $MU_X; $e "Clear Profile                   ";$ff;}
+     M1(){ TPUT 18 $MU_X; $e "Odm vendor only                 ";$ff;}
+     M2(){ TPUT 20 $MU_X; $e "Change path WSL                 ";$ff;}
+     M3(){ TPUT 22 $MU_X; $e "Back to Main menu               ";$ff;}
+      LM=3
+   MENU(){ for each in $(seq 0 $LM);do M${each};done;}
+    POS(){ if [[ $cur == up ]];then ((i--));fi
+           if [[ $cur == dn ]];then ((i++));fi
+           if [[ $i -lt 0   ]];then i=$LM;fi
+           if [[ $i -gt $LM ]];then i=0;fi;}
+REFRESH(){ after=$((i+1)); before=$((i-1))
+           if [[ $before -lt 0  ]];then before=$LM;fi
+           if [[ $after -gt $LM ]];then after=0;fi
+           if [[ $j -lt $i      ]];then UNMARK;M$before;else UNMARK;M$after;fi
+           if [[ $after -eq 0 ]] || [ $before -eq $LM ];then
+           UNMARK; M$before; M$after;fi;j=$i;UNMARK;M$before;M$after;}
+   INIT(){ clear;set_info=$Case_universal;R;HEAD;FOOT2;FOOT;MENU;}
+     SC(){ REFRESH;MARK;$S;$b;cur=`ARROW`;}
+   ES(){ MARK;$e "ENTER = main menu ";$b;read;INIT;};INIT
+  while [[ "$O" != " " ]]; do case $i in
+        0) S=M0;SC;if [[ $cur == "" ]];then R;clear;profile_remove;INIT;fi;;
+        1) S=M1;SC;if [[ $cur == "" ]];then R;clear;switch_unpack;INIT;fi;;
+        2) S=M2;SC;if [[ $cur == "" ]];then R;clear;Change_path;INIT;fi;;
+        3) S=M3;SC;if [[ $cur == "" ]];then R;clear;main_main;INIT;fi;;
  esac;POS;done
 }
 
@@ -891,6 +1037,7 @@ esac
 fi
 fi
 fi
+echo " " > ~/rou/only_mode.txt
 fi
 
 cd ~/
@@ -915,7 +1062,7 @@ MU_X=5
            if [[ $key = $ESC[B ]];then echo dn;fi;}
      M0(){ TPUT 16 $MU_X; $e "Extract Super                   ";$ff;}
      M1(){ TPUT 18 $MU_X; $e "Build ROM                       ";$ff;}
-     M2(){ TPUT 20 $MU_X; $e "Clear Temp folder               ";$ff;}
+     M2(){ TPUT 20 $MU_X; $e "Options                         ";$ff;}
      M3(){ TPUT 22 $MU_X; $e "exit                            ";$ff;}
       LM=3
    MENU(){ for each in $(seq 0 $LM);do M${each};done;}
