@@ -395,7 +395,7 @@ clear
      M0(){ TPUT 16 $MU_X; $e "Build                           ";$ff;}
      M1(){ TPUT 18 $MU_X; $e "Build with lz4.tar              ";$ff;}
      M2(){ TPUT 20 $MU_X; $e "Build tar with extra archive    ";$ff;}
-     M3(){ TPUT 22 $MU_X; $e "exit                            ";$ff;}
+     M3(){ TPUT 22 $MU_X; $e "Back to Main menu               ";$ff;}
       LM=3
    MENU(){ for each in $(seq 0 $LM);do M${each};done;}
     POS(){ if [[ $cur == up ]];then ((i--));fi
@@ -654,7 +654,7 @@ clear
            if [[ $key = $ESC[B ]];then echo dn;fi;}
      M0(){ TPUT 16 $MU_X; $e "Extract from current phone(root)";$ff;}
      M1(){ TPUT 18 $MU_X; $e "Extract from internal           ";$ff;}
-     M2(){ TPUT 20 $MU_X; $e "Exit                            ";$ff;}
+     M2(){ TPUT 20 $MU_X; $e "Back to Main menu               ";$ff;}
       LM=2 
    MENU(){ for each in $(seq 0 $LM);do M${each};done;}
     POS(){ if [[ $cur == up ]];then ((i--));fi
@@ -1063,7 +1063,7 @@ MU_X=5
      M0(){ TPUT 16 $MU_X; $e "Extract Super                   ";$ff;}
      M1(){ TPUT 18 $MU_X; $e "Build ROM                       ";$ff;}
      M2(){ TPUT 20 $MU_X; $e "Options                         ";$ff;}
-     M3(){ TPUT 22 $MU_X; $e "exit                            ";$ff;}
+     M3(){ TPUT 22 $MU_X; $e "Exit                            ";$ff;}
       LM=3
    MENU(){ for each in $(seq 0 $LM);do M${each};done;}
     POS(){ if [[ $cur == up ]];then ((i--));fi
