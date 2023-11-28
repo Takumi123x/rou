@@ -951,12 +951,12 @@ if [ -e ~/rou/complete.txt ]
 then
 if [ "$(getprop ro.product.cpu.abi)" == "armeabi-v7a" ]
 then
-echo "~/storage/shared" > ~/rou/pc.txt
+echo "/storage/emulated/0/build-kitchen" > ~/rou/pc.txt
 internal_root="$(echo "$(<~/rou/pc.txt)")"
 else
 if [ "$(getprop ro.product.cpu.abi)" == "arm64-v8a" ]
 then
-echo "~/storage/shared" > ~/rou/pc.txt
+echo "/storage/emulated/0/build-kitchen" > ~/rou/pc.txt
 internal_root="$(echo "$(<~/rou/pc.txt)")"
 else
 if [ "$(dpkg --print-architecture)" == "amd64" ]
@@ -980,7 +980,7 @@ dpkg -i ~/rou/deb/arm32/lz4.deb
 dpkg -i ~/rou/deb/arm32/libusb.deb
 dpkg -i ~/rou/deb/arm32/zstd.deb
 dpkg -i ~/rou/deb/arm32/p7zip.deb
-echo "~/storage/shared" > ~/rou/pc.txt
+echo "/storage/emulated/0/build-kitchen" > ~/rou/pc.txt
 internal_root="$(echo "$(<~/rou/pc.txt)")"
 echo "binary installed" > ~/rou/complete.txt
 else
@@ -995,7 +995,7 @@ dpkg -i ~/rou/deb/arm64/lz4.deb
 dpkg -i ~/rou/deb/arm64/libusb.deb
 dpkg -i ~/rou/deb/arm64/zstd.deb
 dpkg -i ~/rou/deb/arm64/p7zip.deb
-echo "~/storage/shared" > ~/rou/pc.txt
+echo "/storage/emulated/0/build-kitchen" > ~/rou/pc.txt
 internal_root="$(echo "$(<~/rou/pc.txt)")"
 echo "binary installed" > ~/rou/complete.txt
 else
