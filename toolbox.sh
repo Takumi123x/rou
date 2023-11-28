@@ -951,11 +951,13 @@ if [ -e ~/rou/complete.txt ]
 then
 if [ "$(getprop ro.product.cpu.abi)" == "armeabi-v7a" ]
 then
-internal_root=~/storage/shared
+echo "~/storage/shared" > ~/rou/pc.txt
+internal_root="$(echo "$(<~/rou/pc.txt)")"
 else
 if [ "$(getprop ro.product.cpu.abi)" == "arm64-v8a" ]
 then
-internal_root=~/storage/shared
+echo "~/storage/shared" > ~/rou/pc.txt
+internal_root="$(echo "$(<~/rou/pc.txt)")"
 else
 if [ "$(dpkg --print-architecture)" == "amd64" ]
 then
