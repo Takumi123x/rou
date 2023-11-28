@@ -780,13 +780,7 @@ then
 clear
 dirf="/storage/emulated/0/"
 TPUT  6 1;ls -x $dirf
-UNMARK
-TPUT  1 1;$e " |Drive| ";
-MARK;TPUT 3 1;$e "	______________________
-"
-TPUT  3 1;$e "| write "exit" for cancel |";
-UNMARK
-MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select drive from list:";read p;UNMARK;
+MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select path from list:";read p;UNMARK;
 case $p in
 "")
 echo "not select anything"
@@ -814,13 +808,7 @@ then
 clear
 dirf="/storage/emulated/0/"
 TPUT  6 1;ls -x $dirf
-UNMARK
-TPUT  1 1;$e " |Drive| ";
-MARK;TPUT 3 1;$e "	______________________
-"
-TPUT  3 1;$e "| write "exit" for cancel |";
-UNMARK
-MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select drive from list:";read p;UNMARK;
+MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select path from list:";read p;UNMARK;
 case $p in
 "")
 echo "not select anything"
@@ -990,7 +978,8 @@ dpkg -i ~/rou/deb/arm32/lz4.deb
 dpkg -i ~/rou/deb/arm32/libusb.deb
 dpkg -i ~/rou/deb/arm32/zstd.deb
 dpkg -i ~/rou/deb/arm32/p7zip.deb
-internal_root=~/storage/shared
+echo "~/storage/shared" > ~/rou/pc.txt
+internal_root="$(echo "$(<~/rou/pc.txt)")"
 echo "binary installed" > ~/rou/complete.txt
 else
 if [ "$(getprop ro.product.cpu.abi)" == "arm64-v8a" ]
@@ -1004,7 +993,8 @@ dpkg -i ~/rou/deb/arm64/lz4.deb
 dpkg -i ~/rou/deb/arm64/libusb.deb
 dpkg -i ~/rou/deb/arm64/zstd.deb
 dpkg -i ~/rou/deb/arm64/p7zip.deb
-internal_root=~/storage/shared
+echo "~/storage/shared" > ~/rou/pc.txt
+internal_root="$(echo "$(<~/rou/pc.txt)")"
 echo "binary installed" > ~/rou/complete.txt
 else
 if [ "$(dpkg --print-architecture)" == "amd64" ]
