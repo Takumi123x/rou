@@ -777,11 +777,71 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
 Change_path (){
 if [ "$(getprop ro.product.cpu.abi)" == "armeabi-v7a" ]
 then
-echo "This only for WSL"
+clear
+dirf="/storage/emulated/0/"
+TPUT  6 1;ls -x $dirf
+UNMARK
+TPUT  1 1;$e " |Drive| ";
+MARK;TPUT 3 1;$e "	______________________
+"
+TPUT  3 1;$e "| write "exit" for cancel |";
+UNMARK
+MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select drive from list:";read p;UNMARK;
+case $p in
+"")
+echo "not select anything"
+read -p " "
+Change_path
+;;
+"exit")
+clear
+clear_kitchen
+;;
+*)
+if [ -e $dirf/$p ]
+then
+echo "$dirf/$p" > ~/rou/pc.txt
+internal_root="$(echo "$(<~/rou/pc.txt)")"
+echo "binary installed" > ~/rou/complete.txt
+else
+main_main
+fi
+;;
+esac
 else
 if [ "$(getprop ro.product.cpu.abi)" == "arm64-v8a" ]
 then
-echo "This only for WSL"
+clear
+dirf="/storage/emulated/0/"
+TPUT  6 1;ls -x $dirf
+UNMARK
+TPUT  1 1;$e " |Drive| ";
+MARK;TPUT 3 1;$e "	______________________
+"
+TPUT  3 1;$e "| write "exit" for cancel |";
+UNMARK
+MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select drive from list:";read p;UNMARK;
+case $p in
+"")
+echo "not select anything"
+read -p " "
+Change_path
+;;
+"exit")
+clear
+clear_kitchen
+;;
+*)
+if [ -e $dirf/$p ]
+then
+echo "$dirf/$p" > ~/rou/pc.txt
+internal_root="$(echo "$(<~/rou/pc.txt)")"
+echo "binary installed" > ~/rou/complete.txt
+else
+main_main
+fi
+;;
+esac
 else
 clear
 dirf=/mnt
@@ -852,7 +912,7 @@ clear
            if [[ $key = $ESC[B ]];then echo dn;fi;}
      M0(){ TPUT 16 $MU_X; $e "Clear Profile                   ";$ff;}
      M1(){ TPUT 18 $MU_X; $e "Odm vendor only                 ";$ff;}
-     M2(){ TPUT 20 $MU_X; $e "Change path WSL                 ";$ff;}
+     M2(){ TPUT 20 $MU_X; $e "Change Path                     ";$ff;}
      M3(){ TPUT 22 $MU_X; $e "Back to Main menu               ";$ff;}
       LM=3
    MENU(){ for each in $(seq 0 $LM);do M${each};done;}
