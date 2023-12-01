@@ -5,88 +5,24 @@ UNMARK;TPUT 1 1; $E " "
 }
 
 ff=Fullscreen_force
-
-MARK(){ $e "\e[7m\e[3$(( $RANDOM * 6 / 32767 + 1 ))m";}
+#$e "\ec\e[37;00m\e[J";
+#MARK(){ $e "\e[7m\e[3$(( $RANDOM * 6 / 32767 + 1 ))m";}
+MARK(){ $e "\e[7m\e[30m";}
+MARK2(){ $e "\e[7m\e[37m";}
 UNMARK(){ $e "\e[27m";}
 
-Case_universal="
-______________________
- | |Super image kitchen GUI
- | |By TakuruKagami
- | |
- | |
- | |
- | |
- | |
- | |
- | |
- ||||||||||||||||||||||"
+Case_universal=" "
 
-Build_done="
-______________________
- | |Super image kitchen GUI
- | |> Build Done
- | |
- | |
- | |
- | |
- | |
- | |
- | |
- ||||||||||||||||||||||"
+Build_done=" "
  
-clear_kitchen="
-______________________
- | |Super image kitchen GUI
- | |> Clear temp folder done
- | |
- | |
- | |
- | |
- | |
- | |
- | |
- ||||||||||||||||||||||"
+clear_kitchen=" "
  
-clear2_kitchen="
-______________________
- | |Super image kitchen GUI
- | |> Clear build folder done
- | |
- | |
- | |
- | |
- | |
- | |
- | |
- ||||||||||||||||||||||"
+clear2_kitchen=" "
  
-failed_build="
-______________________
- | |Super image kitchen GUI
- | |> Failed to Build
- | |- Size IMG too big
- | |
- | |
- | |
- | |
- | |
- | |
- ||||||||||||||||||||||
+failed_build=" 
 "
 
 Extract_done="
-______________________
- | |Super image kitchen GUI
- | |> Extract Done
- | |
- | |
- | |
- | |
- | |
- | |
- | |
- ||||||||||||||||||||||
 "
 
 Build_rom (){
@@ -103,7 +39,7 @@ ______________________
  | |Odm size : $(ls -nl $internal_root/odm.img | awk '{print $5}')
 ||||||||||||||||||||||"
 
-if [ -e ~/kitchen-tmp/super_map.txt ]
+if grep -R "Super" ~/kitchen-tmp/super_map.txt
 then
 failed_build (){
 clear
@@ -114,7 +50,7 @@ clear
   CIVIS(){ $e "\e[?25l";}
    DRAW(){ $e "\e%@\e(0";}
   WRITE(){ $e "\e(B";}
-      R(){ CLEAR ;stty sane;$e "\ec\e[37;00m\e[J";};
+      R(){ CLEAR ;stty sane;printf %b '\e[46m' '\e[8]' '\e[H\e[J';};
    HEAD(){ DRAW
            for each in $(seq 45 25);do
            $E "   x                                          x"
@@ -123,7 +59,23 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";}
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";UNMARK;MARK2;
+TPUT   5 2; $e "╔Info═══════════════════════════════════╗"
+TPUT   6 2; $e "║                                       ║";
+TPUT   7 2; $e "║                                       ║";
+TPUT   8 2; $e "║                                       ║";
+TPUT   9 2; $e "║                                       ║";
+TPUT  10 2; $e "║                                       ║";
+TPUT  11 2; $e "║                                       ║";
+TPUT  12 2; $e "║                                       ║";
+TPUT  13 2; $e "╚═══════════════════════════════════════╝";
+TPUT   6 3; $e "Super image kitchen GUI"
+TPUT   7 3; $e "by TakuruKagami"
+TPUT   9 3; $e "Build Failed"
+TPUT  10 3; $e "- Check storage size"
+TPUT  11 3; $e "- Check termux permission"
+TPUT  12 3; $e "Maybe other problem make it failed too";
+MARK;TPUT  14 3; $e "                                         ";TPUT  13 43; $e " ";TPUT  12 43; $e " ";TPUT  11 43; $e " ";TPUT  10 43; $e " ";TPUT  9 43; $e " ";TPUT  8 43; $e " ";TPUT  7 43; $e " ";TPUT  6 43; $e " ";UNMARK;}
    FOOT2(){ UNMARK;TPUT 3 45
    printf "$set_info";}
   ARROW(){ read -s -n3 key 2>/dev/null >&2
@@ -161,7 +113,7 @@ clear
   CIVIS(){ $e "\e[?25l";}
    DRAW(){ $e "\e%@\e(0";}
   WRITE(){ $e "\e(B";}
-      R(){ CLEAR ;stty sane;$e "\ec\e[37;00m\e[J";};
+      R(){ CLEAR ;stty sane;printf %b '\e[46m' '\e[8]' '\e[H\e[J';};
    HEAD(){ DRAW
            for each in $(seq 45 25);do
            $E "   x                                          x"
@@ -170,7 +122,21 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";}
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";UNMARK;MARK2;
+TPUT   5 2; $e "╔Info═══════════════════════════════════╗"
+TPUT   6 2; $e "║                                       ║";
+TPUT   7 2; $e "║                                       ║";
+TPUT   8 2; $e "║                                       ║";
+TPUT   9 2; $e "║                                       ║";
+TPUT  10 2; $e "║                                       ║";
+TPUT  11 2; $e "║                                       ║";
+TPUT  12 2; $e "║                                       ║";
+TPUT  13 2; $e "╚═══════════════════════════════════════╝";
+TPUT   6 3; $e "Super image kitchen GUI"
+TPUT   7 3; $e "by TakuruKagami"
+TPUT   9 3; $e "Build Done"
+TPUT  11 3; $e "Check result in build-kitchen folder"
+MARK;TPUT  14 3; $e "                                         ";TPUT  13 43; $e " ";TPUT  12 43; $e " ";TPUT  11 43; $e " ";TPUT  10 43; $e " ";TPUT  9 43; $e " ";TPUT  8 43; $e " ";TPUT  7 43; $e " ";TPUT  6 43; $e " ";UNMARK;}
    FOOT2(){ UNMARK;TPUT 3 45
    printf "$set_info";}
   ARROW(){ read -s -n3 key 2>/dev/null >&2
@@ -304,18 +270,7 @@ build_done
 fi
 }
 
-super_info="
-______________________
- | |Super image info :
- | |
- | |Super size : $(<~/kitchen-tmp/super.txt)
- | |For logical size : $(<~/kitchen-tmp/main.txt)
- | |System size : $(ls -nl $internal_root/system.img | awk '{print $5}')
- | |Vendor size : $(ls -nl $internal_root/vendor.img | awk '{print $5}')
- | |Product size : $(ls -nl $internal_root/product.img | awk '{print $5}')
- | |System ext size : $(ls -nl $internal_root/system_ext.img | awk '{print $5}')
- | |Odm size : $(ls -nl $internal_root/odm.img | awk '{print $5}')
-||||||||||||||||||||||"
+super_info=" "
 
 Build_archive (){
 clear
@@ -326,7 +281,7 @@ clear
   CIVIS(){ $e "\e[?25l";}
    DRAW(){ $e "\e%@\e(0";}
   WRITE(){ $e "\e(B";}
-      R(){ CLEAR ;stty sane;$e "\ec\e[37;00m\e[J";};
+      R(){ CLEAR ;stty sane;printf %b '\e[46m' '\e[8]' '\e[H\e[J';};
    HEAD(){ DRAW
            for each in $(seq 45 25);do
            $E "   x                                          x"
@@ -335,7 +290,24 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";}
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";UNMARK;MARK2;
+TPUT   5 2; $e "╔Info═══════════════════════════════════╗"
+TPUT   6 2; $e "║                                       ║";
+TPUT   7 2; $e "║                                       ║";
+TPUT   8 2; $e "║                                       ║";
+TPUT   9 2; $e "║                                       ║";
+TPUT  10 2; $e "║                                       ║";
+TPUT  11 2; $e "║                                       ║";
+TPUT  12 2; $e "║                                       ║";
+TPUT  13 2; $e "╚═══════════════════════════════════════╝";
+TPUT   6 3; $e "Super size : $(if [ -e ~/kitchen-tmp/super.txt ];then echo "$(<~/kitchen-tmp/super.txt)";fi)"
+TPUT   7 3; $e "For logical size : $(if [ -e ~/kitchen-tmp/main.txt ];then echo "$(<~/kitchen-tmp/main.txt)";fi)"
+TPUT   8 3; $e "System size : $(if [ -e $internal_root/system.img ];then ls -nl $internal_root/system.img | awk '{print $5}';fi)"
+TPUT   9 3; $e "Vendor size : $(if [ -e $internal_root/vendor.img ];then ls -nl $internal_root/vendor.img | awk '{print $5}';fi)"
+TPUT  10 3; $e "Product size : $(if [ -e $internal_root/product.img ];then ls -nl $internal_root/product.img | awk '{print $5}';fi)"
+TPUT  11 3; $e "System ext size : $(if [ -e $internal_root/system_ext.img ];then ls -nl $internal_root/system_ext.img | awk '{print $5}';fi)"
+TPUT  12 3; $e "Odm size : $(if [ -e $internal_root/odm.img ];then ls -nl $internal_root/odm.img | awk '{print $5}';fi)";
+MARK;TPUT  14 3; $e "                                         ";TPUT  13 43; $e " ";TPUT  12 43; $e " ";TPUT  11 43; $e " ";TPUT  10 43; $e " ";TPUT  9 43; $e " ";TPUT  8 43; $e " ";TPUT  7 43; $e " ";TPUT  6 43; $e " ";UNMARK;}
    FOOT2(){ UNMARK;TPUT 3 45
    printf "$set_info";}
   ARROW(){ read -s -n3 key 2>/dev/null >&2
@@ -377,7 +349,7 @@ clear
   CIVIS(){ $e "\e[?25l";}
    DRAW(){ $e "\e%@\e(0";}
   WRITE(){ $e "\e(B";}
-      R(){ CLEAR ;stty sane;$e "\ec\e[37;00m\e[J";};
+      R(){ CLEAR ;stty sane;printf %b '\e[46m' '\e[8]' '\e[H\e[J';};
    HEAD(){ DRAW
            for each in $(seq 45 25);do
            $E "   x                                          x"
@@ -386,7 +358,24 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";}
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";UNMARK;MARK2;
+TPUT   5 2; $e "╔Info═══════════════════════════════════╗"
+TPUT   6 2; $e "║                                       ║";
+TPUT   7 2; $e "║                                       ║";
+TPUT   8 2; $e "║                                       ║";
+TPUT   9 2; $e "║                                       ║";
+TPUT  10 2; $e "║                                       ║";
+TPUT  11 2; $e "║                                       ║";
+TPUT  12 2; $e "║                                       ║";
+TPUT  13 2; $e "╚═══════════════════════════════════════╝";
+TPUT   6 3; $e "Super size : $(if [ -e ~/kitchen-tmp/super.txt ];then echo "$(<~/kitchen-tmp/super.txt)";fi)"
+TPUT   7 3; $e "For logical size : $(if [ -e ~/kitchen-tmp/main.txt ];then echo "$(<~/kitchen-tmp/main.txt)";fi)"
+TPUT   8 3; $e "System size : $(if [ -e $internal_root/system.img ];then ls -nl $internal_root/system.img | awk '{print $5}';fi)"
+TPUT   9 3; $e "Vendor size : $(if [ -e $internal_root/vendor.img ];then ls -nl $internal_root/vendor.img | awk '{print $5}';fi)"
+TPUT  10 3; $e "Product size : $(if [ -e $internal_root/product.img ];then ls -nl $internal_root/product.img | awk '{print $5}';fi)"
+TPUT  11 3; $e "System ext size : $(if [ -e $internal_root/system_ext.img ];then ls -nl $internal_root/system_ext.img | awk '{print $5}';fi)"
+TPUT  12 3; $e "Odm size : $(if [ -e $internal_root/odm.img ];then ls -nl $internal_root/odm.img | awk '{print $5}';fi)";
+MARK;TPUT  14 3; $e "                                         ";TPUT  13 43; $e " ";TPUT  12 43; $e " ";TPUT  11 43; $e " ";TPUT  10 43; $e " ";TPUT  9 43; $e " ";TPUT  8 43; $e " ";TPUT  7 43; $e " ";TPUT  6 43; $e " ";UNMARK;}
    FOOT2(){ UNMARK;TPUT 3 45
    printf "$set_info";}
   ARROW(){ read -s -n3 key 2>/dev/null >&2
@@ -484,7 +473,7 @@ clear
   CIVIS(){ $e "\e[?25l";}
    DRAW(){ $e "\e%@\e(0";}
   WRITE(){ $e "\e(B";}
-      R(){ CLEAR ;stty sane;$e "\ec\e[37;00m\e[J";};
+      R(){ CLEAR ;stty sane;printf %b '\e[46m' '\e[8]' '\e[H\e[J';};
    HEAD(){ DRAW
            for each in $(seq 45 25);do
            $E "   x                                          x"
@@ -493,7 +482,24 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";}
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";UNMARK;MARK2;
+TPUT   5 2; $e "╔Extract_Done═══════════════════════════╗"
+TPUT   6 2; $e "║                                       ║";
+TPUT   7 2; $e "║                                       ║";
+TPUT   8 2; $e "║                                       ║";
+TPUT   9 2; $e "║                                       ║";
+TPUT  10 2; $e "║                                       ║";
+TPUT  11 2; $e "║                                       ║";
+TPUT  12 2; $e "║                                       ║";
+TPUT  13 2; $e "╚═══════════════════════════════════════╝";
+TPUT   6 3; $e "Super size : $(if [ -e ~/kitchen-tmp/super.txt ];then echo "$(<~/kitchen-tmp/super.txt)";fi)"
+TPUT   7 3; $e "For logical size : $(if [ -e ~/kitchen-tmp/main.txt ];then echo "$(<~/kitchen-tmp/main.txt)";fi)"
+TPUT   8 3; $e "System size : $(if [ -e $internal_root/system.img ];then ls -nl $internal_root/system.img | awk '{print $5}';fi)"
+TPUT   9 3; $e "Vendor size : $(if [ -e $internal_root/vendor.img ];then ls -nl $internal_root/vendor.img | awk '{print $5}';fi)"
+TPUT  10 3; $e "Product size : $(if [ -e $internal_root/product.img ];then ls -nl $internal_root/product.img | awk '{print $5}';fi)"
+TPUT  11 3; $e "System ext size : $(if [ -e $internal_root/system_ext.img ];then ls -nl $internal_root/system_ext.img | awk '{print $5}';fi)"
+TPUT  12 3; $e "Odm size : $(if [ -e $internal_root/odm.img ];then ls -nl $internal_root/odm.img | awk '{print $5}';fi)";
+MARK;TPUT  14 3; $e "                                         ";TPUT  13 43; $e " ";TPUT  12 43; $e " ";TPUT  11 43; $e " ";TPUT  10 43; $e " ";TPUT  9 43; $e " ";TPUT  8 43; $e " ";TPUT  7 43; $e " ";TPUT  6 43; $e " ";UNMARK;}
    FOOT2(){ UNMARK;TPUT 3 45
    printf "$set_info";}
   ARROW(){ read -s -n3 key 2>/dev/null >&2
@@ -521,6 +527,59 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
         1) S=M1;SC;if [[ $cur == "" ]];then R;clear;save_profile;INIT;fi;;
  esac;POS;done
 }
+
+Extract_browse (){
+Alone_a (){
+clear
+dirf="/storage/emulated/0/"
+TPUT  6 1;ls -x $dirf
+MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select path from list:";read p;UNMARK;
+case $p in
+"")
+echo "not select anything"
+read -p " "
+Change_path
+;;
+"exit")
+clear
+clear_kitchen
+;;
+*)
+if [ -e $dirf/$p ]
+then
+echo "$dirf/$p" > ~/rou/pc.txt
+internal_root="$(echo "$(<~/rou/pc.txt)")"
+echo "binary installed" > ~/rou/complete.txt
+else
+main_main
+fi
+;;
+esac
+}
+
+clear
+dirf="/storage/emulated/0/"
+TPUT  6 1;ls -x $dirf
+MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select path from list:";read p;UNMARK;
+case $p in
+"")
+echo "not select anything"
+read -p " "
+Change_path
+;;
+"exit")
+clear
+clear_kitchen
+;;
+*)
+if [ -e $dirf/$p ]
+then
+Alone_a
+fi
+;;
+esac
+}
+
 
 extract_internal (){
 if [ -e $internal_root/AP_*.tar.md5 ]
@@ -637,7 +696,7 @@ clear
   CIVIS(){ $e "\e[?25l";}
    DRAW(){ $e "\e%@\e(0";}
   WRITE(){ $e "\e(B";}
-      R(){ CLEAR ;stty sane;$e "\ec\e[37;00m\e[J";};
+      R(){ CLEAR ;stty sane;printf %b '\e[46m' '\e[8]' '\e[H\e[J';};
    HEAD(){ DRAW
            for each in $(seq 45 25);do
            $E "   x                                          x"
@@ -646,16 +705,34 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";}
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";UNMARK;MARK2;
+TPUT   5 2; $e "╔Info═══════════════════════════════════╗"
+TPUT   6 2; $e "║                                       ║";
+TPUT   7 2; $e "║                                       ║";
+TPUT   8 2; $e "║                                       ║";
+TPUT   9 2; $e "║                                       ║";
+TPUT  10 2; $e "║                                       ║";
+TPUT  11 2; $e "║                                       ║";
+TPUT  12 2; $e "║                                       ║";
+TPUT  13 2; $e "╚═══════════════════════════════════════╝";
+TPUT   6 3; $e "Super size : $(if [ -e ~/kitchen-tmp/super.txt ];then echo "$(<~/kitchen-tmp/super.txt)";fi)"
+TPUT   7 3; $e "For logical size : $(if [ -e ~/kitchen-tmp/main.txt ];then echo "$(<~/kitchen-tmp/main.txt)";fi)"
+TPUT   8 3; $e "System size : $(if [ -e $internal_root/system.img ];then ls -nl $internal_root/system.img | awk '{print $5}';fi)"
+TPUT   9 3; $e "Vendor size : $(if [ -e $internal_root/vendor.img ];then ls -nl $internal_root/vendor.img | awk '{print $5}';fi)"
+TPUT  10 3; $e "Product size : $(if [ -e $internal_root/product.img ];then ls -nl $internal_root/product.img | awk '{print $5}';fi)"
+TPUT  11 3; $e "System ext size : $(if [ -e $internal_root/system_ext.img ];then ls -nl $internal_root/system_ext.img | awk '{print $5}';fi)"
+TPUT  12 3; $e "Odm size : $(if [ -e $internal_root/odm.img ];then ls -nl $internal_root/odm.img | awk '{print $5}';fi)";
+MARK;TPUT  14 3; $e "                                         ";TPUT  13 43; $e " ";TPUT  12 43; $e " ";TPUT  11 43; $e " ";TPUT  10 43; $e " ";TPUT  9 43; $e " ";TPUT  8 43; $e " ";TPUT  7 43; $e " ";TPUT  6 43; $e " ";UNMARK;}
    FOOT2(){ UNMARK;TPUT 3 45
    printf "$set_info";}
   ARROW(){ read -s -n3 key 2>/dev/null >&2
            if [[ $key = $ESC[A ]];then echo up;fi
            if [[ $key = $ESC[B ]];then echo dn;fi;}
      M0(){ TPUT 16 $MU_X; $e "Extract from current phone(root)";$ff;}
-     M1(){ TPUT 18 $MU_X; $e "Extract from internal           ";$ff;}
-     M2(){ TPUT 20 $MU_X; $e "Back to Main menu               ";$ff;}
-      LM=2 
+     M1(){ TPUT 18 $MU_X; $e "Extract from folder build       ";$ff;}
+     M2(){ TPUT 20 $MU_X; $e "Extract with browse             ";$ff;}
+     M3(){ TPUT 22 $MU_X; $e "Back to Main menu               ";$ff;}
+      LM=3 
    MENU(){ for each in $(seq 0 $LM);do M${each};done;}
     POS(){ if [[ $cur == up ]];then ((i--));fi
            if [[ $cur == dn ]];then ((i++));fi
@@ -673,7 +750,8 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
   while [[ "$O" != " " ]]; do case $i in
         0) S=M0;SC;if [[ $cur == "" ]];then R;clear;extract_root;Extract_rom;INIT;fi;;
         1) S=M1;SC;if [[ $cur == "" ]];then R;clear;extract_internal;Extract_rom;INIT;fi;;
-        2) S=M2;SC;if [[ $cur == "" ]];then R;clear;main_main;fi;;
+        2) S=M2;SC;if [[ $cur == "" ]];then R;clear;INIT;fi;;
+        3) S=M3;SC;if [[ $cur == "" ]];then R;clear;main_main;fi;;
  esac;POS;done
 }
 
@@ -689,7 +767,7 @@ clear
   CIVIS(){ $e "\e[?25l";}
    DRAW(){ $e "\e%@\e(0";}
   WRITE(){ $e "\e(B";}
-      R(){ CLEAR ;stty sane;$e "\ec\e[37;00m\e[J";};
+      R(){ CLEAR ;stty sane;printf %b '\e[46m' '\e[8]' '\e[H\e[J';};
    HEAD(){ DRAW
            for each in $(seq 45 25);do
            $E "   x                                          x"
@@ -698,7 +776,20 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";}
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";UNMARK;MARK2;
+TPUT   5 2; $e "╔Info═══════════════════════════════════╗"
+TPUT   6 2; $e "║                                       ║";
+TPUT   7 2; $e "║                                       ║";
+TPUT   8 2; $e "║                                       ║";
+TPUT   9 2; $e "║                                       ║";
+TPUT  10 2; $e "║                                       ║";
+TPUT  11 2; $e "║                                       ║";
+TPUT  12 2; $e "║                                       ║";
+TPUT  13 2; $e "╚═══════════════════════════════════════╝";
+TPUT   6 3; $e "Super image kitchen GUI"
+TPUT   7 3; $e "by TakuruKagami"
+TPUT   9 3; $e "$(if [ -e $internal_root/vendor.img ];then echo "Faild remove";else echo "Files removed";fi)";
+MARK;TPUT  14 3; $e "                                         ";TPUT  13 43; $e " ";TPUT  12 43; $e " ";TPUT  11 43; $e " ";TPUT  10 43; $e " ";TPUT  9 43; $e " ";TPUT  8 43; $e " ";TPUT  7 43; $e " ";TPUT  6 43; $e " ";UNMARK;}
    FOOT2(){ UNMARK;TPUT 3 45
    printf "$set_info";}
   ARROW(){ read -s -n3 key 2>/dev/null >&2
@@ -736,7 +827,7 @@ clear
   CIVIS(){ $e "\e[?25l";}
    DRAW(){ $e "\e%@\e(0";}
   WRITE(){ $e "\e(B";}
-      R(){ CLEAR ;stty sane;$e "\ec\e[37;00m\e[J";};
+      R(){ CLEAR ;stty sane;printf %b '\e[46m' '\e[8]' '\e[H\e[J';};
    HEAD(){ DRAW
            for each in $(seq 45 25);do
            $E "   x                                          x"
@@ -745,7 +836,20 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";}
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";UNMARK;MARK2;
+TPUT   5 2; $e "╔Info═══════════════════════════════════╗"
+TPUT   6 2; $e "║                                       ║";
+TPUT   7 2; $e "║                                       ║";
+TPUT   8 2; $e "║                                       ║";
+TPUT   9 2; $e "║                                       ║";
+TPUT  10 2; $e "║                                       ║";
+TPUT  11 2; $e "║                                       ║";
+TPUT  12 2; $e "║                                       ║";
+TPUT  13 2; $e "╚═══════════════════════════════════════╝";
+TPUT   6 3; $e "Super image kitchen GUI"
+TPUT   7 3; $e "by TakuruKagami"
+TPUT   9 3; $e "$(if [ -e ~/kitchen-tmp/super.txt ];then echo "Faild remove";else echo "Profile removed";fi)";
+MARK;TPUT  14 3; $e "                                         ";TPUT  13 43; $e " ";TPUT  12 43; $e " ";TPUT  11 43; $e " ";TPUT  10 43; $e " ";TPUT  9 43; $e " ";TPUT  8 43; $e " ";TPUT  7 43; $e " ";TPUT  6 43; $e " ";UNMARK;}
    FOOT2(){ UNMARK;TPUT 3 45
    printf "$set_info";}
   ARROW(){ read -s -n3 key 2>/dev/null >&2
@@ -854,8 +958,38 @@ clear_kitchen
 *)
 if [ -e $dirf/$p ]
 then
-echo "$dirf/$p/build-kitchen" > ~/rou/pc.txt
+echo "$dirf/$p" > ~/rou/temp_pc.txt
+clear
+dirf="$(echo "$(<~/rou/temp_pc.txt)")"
+TPUT  6 1;ls -x $dirf
+UNMARK
+TPUT  1 1;$e " |Custom Path| ";
+MARK;TPUT 3 1;$e "	______________________
+"
+TPUT  3 1;$e "| write "exit" for cancel |";
+UNMARK
+MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select Path from list:";read p;UNMARK;
+case $p in
+"")
+echo "not select anything"
+read -p " "
+Change_path
+;;
+"exit")
+clear
+clear_kitchen
+;;
+*)
+if [ -e $dirf/$p ]
+then
+echo "$dirf/$p" > ~/rou/pc.txt
 internal_root="$(echo "$(<~/rou/pc.txt)")"
+echo "binary installed" > ~/rou/complete.txt
+else
+main_main
+fi
+;;
+esac
 echo "binary installed" > ~/rou/complete.txt
 else
 main_main
@@ -883,7 +1017,7 @@ clear
   CIVIS(){ $e "\e[?25l";}
    DRAW(){ $e "\e%@\e(0";}
   WRITE(){ $e "\e(B";}
-      R(){ CLEAR ;stty sane;$e "\ec\e[37;00m\e[J";};
+      R(){ CLEAR ;stty sane;printf %b '\e[46m' '\e[8]' '\e[H\e[J';};
    HEAD(){ DRAW
            for each in $(seq 45 25);do
            $E "   x                                          x"
@@ -892,7 +1026,21 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";TPUT  8 5; $e "Profile :$(if [ -e ~/kitchen-tmp/super.txt ];then echo "Exist";else echo "No";fi)";TPUT  10 5; $e "Extract odm vendor only :$(if [ -e ~/rou/only_mode.txt ];then echo "Yes";else echo "No";fi)";}
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";UNMARK;MARK2;
+TPUT   5 2; $e "╔Options════════════════════════════════╗"
+TPUT   6 2; $e "║                                       ║";
+TPUT   7 2; $e "║                                       ║";
+TPUT   8 2; $e "║                                       ║";
+TPUT   9 2; $e "║                                       ║";
+TPUT  10 2; $e "║                                       ║";
+TPUT  11 2; $e "║                                       ║";
+TPUT  12 2; $e "║                                       ║";
+TPUT  13 2; $e "╚═══════════════════════════════════════╝";
+TPUT   6 3; $e "Super image kitchen GUI"
+TPUT   7 3; $e "by TakuruKagami"
+TPUT   9 3; $e "Profile :$(if [ -e ~/kitchen-tmp/super.txt ];then echo "Exist";else echo "No";fi)"
+TPUT  10 3; $e "Extract odm vendor only :$(if [ -e ~/rou/only_mode.txt ];then echo "Yes";else echo "No";fi)"
+MARK;TPUT  14 3; $e "                                         ";TPUT  13 43; $e " ";TPUT  12 43; $e " ";TPUT  11 43; $e " ";TPUT  10 43; $e " ";TPUT  9 43; $e " ";TPUT  8 43; $e " ";TPUT  7 43; $e " ";TPUT  6 43; $e " ";UNMARK;}
    FOOT2(){ UNMARK;TPUT 3 45
    printf "$set_info";}
   ARROW(){ read -s -n3 key 2>/dev/null >&2
@@ -934,7 +1082,7 @@ clear
   CIVIS(){ $e "\e[?25l";}
    DRAW(){ $e "\e%@\e(0";}
   WRITE(){ $e "\e(B";}
-      R(){ CLEAR ;stty sane;$e "\ec\e[37;00m\e[J";};
+      R(){ CLEAR ;stty sane;printf %b '\e[46m' '\e[8]' '\e[H\e[J';};
    HEAD(){ DRAW
            for each in $(seq 45 25);do
            $E "   x                                          x"
@@ -943,7 +1091,19 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";}
+           printf "ENTER - SELECT,NEXT                      ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";UNMARK;MARK2;
+TPUT   5 2; $e "╔Tool═══════════════════════════════════╗"
+TPUT   6 2; $e "║                                       ║";
+TPUT   7 2; $e "║                                       ║";
+TPUT   8 2; $e "║                                       ║";
+TPUT   9 2; $e "║                                       ║";
+TPUT  10 2; $e "║                                       ║";
+TPUT  11 2; $e "║                                       ║";
+TPUT  12 2; $e "║                                       ║";
+TPUT  13 2; $e "╚═══════════════════════════════════════╝";
+TPUT   6 3; $e "Super image kitchen GUI"
+TPUT   7 3; $e "by TakuruKagami"
+MARK;TPUT  14 3; $e "                                         ";TPUT  13 43; $e " ";TPUT  12 43; $e " ";TPUT  11 43; $e " ";TPUT  10 43; $e " ";TPUT  9 43; $e " ";TPUT  8 43; $e " ";TPUT  7 43; $e " ";TPUT  6 43; $e " ";UNMARK;}
    FOOT2(){ UNMARK;TPUT 3 45
    printf "$set_info";}
    
@@ -1126,14 +1286,14 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
            if [[ $j -lt $i      ]];then UNMARK;M$before;else UNMARK;M$after;fi
            if [[ $after -eq 0 ]] || [ $before -eq $LM ];then
            UNMARK; M$before; M$after;fi;j=$i;UNMARK;M$before;M$after;}
-   INIT(){ clear;set_info=$Case_universal;R;HEAD;FOOT2;FOOT;UNMARK;TPUT  3 2; $e "$internal_root";MARK;MENU;}
+   INIT(){ clear;R;HEAD;FOOT2;FOOT;UNMARK;TPUT  3 2; $e "$internal_root";MARK;MENU;}
      SC(){ REFRESH;MARK;$S;$b;cur=`ARROW`;}
    ES(){ MARK;$e "ENTER = main menu ";$b;read;INIT;};INIT
   while [[ "$O" != " " ]]; do case $i in
         0) S=M0;SC;if [[ $cur == "" ]];then R;clear;Extract_rom;INIT;fi;;
         1) S=M1;SC;if [[ $cur == "" ]];then R;clear;Build_rom;INIT;fi;;
         2) S=M2;SC;if [[ $cur == "" ]];then R;clear;clear_kitchen;fi;;
-        3) S=M3;SC;if [[ $cur == "" ]];then R;clear;exit;fi;;
+        3) S=M3;SC;if [[ $cur == "" ]];then R;clear;$e "\ec\e[37;00m\e[J";exit;fi;;
  esac;POS;done
 }
 
