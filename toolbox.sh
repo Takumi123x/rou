@@ -540,6 +540,8 @@ mv -f $internal_root/AP/super.img.lz4 $internal_root/
 else
 mv -f $internal_root/AP/super.img $internal_root/
 fi
+rm -rf $internal_root/AP/
+extract_internal
 else
 if [ -e $internal_path/AP_*.tar ]
 then
@@ -552,6 +554,8 @@ mv -f $internal_root/AP/super.img.lz4 $internal_root/
 else
 mv -f $internal_root/AP/super.img $internal_root/
 fi
+rm -rf $internal_root/AP/
+extract_internal
 else
 if [ -e $dirf/$p ]
 then
@@ -594,6 +598,8 @@ mv -f $internal_root/AP/super.img.lz4 $internal_root/
 else
 mv -f $internal_root/AP/super.img $internal_root/
 fi
+rm -rf $internal_root/AP/
+extract_internal
 else
 if [ -e $internal_path/AP_*.tar ]
 then
@@ -606,6 +612,8 @@ mv -f $internal_root/AP/super.img.lz4 $internal_root/
 else
 mv -f $internal_root/AP/super.img $internal_root/
 fi
+rm -rf $internal_root/AP/
+extract_internal
 else
 if [ -e $dirf/$p ]
 then
