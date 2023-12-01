@@ -535,6 +535,18 @@ mv -f $internal_path/super.img.lz4 $internal_root/
 rm -rf $internal_root/AP/
 extract_internal
 else
+if [ -e $internal_path/super.img ]
+then
+mv -f $internal_path/super.img $internal_root/
+rm -rf $internal_root/AP/
+extract_internal
+else
+if [ -e $internal_path/super_raw.img ]
+then
+mv -f $internal_path/super_raw.img $internal_root/
+rm -rf $internal_root/AP/
+extract_internal
+else
 if [ -e $internal_path/AP_*.tar.md5 ]
 then
 cd ~
@@ -569,6 +581,8 @@ echo "$dirf/$p" > ~/rou/pc_ext.txt
 Alone_b
 else
 Alone_a
+fi
+fi
 fi
 fi
 fi
@@ -600,6 +614,18 @@ mv -f $internal_path/super.img.lz4 $internal_root/
 rm -rf $internal_root/AP/
 extract_internal
 else
+if [ -e $internal_path/super.img ]
+then
+mv -f $internal_path/super.img $internal_root/
+rm -rf $internal_root/AP/
+extract_internal
+else
+if [ -e $internal_path/super_raw.img ]
+then
+mv -f $internal_path/super_raw.img $internal_root/
+rm -rf $internal_root/AP/
+extract_internal
+else
 if [ -e $internal_path/AP_*.tar.md5 ]
 then
 cd ~
@@ -634,6 +660,8 @@ echo "$dirf/$p" > ~/rou/pc_ext.txt
 Alone_a
 else
 Alone_b
+fi
+fi
 fi
 fi
 fi
@@ -672,6 +700,24 @@ Extract_rom
 ;;
 *)
 internal_path="$dirf"
+if [ -e $internal_path/super.img.lz4 ]
+then
+mv -f $internal_path/super.img.lz4 $internal_root/
+rm -rf $internal_root/AP/
+extract_internal
+else
+if [ -e $internal_path/super.img ]
+then
+mv -f $internal_path/super.img $internal_root/
+rm -rf $internal_root/AP/
+extract_internal
+else
+if [ -e $internal_path/super_raw.img ]
+then
+mv -f $internal_path/super_raw.img $internal_root/
+rm -rf $internal_root/AP/
+extract_internal
+else
 if [ -e $internal_path/AP_*.tar.md5 ]
 then
 cd ~
@@ -683,6 +729,8 @@ mv -f $internal_root/AP/super.img.lz4 $internal_root/
 else
 mv -f $internal_root/AP/super.img $internal_root/
 fi
+rm -rf $internal_root/AP/
+extract_internal
 else
 if [ -e $internal_path/AP_*.tar ]
 then
@@ -695,6 +743,8 @@ mv -f $internal_root/AP/super.img.lz4 $internal_root/
 else
 mv -f $internal_root/AP/super.img $internal_root/
 fi
+rm -rf $internal_root/AP/
+extract_internal
 else
 if [ -e $dirf/$p ]
 then
@@ -702,6 +752,9 @@ echo "$dirf/$p" > ~/rou/pc_ext.txt
 Alone_a
 else
 Alone_b
+fi
+fi
+fi
 fi
 fi
 fi
