@@ -1250,6 +1250,7 @@ dpkg -i ~/rou/deb/arm32/p7zip.deb
 echo "/storage/emulated/0/build-kitchen" > ~/rou/pc.txt
 internal_root="$(echo "$(<~/rou/pc.txt)")"
 echo "binary installed" > ~/rou/complete.txt
+termux-setup-storage
 else
 if [ "$(getprop ro.product.cpu.abi)" == "arm64-v8a" ]
 then
@@ -1265,6 +1266,7 @@ dpkg -i ~/rou/deb/arm64/p7zip.deb
 echo "/storage/emulated/0/build-kitchen" > ~/rou/pc.txt
 internal_root="$(echo "$(<~/rou/pc.txt)")"
 echo "binary installed" > ~/rou/complete.txt
+termux-setup-storage
 else
 if [ "$(dpkg --print-architecture)" == "amd64" ]
 then
