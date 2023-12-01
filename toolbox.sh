@@ -511,52 +511,177 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
 }
 
 Extract_browse (){
+$e "\ec\e[37;00m\e[J"
 Alone_a (){
 clear
-dirf="/storage/emulated/0/"
+dirf="$(echo "$(<~/rou/pc_ext.txt)")"
 TPUT  6 1;ls -x $dirf
-MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select path from list:";read p;UNMARK;
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select path from list:";read p;UNMARK;
 case $p in
 "")
 echo "not select anything"
 read -p " "
-Change_path
+Alone_a
 ;;
 "exit")
 clear
-clear_kitchen
+Extract_browse
 ;;
 *)
+internal_path="$dirf"
+if [ -e $internal_path/AP_*.tar.md5 ]
+then
+cd ~
+mkdir $internal_root/AP
+7z e $internal_path/AP_*.tar.md5 -o$internal_root/AP
+if [ -e $internal_root/AP/super.img.lz4 ]
+then
+mv -f $internal_root/AP/super.img.lz4 $internal_root/
+else
+mv -f $internal_root/AP/super.img $internal_root/
+fi
+else
+if [ -e $internal_path/AP_*.tar ]
+then
+cd ~
+mkdir $internal_root/AP
+7z e $internal_path/AP_*.tar -o$internal_root/AP
+if [ -e $internal_root/AP/super.img.lz4 ]
+then
+mv -f $internal_root/AP/super.img.lz4 $internal_root/
+else
+mv -f $internal_root/AP/super.img $internal_root/
+fi
+else
 if [ -e $dirf/$p ]
 then
-echo "$dirf/$p" > ~/rou/pc.txt
-internal_root="$(echo "$(<~/rou/pc.txt)")"
-echo "binary installed" > ~/rou/complete.txt
+echo "$dirf/$p" > ~/rou/pc_ext.txt
+Alone_b
 else
-main_main
+Alone_a
+fi
+fi
+fi
+;;
+esac
+}
+
+Alone_b (){
+clear
+dirf="$(echo "$(<~/rou/pc_ext.txt)")"
+TPUT  6 1;ls -x $dirf
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select path from list:";read p;UNMARK;
+case $p in
+"")
+echo "not select anything"
+read -p " "
+Alone_b
+;;
+"exit")
+clear
+Extract_browse
+;;
+*)
+internal_path="$dirf"
+if [ -e $internal_path/AP_*.tar.md5 ]
+then
+cd ~
+mkdir $internal_root/AP
+7z e $internal_path/AP_*.tar.md5 -o$internal_root/AP
+if [ -e $internal_root/AP/super.img.lz4 ]
+then
+mv -f $internal_root/AP/super.img.lz4 $internal_root/
+else
+mv -f $internal_root/AP/super.img $internal_root/
+fi
+else
+if [ -e $internal_path/AP_*.tar ]
+then
+cd ~
+mkdir $internal_root/AP
+7z e $internal_path/AP_*.tar -o$internal_root/AP
+if [ -e $internal_root/AP/super.img.lz4 ]
+then
+mv -f $internal_root/AP/super.img.lz4 $internal_root/
+else
+mv -f $internal_root/AP/super.img $internal_root/
+fi
+else
+if [ -e $dirf/$p ]
+then
+echo "$dirf/$p" > ~/rou/pc_ext.txt
+Alone_a
+else
+Alone_b
+fi
+fi
 fi
 ;;
 esac
 }
 
 clear
+if [ "$(getprop ro.product.cpu.abi)" == "armeabi-v7a" ]
+then
 dirf="/storage/emulated/0/"
+else
+if [ "$(getprop ro.product.cpu.abi)" == "arm64-v8a" ]
+then
+dirf="/storage/emulated/0/"
+else
+if [ "$(dpkg --print-architecture)" == "amd64" ]
+then
+dirf="/mnt"
+fi
+fi
+fi
+clear
 TPUT  6 1;ls -x $dirf
-MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select path from list:";read p;UNMARK;
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select path from list:";read p;UNMARK;
 case $p in
 "")
 echo "not select anything"
 read -p " "
-Change_path
+Extract_browse
 ;;
 "exit")
 clear
-clear_kitchen
+Extract_rom
 ;;
 *)
+internal_path="$dirf"
+if [ -e $internal_path/AP_*.tar.md5 ]
+then
+cd ~
+mkdir $internal_root/AP
+7z e $internal_path/AP_*.tar.md5 -o$internal_root/AP
+if [ -e $internal_root/AP/super.img.lz4 ]
+then
+mv -f $internal_root/AP/super.img.lz4 $internal_root/
+else
+mv -f $internal_root/AP/super.img $internal_root/
+fi
+else
+if [ -e $internal_path/AP_*.tar ]
+then
+cd ~
+mkdir $internal_root/AP
+7z e $internal_path/AP_*.tar -o$internal_root/AP
+if [ -e $internal_root/AP/super.img.lz4 ]
+then
+mv -f $internal_root/AP/super.img.lz4 $internal_root/
+else
+mv -f $internal_root/AP/super.img $internal_root/
+fi
+else
 if [ -e $dirf/$p ]
 then
+echo "$dirf/$p" > ~/rou/pc_ext.txt
 Alone_a
+else
+Alone_b
+fi
+fi
 fi
 ;;
 esac
@@ -721,7 +846,7 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
   while [[ "$O" != " " ]]; do case $i in
         0) S=M0;SC;if [[ $cur == "" ]];then R;clear;extract_root;Extract_rom;INIT;fi;;
         1) S=M1;SC;if [[ $cur == "" ]];then R;clear;extract_internal;Extract_rom;INIT;fi;;
-        2) S=M2;SC;if [[ $cur == "" ]];then R;clear;INIT;fi;;
+        2) S=M2;SC;if [[ $cur == "" ]];then R;clear;Extract_browse;Extract_rom;INIT;fi;;
         3) S=M3;SC;if [[ $cur == "" ]];then R;clear;main_main;fi;;
  esac;POS;done
 }
