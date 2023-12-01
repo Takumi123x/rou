@@ -529,24 +529,6 @@ Extract_browse
 ;;
 *)
 internal_path="$dirf"
-if [ -e $internal_path/super.img.lz4 ]
-then
-mv -f $internal_path/super.img.lz4 $internal_root/
-rm -rf $internal_root/AP/
-extract_internal
-else
-if [ -e $internal_path/super.img ]
-then
-mv -f $internal_path/super.img $internal_root/
-rm -rf $internal_root/AP/
-extract_internal
-else
-if [ -e $internal_path/super_raw.img ]
-then
-mv -f $internal_path/super_raw.img $internal_root/
-rm -rf $internal_root/AP/
-extract_internal
-else
 if [ -e $internal_path/AP_*.tar.md5 ]
 then
 cd ~
@@ -581,9 +563,6 @@ echo "$dirf/$p" > ~/rou/pc_ext.txt
 Alone_b
 else
 Alone_a
-fi
-fi
-fi
 fi
 fi
 fi
@@ -608,24 +587,6 @@ Extract_browse
 ;;
 *)
 internal_path="$dirf"
-if [ -e $internal_path/super.img.lz4 ]
-then
-mv -f $internal_path/super.img.lz4 $internal_root/
-rm -rf $internal_root/AP/
-extract_internal
-else
-if [ -e $internal_path/super.img ]
-then
-mv -f $internal_path/super.img $internal_root/
-rm -rf $internal_root/AP/
-extract_internal
-else
-if [ -e $internal_path/super_raw.img ]
-then
-mv -f $internal_path/super_raw.img $internal_root/
-rm -rf $internal_root/AP/
-extract_internal
-else
 if [ -e $internal_path/AP_*.tar.md5 ]
 then
 cd ~
@@ -660,9 +621,6 @@ echo "$dirf/$p" > ~/rou/pc_ext.txt
 Alone_a
 else
 Alone_b
-fi
-fi
-fi
 fi
 fi
 fi
@@ -700,24 +658,6 @@ Extract_rom
 ;;
 *)
 internal_path="$dirf"
-if [ -e $internal_path/super.img.lz4 ]
-then
-mv -f $internal_path/super.img.lz4 $internal_root/
-rm -rf $internal_root/AP/
-extract_internal
-else
-if [ -e $internal_path/super.img ]
-then
-mv -f $internal_path/super.img $internal_root/
-rm -rf $internal_root/AP/
-extract_internal
-else
-if [ -e $internal_path/super_raw.img ]
-then
-mv -f $internal_path/super_raw.img $internal_root/
-rm -rf $internal_root/AP/
-extract_internal
-else
 if [ -e $internal_path/AP_*.tar.md5 ]
 then
 cd ~
@@ -752,9 +692,6 @@ echo "$dirf/$p" > ~/rou/pc_ext.txt
 Alone_a
 else
 Alone_b
-fi
-fi
-fi
 fi
 fi
 fi
@@ -901,7 +838,7 @@ MARK;TPUT  14 3; $e "                                         ";TPUT  13 43; $e 
            if [[ $key = $ESC[B ]];then echo dn;fi;}
      M0(){ TPUT 16 $MU_X; $e "Extract from current phone(root)";$ff;}
      M1(){ TPUT 18 $MU_X; $e "Extract from folder build       ";$ff;}
-     M2(){ TPUT 20 $MU_X; $e "Extract with browse             ";$ff;}
+     M2(){ TPUT 20 $MU_X; $e "Extract with browse(AP only)   ";$ff;}
      M3(){ TPUT 22 $MU_X; $e "Back to Main menu               ";$ff;}
       LM=3 
    MENU(){ for each in $(seq 0 $LM);do M${each};done;}
