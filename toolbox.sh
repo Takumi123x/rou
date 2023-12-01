@@ -12,32 +12,14 @@ MARK2(){ $e "\e[7m\e[37m";}
 UNMARK(){ $e "\e[27m";}
 
 Case_universal=" "
-
 Build_done=" "
- 
 clear_kitchen=" "
- 
 clear2_kitchen=" "
- 
-failed_build=" 
-"
-
-Extract_done="
-"
+failed_build=" "
+Extract_done=" "
 
 Build_rom (){
-super_info="
-______________________
- | |Super image info :
- | |
- | |Super size : $(<~/kitchen-tmp/super.txt)
- | |For logical size : $(<~/kitchen-tmp/main.txt)
- | |System size : $(ls -nl $internal_root/system.img | awk '{print $5}')
- | |Vendor size : $(ls -nl $internal_root/vendor.img | awk '{print $5}')
- | |Product size : $(ls -nl $internal_root/product.img | awk '{print $5}')
- | |System ext size : $(ls -nl $internal_root/system_ext.img | awk '{print $5}')
- | |Odm size : $(ls -nl $internal_root/odm.img | awk '{print $5}')
-||||||||||||||||||||||"
+super_info=" "
 
 if grep -R "Super" ~/kitchen-tmp/super_map.txt
 then
@@ -675,18 +657,7 @@ fi
 extract_done
 }
 
-super_info="
-______________________
- | |Super image info :
- | |
- | |Super size : $(<~/kitchen-tmp/super.txt)
- | |For logical size : $(<~/kitchen-tmp/main.txt)
- | |System size : $(ls -nl $internal_root/system.img | awk '{print $5}')
- | |Vendor size : $(ls -nl $internal_root/vendor.img | awk '{print $5}')
- | |Product size : $(ls -nl $internal_root/product.img | awk '{print $5}')
- | |System ext size : $(ls -nl $internal_root/system_ext.img | awk '{print $5}')
- | |Odm size : $(ls -nl $internal_root/odm.img | awk '{print $5}')
-||||||||||||||||||||||"
+super_info=" "
 
 clear
       E='echo -e';e='echo -en';trap "R;exit" 2
@@ -879,12 +850,13 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
 }
  
 Change_path (){
+$e "\ec\e[37;00m\e[J"
 if [ "$(getprop ro.product.cpu.abi)" == "armeabi-v7a" ]
 then
 clear
 dirf="/storage/emulated/0/"
 TPUT  6 1;ls -x $dirf
-MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select path from list:";read p;UNMARK;
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select path from list:";read p;UNMARK;
 case $p in
 "")
 echo "not select anything"
@@ -912,7 +884,7 @@ then
 clear
 dirf="/storage/emulated/0/"
 TPUT  6 1;ls -x $dirf
-MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select path from list:";read p;UNMARK;
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select path from list:";read p;UNMARK;
 case $p in
 "")
 echo "not select anything"
@@ -940,11 +912,11 @@ dirf=/mnt
 TPUT  6 1;ls -x $dirf
 UNMARK
 TPUT  1 1;$e " |Drive| ";
-MARK;TPUT 3 1;$e "	______________________
+MARK2;TPUT 3 1;$e "	______________________
 "
 TPUT  3 1;$e "| write "exit" for cancel |";
 UNMARK
-MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select drive from list:";read p;UNMARK;
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select drive from list:";read p;UNMARK;
 case $p in
 "")
 echo "not select anything"
@@ -964,11 +936,11 @@ dirf="$(echo "$(<~/rou/temp_pc.txt)")"
 TPUT  6 1;ls -x $dirf
 UNMARK
 TPUT  1 1;$e " |Custom Path| ";
-MARK;TPUT 3 1;$e "	______________________
+MARK2;TPUT 3 1;$e "	______________________
 "
 TPUT  3 1;$e "| write "exit" for cancel |";
 UNMARK
-MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select Path from list:";read p;UNMARK;
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select Path from list:";read p;UNMARK;
 case $p in
 "")
 echo "not select anything"
