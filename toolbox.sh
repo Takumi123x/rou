@@ -10,6 +10,7 @@ ff=Fullscreen_force
 MARK(){ $e "\e[7m\e[30m";}
 MARK2(){ $e "\e[7m\e[37m";}
 UNMARK(){ $e "\e[27m";}
+BLT(){ $e "\e[7m\e[0;30m";}
 
 Case_universal=" "
 Build_done=" "
@@ -194,15 +195,12 @@ build_done
 fi
 }
 
-build_lz4 (){
+build_only (){
 build_super
 
-lz4 super.img
-tar -cvf $internal_root/super.tar super.img.lz4
-rm -rf ./super.img.lz4
-rm -rf ./super.img
+lz4 -1 -v super.img
 
-if [ "$(ls -nl $internal_root/super.tar | awk '{print $5}')" -lt 100000 ]
+if [ "$(ls -nl $internal_root/super.img | awk '{print $5}')" -lt 100000 ]
 then
 failed_build
 else
@@ -364,7 +362,7 @@ MARK;TPUT  14 3; $e "                                         ";TPUT  13 43; $e 
            if [[ $key = $ESC[A ]];then echo up;fi
            if [[ $key = $ESC[B ]];then echo dn;fi;}
      M0(){ TPUT 16 $MU_X; $e "Build                           ";$ff;}
-     M1(){ TPUT 18 $MU_X; $e "Build with lz4.tar              ";$ff;}
+     M1(){ TPUT 18 $MU_X; $e "Build IMG Only                  ";$ff;}
      M2(){ TPUT 20 $MU_X; $e "Build tar with extra archive    ";$ff;}
      M3(){ TPUT 22 $MU_X; $e "Back to Main menu               ";$ff;}
       LM=3
@@ -384,7 +382,7 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
    ES(){ MARK;$e "ENTER = main menu ";$b;read;INIT;};INIT
   while [[ "$O" != " " ]]; do case $i in
         0) S=M0;SC;if [[ $cur == "" ]];then R;clear;build_now;INIT;fi;;
-        1) S=M1;SC;if [[ $cur == "" ]];then R;clear;build_lz4;INIT;fi;;
+        1) S=M1;SC;if [[ $cur == "" ]];then R;clear;build_only;INIT;fi;;
         2) S=M2;SC;if [[ $cur == "" ]];then R;clear;Build_archive;INIT;fi;;
         3) S=M3;SC;if [[ $cur == "" ]];then R;clear;main_main;fi;;
  esac;POS;done
@@ -746,6 +744,7 @@ printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > 
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
 lpunpack -p vendor $internal_root/super.img $internal_root/
 lpunpack -p odm $internal_root/super.img $internal_root/
+lpunpack -p system_ext $internal_root/super.img $internal_root/
 else
 rm -rf $internal_root/super_raw.img 
 lpdump $internal_root/super.img > ~/kitchen-tmp/super_map.txt
@@ -784,6 +783,7 @@ printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > 
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Maximum size:" | awk '{print $3}' | sed '2!d' > ~/kitchen-tmp/main.txt
 dd if=/dev/block/mapper/vendor of=$internal_root/vendor.img
 dd if=/dev/block/mapper/odm of=$internal_root/odm.img
+dd if=/dev/block/mapper/system_ext of=$internal_root/system_ext.img
 else
 lpdump /dev/block/by-name/super > ~/kitchen-tmp/super_map.txt
 printf "$(<~/kitchen-tmp/super_map.txt)" | grep -e "Size:" | awk '{print $2}' > ~/kitchen-tmp/super.txt
