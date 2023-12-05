@@ -1276,19 +1276,20 @@ dirf=/mnt
 TPUT  6 1;ls -x $dirf
 UNMARK
 TPUT  1 1;$e " |Drive| ";
-MARK;TPUT 3 1;$e "	______________________
+MARK2;TPUT 3 1;$e "	______________________
 "
 TPUT  3 1;$e "| write "exit" for cancel |";
 UNMARK
-MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select drive from list:";read p;UNMARK;
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select drive from list:";read p;UNMARK;
 case $p in
 "")
-echo "not select anything exit"
-exit
+echo "not select anything"
+read -p " "
+Change_path
 ;;
 "exit")
 clear
-exit
+clear_kitchen
 ;;
 *)
 if [ -e $dirf/$p ]
@@ -1320,19 +1321,20 @@ dirf=/mnt
 TPUT  6 1;ls -x $dirf
 UNMARK
 TPUT  1 1;$e " |Drive| ";
-MARK;TPUT 3 1;$e "	______________________
+MARK2;TPUT 3 1;$e "	______________________
 "
 TPUT  3 1;$e "| write "exit" for cancel |";
 UNMARK
-MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select drive from list:";read p;UNMARK;
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select drive from list:";read p;UNMARK;
 case $p in
 "")
-echo "not select anything exit"
-exit
+echo "not select anything"
+read -p " "
+Change_path
 ;;
 "exit")
 clear
-exit
+clear_kitchen
 ;;
 *)
 if [ -e $dirf/$p ]
