@@ -1272,7 +1272,12 @@ if [ "$(dpkg --print-architecture)" == "amd64" ]
 then
 cp -f ~/rou/deb/PC/* /bin
 clear
+if [ -e "/mnt/*" ]
+then
 dirf=/mnt
+else
+dirf=/home
+fi
 TPUT  6 1;ls -x $dirf
 UNMARK
 TPUT  1 1;$e " |Drive| ";
@@ -1285,11 +1290,11 @@ case $p in
 "")
 echo "not select anything"
 read -p " "
-Change_path
+main_main
 ;;
 "exit")
 clear
-clear_kitchen
+exit
 ;;
 *)
 if [ -e $dirf/$p ]
@@ -1316,8 +1321,13 @@ fi
 ;;
 esac
 else
-clear
+if [ -e "/mnt/*" ]
+then
 dirf=/mnt
+else
+dirf=/home
+fi
+clear
 TPUT  6 1;ls -x $dirf
 UNMARK
 TPUT  1 1;$e " |Drive| ";
@@ -1330,11 +1340,11 @@ case $p in
 "")
 echo "not select anything"
 read -p " "
-Change_path
+main_main
 ;;
 "exit")
 clear
-clear_kitchen
+exit
 ;;
 *)
 if [ -e $dirf/$p ]
