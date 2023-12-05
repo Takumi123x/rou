@@ -42,7 +42,7 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";UNMARK;MARK2;
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools GUI           ";UNMARK;MARK2;
 TPUT   5 2; $e "╔Info═══════════════════════════════════╗"
 TPUT   6 2; $e "║                                       ║";
 TPUT   7 2; $e "║                                       ║";
@@ -105,7 +105,7 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";UNMARK;MARK2;
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools GUI           ";UNMARK;MARK2;
 TPUT   5 2; $e "╔Info═══════════════════════════════════╗"
 TPUT   6 2; $e "║                                       ║";
 TPUT   7 2; $e "║                                       ║";
@@ -270,7 +270,7 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";UNMARK;MARK2;
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools GUI           ";UNMARK;MARK2;
 TPUT   5 2; $e "╔Info═══════════════════════════════════╗"
 TPUT   6 2; $e "║                                       ║";
 TPUT   7 2; $e "║                                       ║";
@@ -338,7 +338,7 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";UNMARK;MARK2;
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools GUI           ";UNMARK;MARK2;
 TPUT   5 2; $e "╔Info═══════════════════════════════════╗"
 TPUT   6 2; $e "║                                       ║";
 TPUT   7 2; $e "║                                       ║";
@@ -462,7 +462,7 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";UNMARK;MARK2;
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools GUI           ";UNMARK;MARK2;
 TPUT   5 2; $e "╔Extract_Done═══════════════════════════╗"
 TPUT   6 2; $e "║                                       ║";
 TPUT   7 2; $e "║                                       ║";
@@ -813,7 +813,7 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";UNMARK;MARK2;
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools GUI           ";UNMARK;MARK2;
 TPUT   5 2; $e "╔Info═══════════════════════════════════╗"
 TPUT   6 2; $e "║                                       ║";
 TPUT   7 2; $e "║                                       ║";
@@ -884,7 +884,7 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";UNMARK;MARK2;
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools GUI           ";UNMARK;MARK2;
 TPUT   5 2; $e "╔Info═══════════════════════════════════╗"
 TPUT   6 2; $e "║                                       ║";
 TPUT   7 2; $e "║                                       ║";
@@ -944,7 +944,7 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";UNMARK;MARK2;
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools GUI           ";UNMARK;MARK2;
 TPUT   5 2; $e "╔Info═══════════════════════════════════╗"
 TPUT   6 2; $e "║                                       ║";
 TPUT   7 2; $e "║                                       ║";
@@ -1135,7 +1135,7 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";UNMARK;MARK2;
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools GUI           ";UNMARK;MARK2;
 TPUT   5 2; $e "╔Options════════════════════════════════╗"
 TPUT   6 2; $e "║                                       ║";
 TPUT   7 2; $e "║                                       ║";
@@ -1200,7 +1200,7 @@ clear
            $E " ";UNMARK;}
            i=0; CLEAR; CIVIS;NULL=/dev/null
    FOOT(){ MARK;TPUT 47 2
-           printf "ENTER - SELECT,NEXT                      ";TPUT  2 2; $e "Super Kitchen Tools Termux GUI           ";UNMARK;MARK2;
+           printf "ENTER - SELECT,NEXT                      ";TPUT  2 2; $e "Super Kitchen Tools GUI           ";UNMARK;MARK2;
 TPUT   5 2; $e "╔Tool═══════════════════════════════════╗"
 TPUT   6 2; $e "║                                       ║";
 TPUT   7 2; $e "║                                       ║";
