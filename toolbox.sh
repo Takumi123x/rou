@@ -1272,7 +1272,7 @@ if [ "$(dpkg --print-architecture)" == "amd64" ]
 then
 cp -f ~/rou/deb/PC/* /bin
 clear
-if [ -e "/mnt/*" ]
+if [ -n "$(ls -A /mnt 2>/dev/null)" ]
 then
 dirf=/mnt
 else
@@ -1321,7 +1321,7 @@ fi
 ;;
 esac
 else
-if [ -e "/mnt/*" ]
+if [ -n "$(ls -A /mnt 2>/dev/null)" ]
 then
 dirf=/mnt
 else
