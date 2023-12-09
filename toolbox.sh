@@ -514,7 +514,7 @@ Alone_a (){
 clear
 dirf="$(echo "$(<~/rou/pc_ext.txt)")"
 TPUT  6 1;ls -x $dirf
-MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select path from list:";read p;UNMARK;
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "cmd:|select|back|exit|term:";read p;UNMARK;
 case $p in
 "")
 echo "not select anything"
@@ -523,46 +523,52 @@ Alone_a
 ;;
 "exit")
 clear
-Extract_browse
+Extract_rom
+;;
+"back")
+echo "$dirf" | sed 's|\(.*\)/.*|\1|' > ~/rou/pc_ext.txt
+internal_root="$(echo "$(<~/rou/pc_ext.txt)")"
+Alone_b
+;;
+"select")
+if [ -e "$(echo "$(<~/rou/pc_ext.txt)" | sed -e 's/\(.tar.md5\)*$//g')".tar.md5 ]
+then
+cd ~
+mkdir $internal_root/AP
+7z e "$(echo "$(<~/rou/pc_ext.txt)" | sed -e 's/\(.tar.md5\)*$//g')".tar.md5 -o$internal_root/AP
+if [ -e $internal_root/AP/super.img.lz4 ]
+then
+mv -f $internal_root/AP/super.img.lz4 $internal_root/
+else
+mv -f $internal_root/AP/super.img $internal_root/
+fi
+rm -rf $internal_root/AP/
+extract_internal
+else
+if [ -e "$(echo "$(<~/rou/pc_ext.txt)" | sed -e 's/\(.tar\)*$//g')".tar ]
+then
+cd ~
+mkdir $internal_root/AP
+7z e "$(echo "$(<~/rou/pc_ext.txt)" | sed -e 's/\(.tar\)*$//g')".tar -o$internal_root/AP
+if [ -e $internal_root/AP/super.img.lz4 ]
+then
+mv -f $internal_root/AP/super.img.lz4 $internal_root/
+else
+mv -f $internal_root/AP/super.img $internal_root/
+fi
+rm -rf $internal_root/AP/
+extract_internal
+fi
+fi
 ;;
 *)
 internal_path="$dirf"
-if [ -e $internal_path/AP_*.tar.md5 ]
-then
-cd ~
-mkdir $internal_root/AP
-7z e $internal_path/AP_*.tar.md5 -o$internal_root/AP
-if [ -e $internal_root/AP/super.img.lz4 ]
-then
-mv -f $internal_root/AP/super.img.lz4 $internal_root/
-else
-mv -f $internal_root/AP/super.img $internal_root/
-fi
-rm -rf $internal_root/AP/
-extract_internal
-else
-if [ -e $internal_path/AP_*.tar ]
-then
-cd ~
-mkdir $internal_root/AP
-7z e $internal_path/AP_*.tar -o$internal_root/AP
-if [ -e $internal_root/AP/super.img.lz4 ]
-then
-mv -f $internal_root/AP/super.img.lz4 $internal_root/
-else
-mv -f $internal_root/AP/super.img $internal_root/
-fi
-rm -rf $internal_root/AP/
-extract_internal
-else
 if [ -e $dirf/$p ]
 then
 echo "$dirf/$p" > ~/rou/pc_ext.txt
 Alone_b
 else
 Alone_a
-fi
-fi
 fi
 ;;
 esac
@@ -572,7 +578,7 @@ Alone_b (){
 clear
 dirf="$(echo "$(<~/rou/pc_ext.txt)")"
 TPUT  6 1;ls -x $dirf
-MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select path from list:";read p;UNMARK;
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "cmd:|select|back|exit|term:";read p;UNMARK;
 case $p in
 "")
 echo "not select anything"
@@ -581,46 +587,52 @@ Alone_b
 ;;
 "exit")
 clear
-Extract_browse
+Extract_rom
+;;
+"back")
+echo "$dirf" | sed 's|\(.*\)/.*|\1|' > ~/rou/pc_ext.txt
+internal_root="$(echo "$(<~/rou/pc_ext.txt)")"
+Alone_b
+;;
+"select")
+if [ -e "$(echo "$(<~/rou/pc_ext.txt)" | sed -e 's/\(.tar.md5\)*$//g')".tar.md5 ]
+then
+cd ~
+mkdir $internal_root/AP
+7z e "$(echo "$(<~/rou/pc_ext.txt)" | sed -e 's/\(.tar.md5\)*$//g')".tar.md5 -o$internal_root/AP
+if [ -e $internal_root/AP/super.img.lz4 ]
+then
+mv -f $internal_root/AP/super.img.lz4 $internal_root/
+else
+mv -f $internal_root/AP/super.img $internal_root/
+fi
+rm -rf $internal_root/AP/
+extract_internal
+else
+if [ -e "$(echo "$(<~/rou/pc_ext.txt)" | sed -e 's/\(.tar\)*$//g')".tar ]
+then
+cd ~
+mkdir $internal_root/AP
+7z e "$(echo "$(<~/rou/pc_ext.txt)" | sed -e 's/\(.tar\)*$//g')".tar -o$internal_root/AP
+if [ -e $internal_root/AP/super.img.lz4 ]
+then
+mv -f $internal_root/AP/super.img.lz4 $internal_root/
+else
+mv -f $internal_root/AP/super.img $internal_root/
+fi
+rm -rf $internal_root/AP/
+extract_internal
+fi
+fi
 ;;
 *)
 internal_path="$dirf"
-if [ -e $internal_path/AP_*.tar.md5 ]
-then
-cd ~
-mkdir $internal_root/AP
-7z e $internal_path/AP_*.tar.md5 -o$internal_root/AP
-if [ -e $internal_root/AP/super.img.lz4 ]
-then
-mv -f $internal_root/AP/super.img.lz4 $internal_root/
-else
-mv -f $internal_root/AP/super.img $internal_root/
-fi
-rm -rf $internal_root/AP/
-extract_internal
-else
-if [ -e $internal_path/AP_*.tar ]
-then
-cd ~
-mkdir $internal_root/AP
-7z e $internal_path/AP_*.tar -o$internal_root/AP
-if [ -e $internal_root/AP/super.img.lz4 ]
-then
-mv -f $internal_root/AP/super.img.lz4 $internal_root/
-else
-mv -f $internal_root/AP/super.img $internal_root/
-fi
-rm -rf $internal_root/AP/
-extract_internal
-else
 if [ -e $dirf/$p ]
 then
 echo "$dirf/$p" > ~/rou/pc_ext.txt
 Alone_a
 else
 Alone_b
-fi
-fi
 fi
 ;;
 esac
@@ -637,13 +649,13 @@ dirf="/storage/emulated/0/"
 else
 if [ "$(dpkg --print-architecture)" == "amd64" ]
 then
-dirf="/mnt"
+dirf="/"
 fi
 fi
 fi
 clear
 TPUT  6 1;ls -x $dirf
-MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select path from list:";read p;UNMARK;
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "cmd:|select|back|exit|term:";read p;UNMARK;
 case $p in
 "")
 echo "not select anything"
@@ -654,44 +666,50 @@ Extract_browse
 clear
 Extract_rom
 ;;
+"back")
+echo "$dirf" | sed 's|\(.*\)/.*|\1|' > ~/rou/pc_ext.txt
+internal_root="$(echo "$(<~/rou/pc_ext.txt)")"
+Alone_b
+;;
+"select")
+if [ -e "$(echo "$(<~/rou/pc_ext.txt)" | sed -e 's/\(.tar.md5\)*$//g')".tar.md5 ]
+then
+cd ~
+mkdir $internal_root/AP
+7z e "$(echo "$(<~/rou/pc_ext.txt)" | sed -e 's/\(.tar.md5\)*$//g')".tar.md5 -o$internal_root/AP
+if [ -e $internal_root/AP/super.img.lz4 ]
+then
+mv -f $internal_root/AP/super.img.lz4 $internal_root/
+else
+mv -f $internal_root/AP/super.img $internal_root/
+fi
+rm -rf $internal_root/AP/
+extract_internal
+else
+if [ -e "$(echo "$(<~/rou/pc_ext.txt)" | sed -e 's/\(.tar\)*$//g')".tar ]
+then
+cd ~
+mkdir $internal_root/AP
+7z e "$(echo "$(<~/rou/pc_ext.txt)" | sed -e 's/\(.tar\)*$//g')".tar -o$internal_root/AP
+if [ -e $internal_root/AP/super.img.lz4 ]
+then
+mv -f $internal_root/AP/super.img.lz4 $internal_root/
+else
+mv -f $internal_root/AP/super.img $internal_root/
+fi
+rm -rf $internal_root/AP/
+extract_internal
+fi
+fi
+;;
 *)
 internal_path="$dirf"
-if [ -e $internal_path/AP_*.tar.md5 ]
-then
-cd ~
-mkdir $internal_root/AP
-7z e $internal_path/AP_*.tar.md5 -o$internal_root/AP
-if [ -e $internal_root/AP/super.img.lz4 ]
-then
-mv -f $internal_root/AP/super.img.lz4 $internal_root/
-else
-mv -f $internal_root/AP/super.img $internal_root/
-fi
-rm -rf $internal_root/AP/
-extract_internal
-else
-if [ -e $internal_path/AP_*.tar ]
-then
-cd ~
-mkdir $internal_root/AP
-7z e $internal_path/AP_*.tar -o$internal_root/AP
-if [ -e $internal_root/AP/super.img.lz4 ]
-then
-mv -f $internal_root/AP/super.img.lz4 $internal_root/
-else
-mv -f $internal_root/AP/super.img $internal_root/
-fi
-rm -rf $internal_root/AP/
-extract_internal
-else
 if [ -e $dirf/$p ]
 then
 echo "$dirf/$p" > ~/rou/pc_ext.txt
 Alone_a
 else
 Alone_b
-fi
-fi
 fi
 ;;
 esac
@@ -988,12 +1006,13 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
  
 Change_path (){
 $e "\ec\e[37;00m\e[J"
-if [ "$(getprop ro.product.cpu.abi)" == "armeabi-v7a" ]
-then
+close_course_a (){
 clear
-dirf="/storage/emulated/0/"
+dirf="$(echo "$(<~/rou/temp_pc.txt)")" 
 TPUT  6 1;ls -x $dirf
-MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select path from list:";read p;UNMARK;
+
+UNMARK
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "cmd:|select|back|exit|term:";read p;UNMARK;
 case $p in
 "")
 echo "not select anything"
@@ -1004,80 +1023,36 @@ Change_path
 clear
 clear_kitchen
 ;;
-*)
-if [ -e $dirf/$p ]
-then
-echo "$dirf/$p" > ~/rou/pc.txt
+"back")
+echo "$dirf" | sed 's|\(.*\)/.*|\1|' > ~/rou/temp_pc.txt
+internal_root="$(echo "$(<~/rou/temp_pc.txt)")"
+close_course_b
+;;
+"select")
+echo "$dirf" > ~/rou/pc.txt
 internal_root="$(echo "$(<~/rou/pc.txt)")"
 echo "binary installed" > ~/rou/complete.txt
-else
-main_main
-fi
-;;
-esac
-else
-if [ "$(getprop ro.product.cpu.abi)" == "arm64-v8a" ]
-then
-clear
-dirf="/storage/emulated/0/"
-TPUT  6 1;ls -x $dirf
-MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select path from list:";read p;UNMARK;
-case $p in
-"")
-echo "not select anything"
-read -p " "
-Change_path
-;;
-"exit")
-clear
-clear_kitchen
-;;
-*)
-if [ -e $dirf/$p ]
-then
-echo "$dirf/$p" > ~/rou/pc.txt
-internal_root="$(echo "$(<~/rou/pc.txt)")"
-echo "binary installed" > ~/rou/complete.txt
-else
-main_main
-fi
-;;
-esac
-else
-clear
-dirf=/mnt
-TPUT  6 1;ls -x $dirf
-UNMARK
-TPUT  1 1;$e " |Drive| ";
-MARK2;TPUT 3 1;$e "	______________________
-"
-TPUT  3 1;$e "| write "exit" for cancel |";
-UNMARK
-MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select drive from list:";read p;UNMARK;
-case $p in
-"")
-echo "not select anything"
-read -p " "
-Change_path
-;;
-"exit")
-clear
-clear_kitchen
 ;;
 *)
 if [ -e $dirf/$p ]
 then
 echo "$dirf/$p" > ~/rou/temp_pc.txt
+close_course_b
+else
+main_main
+fi
+;;
+esac
+echo "binary installed" > ~/rou/complete.txt
+}
+
+close_course_b (){
 clear
 dirf="$(echo "$(<~/rou/temp_pc.txt)")"
 TPUT  6 1;ls -x $dirf
+
 UNMARK
-TPUT  1 1;$e " |Custom Path| ";
-MARK2;TPUT 3 1;$e "	______________________
-"
-TPUT  3 1;$e "| write "exit" for cancel |";
-UNMARK
-MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select Path from list:";read p;UNMARK;
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "cmd:|select|back|exit|term:";read p;UNMARK;
 case $p in
 "")
 echo "not select anything"
@@ -1088,25 +1063,83 @@ Change_path
 clear
 clear_kitchen
 ;;
+"back")
+echo "$dirf" | sed 's|\(.*\)/.*|\1|' > ~/rou/temp_pc.txt
+internal_root="$(echo "$(<~/rou/temp_pc.txt)")"
+close_course_a
+;;
+"select")
+echo "$dirf" > ~/rou/pc.txt
+internal_root="$(echo "$(<~/rou/pc.txt)")"
+echo "binary installed" > ~/rou/complete.txt
+;;
 *)
 if [ -e $dirf/$p ]
 then
-echo "$dirf/$p" > ~/rou/pc.txt
+echo "$dirf/$p" > ~/rou/temp_pc.txt
+close_course_a
+else
+main_main
+fi
+;;
+esac
+echo "binary installed" > ~/rou/complete.txt
+}
+
+clear
+if [ "$(getprop ro.product.cpu.abi)" == "armeabi-v7a" ]
+then
+dirf="/storage/emulated/0/"
+else
+if [ "$(getprop ro.product.cpu.abi)" == "arm64-v8a" ]
+then
+dirf="/storage/emulated/0/"
+else
+if [ "$(dpkg --print-architecture)" == "amd64" ]
+then
+dirf="/"
+else
+echo "False"
+main_main
+fi
+fi
+fi
+clear
+TPUT  6 1;ls -x $dirf
+
+UNMARK
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "cmd:|select|back|exit|term:";read p;UNMARK;
+case $p in
+"")
+echo "not select anything"
+read -p " "
+Change_path
+;;
+"exit")
+clear
+clear_kitchen
+;;
+"back")
+echo "$dirf" | sed 's|\(.*\)/.*|\1|' > ~/rou/temp_pc.txt
+internal_root="$(echo "$(<~/rou/temp_pc.txt)")"
+close_course_a
+;;
+"select")
+echo "$dirf" > ~/rou/pc.txt
 internal_root="$(echo "$(<~/rou/pc.txt)")"
 echo "binary installed" > ~/rou/complete.txt
+;;
+*)
+if [ -e $dirf/$p ]
+then
+echo "$dirf/$p" > ~/rou/temp_pc.txt
+close_course_a
 else
 main_main
 fi
 ;;
 esac
 echo "binary installed" > ~/rou/complete.txt
-else
-main_main
-fi
-;;
-esac
-fi
-fi
 }
 
 switch_unpack (){
@@ -1272,35 +1305,120 @@ if [ "$(dpkg --print-architecture)" == "amd64" ]
 then
 cp -f ~/rou/deb/PC/* /bin
 clear
-if [ -n "$(ls -A /mnt 2>/dev/null)" ]
-then
-dirf=/mnt
-else
-dirf=/home
-fi
+echo "/" > ~/rou/pc.txt
+internal_root="$(echo "$(<~/rou/pc.txt)")"
+$e "\ec\e[37;00m\e[J"
+close_course_a (){
+clear
+dirf="$(echo "$(<~/rou/temp_pc.txt)")" 
 TPUT  6 1;ls -x $dirf
+
 UNMARK
-TPUT  1 1;$e " |Drive| ";
-MARK2;TPUT 3 1;$e "	______________________
-"
-TPUT  3 1;$e "| write "exit" for cancel |";
-UNMARK
-MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select drive from list:";read p;UNMARK;
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "cmd:|select|back|exit|term:";read p;UNMARK;
 case $p in
 "")
 echo "not select anything"
 read -p " "
-main_main
+Change_path
 ;;
 "exit")
 clear
 exit
 ;;
+"back")
+echo "$dirf" | sed 's|\(.*\)/.*|\1|' > ~/rou/temp_pc.txt
+internal_root="$(echo "$(<~/rou/temp_pc.txt)")"
+close_course_b
+;;
+"select")
+echo "$dirf" > ~/rou/pc.txt
+internal_root="$(echo "$(<~/rou/pc.txt)")"
+;;
 *)
 if [ -e $dirf/$p ]
 then
-echo "$dirf/$p/build-kitchen" > ~/rou/pc.txt
+echo "$dirf/$p" > ~/rou/temp_pc.txt
+close_course_b
+else
+main_main
+fi
+;;
+esac
+}
+
+close_course_b (){
+clear
+dirf="$(echo "$(<~/rou/temp_pc.txt)")"
+TPUT  6 1;ls -x $dirf
+
+UNMARK
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "cmd:|select|back|exit|term:";read p;UNMARK;
+case $p in
+"")
+echo "not select anything"
+read -p " "
+Change_path
+;;
+"exit")
+clear
+exit
+;;
+"back")
+echo "$dirf" | sed 's|\(.*\)/.*|\1|' > ~/rou/temp_pc.txt
+internal_root="$(echo "$(<~/rou/temp_pc.txt)")"
+close_course_a
+;;
+"select")
+echo "$dirf" > ~/rou/pc.txt
 internal_root="$(echo "$(<~/rou/pc.txt)")"
+;;
+*)
+if [ -e $dirf/$p ]
+then
+echo "$dirf/$p" > ~/rou/temp_pc.txt
+close_course_a
+else
+main_main
+fi
+;;
+esac
+}
+
+clear
+dirf=$internal_root
+TPUT  6 1;ls -x $dirf
+
+UNMARK
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "cmd:|select|back|exit|term:";read p;UNMARK;
+case $p in
+"")
+echo "not select anything"
+read -p " "
+Change_path
+;;
+"exit")
+clear
+exit
+;;
+"back")
+echo "$dirf" | sed 's|\(.*\)/.*|\1|' > ~/rou/temp_pc.txt
+internal_root="$(echo "$(<~/rou/temp_pc.txt)")"
+close_course_a
+;;
+"select")
+echo "$dirf" > ~/rou/pc.txt
+internal_root="$(echo "$(<~/rou/pc.txt)")"
+;;
+*)
+if [ -e $dirf/$p ]
+then
+echo "$dirf/$p" > ~/rou/temp_pc.txt
+close_course_a
+else
+main_main
+fi
+;;
+esac
 chmod +x ~/rou/deb/PC/*
 cp ~/rou/deb/PC/* /bin
 chmod +x /bin/lpmake
@@ -1315,42 +1433,119 @@ apt install p7zip-full
 apt install lz4
 echo "binary installed" > ~/rou/complete.txt
 else
-echo "False"
-main_main
-fi
-;;
-esac
-else
-if [ -n "$(ls -A /mnt 2>/dev/null)" ]
-then
-dirf=/mnt
-else
-dirf=/home
-fi
+echo "/" > ~/rou/pc.txt
+internal_root="$(echo "$(<~/rou/pc.txt)")"
+$e "\ec\e[37;00m\e[J"
+close_course_a (){
 clear
+dirf="$(echo "$(<~/rou/temp_pc.txt)")" 
 TPUT  6 1;ls -x $dirf
+
 UNMARK
-TPUT  1 1;$e " |Drive| ";
-MARK2;TPUT 3 1;$e "	______________________
-"
-TPUT  3 1;$e "| write "exit" for cancel |";
-UNMARK
-MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select drive from list:";read p;UNMARK;
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "cmd:|select|back|exit|term:";read p;UNMARK;
 case $p in
 "")
 echo "not select anything"
 read -p " "
-main_main
+Change_path
 ;;
 "exit")
 clear
 exit
 ;;
+"back")
+echo "$dirf" | sed 's|\(.*\)/.*|\1|' > ~/rou/temp_pc.txt
+internal_root="$(echo "$(<~/rou/temp_pc.txt)")"
+close_course_b
+;;
+"select")
+echo "$dirf" > ~/rou/pc.txt
+internal_root="$(echo "$(<~/rou/pc.txt)")"
+;;
 *)
 if [ -e $dirf/$p ]
 then
-echo "$dirf/$p" > ~/rou/pc.txt
+echo "$dirf/$p" > ~/rou/temp_pc.txt
+close_course_b
+else
+main_main
+fi
+;;
+esac
+}
+
+close_course_b (){
+clear
+dirf="$(echo "$(<~/rou/temp_pc.txt)")"
+TPUT  6 1;ls -x $dirf
+
+UNMARK
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "cmd:|select|back|exit|term:";read p;UNMARK;
+case $p in
+"")
+echo "not select anything"
+read -p " "
+Change_path
+;;
+"exit")
+clear
+exit
+;;
+"back")
+echo "$dirf" | sed 's|\(.*\)/.*|\1|' > ~/rou/temp_pc.txt
+internal_root="$(echo "$(<~/rou/temp_pc.txt)")"
+close_course_a
+;;
+"select")
+echo "$dirf" > ~/rou/pc.txt
 internal_root="$(echo "$(<~/rou/pc.txt)")"
+;;
+*)
+if [ -e $dirf/$p ]
+then
+echo "$dirf/$p" > ~/rou/temp_pc.txt
+close_course_a
+else
+main_main
+fi
+;;
+esac
+}
+
+clear
+dirf=$internal_root
+TPUT  6 1;ls -x $dirf
+UNMARK
+MARK2;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "cmd:|select|back|exit|term:";read p;UNMARK;
+case $p in
+"")
+echo "not select anything"
+read -p " "
+Change_path
+;;
+"exit")
+clear
+exit
+;;
+"back")
+echo "$dirf" | sed 's|\(.*\)/.*|\1|' > ~/rou/temp_pc.txt
+internal_root="$(echo "$(<~/rou/temp_pc.txt)")"
+close_course_a
+;;
+"select")
+echo "$dirf" > ~/rou/pc.txt
+internal_root="$(echo "$(<~/rou/pc.txt)")"
+;;
+*)
+if [ -e $dirf/$p ]
+then
+echo "$dirf/$p" > ~/rou/temp_pc.txt
+close_course_a
+else
+main_main
+fi
+;;
+esac
 chmod +x ~/rou/deb/PC/*
 cp ~/rou/deb/PC/* /bin
 chmod +x /bin/lpmake
@@ -1361,12 +1556,9 @@ apt install android-sdk-libsparse-utils
 sudo apt-get update --fix-missing
 sudo apt-get install --fix-missing
 apt install android-sdk-libsparse-utils
+apt install p7zip-full
+apt install lz4
 echo "binary installed" > ~/rou/complete.txt
-else
-main_main
-fi
-;;
-esac
 fi
 fi
 fi
