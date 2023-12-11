@@ -21,6 +21,107 @@ Extract_done=" "
 
 Build_rom (){
 super_info=" "
+build_manual (){
+build_now (){
+if [ -e odm.img ]
+then
+echo "$(($(ls -nl odm.img | awk '{print $5}') + 2621440 +$(ls -nl system.img | awk '{print $5}') + $(ls -nl vendor.img | awk '{print $5}')))" > ~/kitchen-tmp/main.txt
+else
+if [ -e system_ext.img ]
+then
+echo "$((2621440 + 2621440 +$(ls -nl system.img | awk '{print $5}') + $(ls -nl vendor.img | awk '{print $5}')))" > ~/kitchen-tmp/main.txt
+fi
+fi
+
+if [ -e odm.img ]
+then
+lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl $internal_root/system.img | awk '{print $5}'):main --image system=$internal_root/system.img --partition vendor:readonly:$(ls -nl $internal_root/vendor.img | awk '{print $5}'):main --image vendor=$internal_root/vendor.img --partition product:readonly:$(ls -nl $internal_root/product.img | awk '{print $5}'):main --image product=$internal_root/product.img --partition odm:readonly:$(ls -nl $internal_root/odm.img | awk '{print $5}'):main --image odm=$internal_root/odm.img --sparse --output super.img
+else
+if [ -e system_ext.img ]
+then
+lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl $internal_root/system.img | awk '{print $5}'):main --image system=$internal_root/system.img --partition vendor:readonly:$(ls -nl $internal_root/vendor.img | awk '{print $5}'):main --image vendor=$internal_root/vendor.img --partition product:readonly:$(ls -nl $internal_root/product.img | awk '{print $5}'):main --image product=$internal_root/product.img --partition system_ext:readonly:$(ls -nl $internal_root/system_ext.img | awk '{print $5}'):main --image system_ext=$internal_root/system_ext.img --sparse --output super.img
+fi
+fi
+}
+
+clear
+echo "adb shell blockdev --getsize64 /dev/block/bootdevice/by-name/super"
+echo "Insert size super from ADB"
+read p
+case $p in
+"")
+build_manual
+;;
+"exit")
+main_main
+;;
+*)
+echo "$p" > ~/kitchen-tmp/super.txt
+;;
+esac
+clear
+      E='echo -e';e='echo -en';trap "R;exit" 2
+    ESC=$( $e "\e")
+   TPUT(){ $e "\e[${1};${2}H";}
+  CLEAR(){ $e "\ec";}
+  CIVIS(){ $e "\e[?25l";}
+   DRAW(){ $e "\e%@\e(0";}
+  WRITE(){ $e "\e(B";}
+      R(){ CLEAR ;stty sane;printf %b '\e[46m' '\e[8]' '\e[H\e[J';};
+   HEAD(){ DRAW
+           for each in $(seq 45 25);do
+           $E "   x                                          x"
+           done
+           WRITE;MARK;TPUT 1 1
+           $E " ";UNMARK;}
+           i=0; CLEAR; CIVIS;NULL=/dev/null
+   FOOT(){ MARK;TPUT 47 2
+           printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools GUI           ";UNMARK;MARK2;
+TPUT   5 2; $e "╔Info═══════════════════════════════════╗"
+TPUT   6 2; $e "║                                       ║";
+TPUT   7 2; $e "║                                       ║";
+TPUT   8 2; $e "║                                       ║";
+TPUT   9 2; $e "║                                       ║";
+TPUT  10 2; $e "║                                       ║";
+TPUT  11 2; $e "║                                       ║";
+TPUT  12 2; $e "║                                       ║";
+TPUT  13 2; $e "╚═══════════════════════════════════════╝";
+TPUT   6 3; $e "Super size : $(if [ -e ~/kitchen-tmp/super.txt ];then echo "$(<~/kitchen-tmp/super.txt)";fi)"
+TPUT   8 3; $e "System size : $(if [ -e $internal_root/system.img ];then ls -nl $internal_root/system.img | awk '{print $5}';fi)"
+TPUT   9 3; $e "Vendor size : $(if [ -e $internal_root/vendor.img ];then ls -nl $internal_root/vendor.img | awk '{print $5}';fi)"
+TPUT  10 3; $e "Product size : $(if [ -e $internal_root/product.img ];then ls -nl $internal_root/product.img | awk '{print $5}';fi)"
+TPUT  11 3; $e "System ext size : $(if [ -e $internal_root/system_ext.img ];then ls -nl $internal_root/system_ext.img | awk '{print $5}';fi)"
+TPUT  12 3; $e "Odm size : $(if [ -e $internal_root/odm.img ];then ls -nl $internal_root/odm.img | awk '{print $5}';fi)";
+MARK;TPUT  14 3; $e "                                         ";TPUT  13 43; $e " ";TPUT  12 43; $e " ";TPUT  11 43; $e " ";TPUT  10 43; $e " ";TPUT  9 43; $e " ";TPUT  8 43; $e " ";TPUT  7 43; $e " ";TPUT  6 43; $e " ";UNMARK;}
+   FOOT2(){ UNMARK;TPUT 3 45
+   printf "$set_info";}
+  ARROW(){ read -s -n3 key 2>/dev/null >&2
+           if [[ $key = $ESC[A ]];then echo up;fi
+           if [[ $key = $ESC[B ]];then echo dn;fi;}
+     M0(){ TPUT 16 $MU_X; $e "Build now                       ";$ff;}
+     M1(){ TPUT 18 $MU_X; $e "Build with archive (Not yet)    ";$ff;}
+     M2(){ TPUT 22 $MU_X; $e "exit                            ";$ff;}
+      LM=2
+   MENU(){ for each in $(seq 0 $LM);do M${each};done;}
+    POS(){ if [[ $cur == up ]];then ((i--));fi
+           if [[ $cur == dn ]];then ((i++));fi
+           if [[ $i -lt 0   ]];then i=$LM;fi
+           if [[ $i -gt $LM ]];then i=0;fi;}
+REFRESH(){ after=$((i+1)); before=$((i-1))
+           if [[ $before -lt 0  ]];then before=$LM;fi
+           if [[ $after -gt $LM ]];then after=0;fi
+           if [[ $j -lt $i      ]];then UNMARK;M$before;else UNMARK;M$after;fi
+           if [[ $after -eq 0 ]] || [ $before -eq $LM ];then
+           UNMARK; M$before; M$after;fi;j=$i;UNMARK;M$before;M$after;}
+   INIT(){ clear;set_info=$super_info;R;HEAD;FOOT2;FOOT;MENU;}
+     SC(){ REFRESH;MARK;$S;$b;cur=`ARROW`;}
+   ES(){ MARK;$e "ENTER = main menu ";$b;read;INIT;};INIT
+  while [[ "$O" != " " ]]; do case $i in
+        0) S=M0;SC;if [[ $cur == "" ]];then R;clear;build_now;INIT;fi;;
+        1) S=M1;SC;if [[ $cur == "" ]];then R;clear;INIT;fi;;
+        2) S=M2;SC;if [[ $cur == "" ]];then R;clear;main_main;fi;;
+ esac;POS;done
+}
 
 if grep -R "Super" ~/kitchen-tmp/super_map.txt
 then
@@ -155,7 +256,8 @@ echo " "
 else
 simg2img $internal_root/system.img $internal_root/system.raw.img
 fi
-if [ -e $internal_root/odm.img ]
+
+if grep -R "odm" ~/kitchen-tmp/super_map.txt
 then
 if [ -e $internal_root/product.img ]
 then
@@ -165,6 +267,10 @@ cp -rf ~/rou/fake/product.img $internal_root/
 fi
 lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl $internal_root/system.img | awk '{print $5}'):main --image system=$internal_root/system.img --partition vendor:readonly:$(ls -nl $internal_root/vendor.img | awk '{print $5}'):main --image vendor=$internal_root/vendor.img --partition product:readonly:$(ls -nl $internal_root/product.img | awk '{print $5}'):main --image product=$internal_root/product.img --partition odm:readonly:$(ls -nl $internal_root/odm.img | awk '{print $5}'):main --image odm=$internal_root/odm.img --sparse --output super.img
 else
+echo "Profile not include ODM device maybe exynos or unisoc"
+echo "Try change how build it"
+if grep -R "system_ext" ~/kitchen-tmp/super_map.txt
+then
 if [ -e $internal_root/product.img ]
 then
 echo " "
@@ -178,28 +284,48 @@ else
 cp -rf ~/rou/fake/system_ext.img $internal_root/
 fi
 lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$(<~/kitchen-tmp/super.txt) --group main:$(<~/kitchen-tmp/main.txt) --partition system:readonly:$(ls -nl $internal_root/system.img | awk '{print $5}'):main --image system=$internal_root/system.img --partition vendor:readonly:$(ls -nl $internal_root/vendor.img | awk '{print $5}'):main --image vendor=$internal_root/vendor.img --partition product:readonly:$(ls -nl $internal_root/product.img | awk '{print $5}'):main --image product=$internal_root/product.img --partition system_ext:readonly:$(ls -nl $internal_root/system_ext.img | awk '{print $5}'):main --image system_ext=$internal_root/system_ext.img --sparse --output super.img
+else
+echo "No ODM and system_ext in profile"
+fi
 fi
 }
 
 build_now (){
-build_super
-
+archive_now (){
+clear
+echo "Give name to output file"
+read p
+case $p in
+"")
 tar -cvf $internal_root/super.tar super.img
 rm -rf ./super.img
-
 if [ "$(ls -nl $internal_root/super.tar | awk '{print $5}')" -lt 100000 ]
 then
 failed_build
 else
 build_done
 fi
+;;
+*)
+tar -cvf $internal_root/$p.tar super.img
+rm -rf ./super.img
+if [ "$(ls -nl $internal_root/$p.tar | awk '{print $5}')" -lt 100000 ]
+then
+failed_build
+else
+build_done
+fi
+;;
+esac
+}
+
+build_super
+archive_now
 }
 
 build_only (){
-build_super
-
-lz4 -1 -v super.img
-
+img_now (){
+#lz4 -1 -v super.img
 if [ "$(ls -nl $internal_root/super.img | awk '{print $5}')" -lt 100000 ]
 then
 failed_build
@@ -208,46 +334,121 @@ build_done
 fi
 }
 
-build_xz (){
 build_super
+img_now
+}
 
+build_xz (){
+archive_xz (){
+clear
+echo "Give name to output file"
+read p
+case $p in
+"")
 tar --xz -cvf $internal_root/super.tar.xz super.img
 rm -rf ./super.img
-
 if [ "$(ls -nl $internal_root/super.tar.xz | awk '{print $5}')" -lt 100000 ]
 then
 failed_build
 else
 build_done
 fi
+;;
+*)
+tar --xz -cvf $internal_root/$p.tar.xz super.img
+rm -rf ./super.img
+if [ "$(ls -nl $internal_root/$p.tar.xz | awk '{print $5}')" -lt 100000 ]
+then
+failed_build
+else
+build_done
+fi
+;;
+esac
+}
+
+build_super
+archive_xz
 }
 
 build_gz (){
-build_super
-
+archive_gz (){
+clear
+echo "Give name to output file"
+read p
+case $p in
+"")
 tar -zcvf $internal_root/super.tar.gz super.img
 rm -rf ./super.img
-
 if [ "$(ls -nl $internal_root/super.tar.gz | awk '{print $5}')" -lt 100000 ]
 then
 failed_build
 else
 build_done
 fi
+;;
+*)
+tar -zcvf $internal_root/$p.tar.gz super.img
+rm -rf ./super.img
+if [ "$(ls -nl $internal_root/$p.tar.gz | awk '{print $5}')" -lt 100000 ]
+then
+failed_build
+else
+build_done
+fi
+;;
+esac
+}
+
+build_super
+archive_gz
 }
 
 build_7z (){
-build_super
-
-7z a $internal_root/super.7z $internal_root/super.img
+archive_7z (){
+clear
+echo "Give name to output file"
+read p
+case $p in
+"")
+tar -cvf $internal_root/super.tar super.img
+if [ "$(ls -nl $internal_root/super.tar | awk '{print $5}')" -lt 100000 ]
+then
+failed_build
+else
+7z a $internal_root/super.7z $internal_root/super.tar
 rm -rf ./super.img
-
+rm -rf ./super.tar
 if [ "$(ls -nl $internal_root/super.7z | awk '{print $5}')" -lt 100000 ]
 then
 failed_build
 else
 build_done
 fi
+fi
+;;
+*)
+tar -cvf $internal_root/super.tar super.img
+if [ "$(ls -nl $internal_root/super.tar | awk '{print $5}')" -lt 100000 ]
+then
+failed_build
+else
+7z a $internal_root/$p.7z $internal_root/super.tar
+rm -rf ./super.img
+rm -rf ./super.tar
+if [ "$(ls -nl $internal_root/$p.7z | awk '{print $5}')" -lt 100000 ]
+then
+failed_build
+else
+build_done
+fi
+fi
+;;
+esac
+}
+
+build_super
+archive_7z
 }
 
 super_info=" "
@@ -387,14 +588,17 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
         3) S=M3;SC;if [[ $cur == "" ]];then R;clear;main_main;fi;;
  esac;POS;done
 else
-clear
 dirf=~/rou/fake/profile
+clear
 TPUT  6 1;ls -x $dirf
 UNMARK
 TPUT  1 1;$e " |Profile| ";
+MARK;TPUT 2 1;$e "	______________________
+";
 MARK;TPUT 3 1;$e "	______________________
-"
-TPUT  3 1;$e "| write "exit" for cancel |";
+";
+TPUT  2 1;$e "| write "exit" for exit           |";
+TPUT  3 1;$e "| write "manual" for build manual |";
 UNMARK
 MARK;TPUT 47 1;$e "	                        ";TPUT 47 1;$e "Select profile from list:";read p;UNMARK;
 case $p in
@@ -404,6 +608,9 @@ echo "Select in menu or exit"
 "exit")
 clear
 fontceti
+;;
+"manual")
+build_manual
 ;;
 *)
 cp -rf ~/rou/fake/profile/$p ~/kitchen-tmp/
@@ -1263,8 +1470,7 @@ if [ "$(dpkg --print-architecture)" == "amd64" ]
 then
 internal_root="$(echo "$(<~/rou/pc.txt)")"
 else
-echo "False"
-main_main
+internal_root="$(echo "$(<~/rou/pc.txt)")"
 fi
 fi
 fi
