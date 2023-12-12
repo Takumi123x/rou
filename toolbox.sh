@@ -45,9 +45,24 @@ fi
 }
 
 clear
-echo "adb shell blockdev --getsize64 /dev/block/bootdevice/by-name/super"
-echo "Insert size super from ADB"
-read p
+MARK;TPUT 47 2;printf "ENTER - SELECT,NEXT                     ";TPUT  2 2; $e "Super Kitchen Tools GUI           ";UNMARK;MARK2;
+TPUT   5 2; $e "╔Manual_mode════════════════════════════╗"
+TPUT   6 2; $e "║                                       ║";
+TPUT   7 2; $e "║                                       ║";
+TPUT   8 2; $e "║                                       ║";
+TPUT   9 2; $e "║                                       ║";
+TPUT  10 2; $e "║                                       ║";
+TPUT  11 2; $e "║                                       ║";
+TPUT  12 2; $e "║                                       ║";
+TPUT  13 2; $e "╚═══════════════════════════════════════╝";
+TPUT   6 3; $e "Super image kitchen GUI"
+TPUT   7 3; $e "by TakuruKagami"
+TPUT   9 3; $e "Insert size super from ADB"
+TPUT  10 3; $e "adb shell blockdev --getsize64"
+TPUT  11 3; $e "/dev/block/by-name/super"
+MARK;TPUT  14 3; $e "                                         ";TPUT  13 43; $e " ";TPUT  12 43; $e " ";TPUT  11 43; $e " ";TPUT  10 43; $e " ";TPUT  9 43; $e " ";TPUT  8 43; $e " ";TPUT  7 43; $e " ";TPUT  6 43; $e " ";UNMARK;
+TPUT 16 2;$e "Write "exit" to back main menu";
+MARK;TPUT 18 2;$e "Terminal :";read p;UNMARK
 case $p in
 "")
 build_manual
@@ -56,7 +71,10 @@ build_manual
 main_main
 ;;
 *)
-echo "$p" > ~/kitchen-tmp/super.txt
+case $p in
+    ''|*[!0-9]*) echo "Must number";read -t 5;build_manual ;;
+    *) echo "$p" > ~/kitchen-tmp/super.txt ;;
+esac
 ;;
 esac
 clear
