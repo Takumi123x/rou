@@ -23,6 +23,20 @@ Build_rom (){
 super_info=" "
 build_manual (){
 build_now (){
+simg2img $internal_root/system.img $internal_root/system.raw.img
+if [ "$(ls -nl $internal_root/system.raw.img | awk '{print $5}')" -lt 100000 ]
+then
+rm -rf $internal_root/system.raw.img
+else
+if [ -e $internal_root/system.raw.img ]
+then
+rm -rf $internal_root/system.img
+mv $internal_root/system.raw.img $internal_root/system.img
+else
+echo " "
+fi
+fi
+
 if [ -e odm.img ]
 then
 echo "$(($(ls -nl odm.img | awk '{print $5}') + 2621440 +$(ls -nl system.img | awk '{print $5}') + $(ls -nl vendor.img | awk '{print $5}')))" > ~/kitchen-tmp/main.txt
@@ -268,11 +282,18 @@ REFRESH(){ after=$((i+1)); before=$((i-1))
 }
 
 build_super (){
-if [ "$(find $internal_root/system.img -type f ! -size 0 -printf '%S\n' | sed 's/\.[0-9]*//')" == 1 ]
-then
-echo " "
-else
 simg2img $internal_root/system.img $internal_root/system.raw.img
+if [ "$(ls -nl $internal_root/system.raw.img | awk '{print $5}')" -lt 100000 ]
+then
+rm -rf $internal_root/system.raw.img
+else
+if [ -e $internal_root/system.raw.img ]
+then
+rm -rf $internal_root/system.img
+mv $internal_root/system.raw.img $internal_root/system.img
+else
+echo " "
+fi
 fi
 
 if grep -R "odm" ~/kitchen-tmp/super_map.txt
