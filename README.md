@@ -3,7 +3,7 @@
 This tool just for edit super. this work both in termux and wsl (desktop)
 
 # Clone this repo
-- su (linux/wsl)
+- su (Only for linux/wsl)
 - cd ~
 - apt update
 - apt install git -y
