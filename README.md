@@ -5,7 +5,6 @@ This tool just for edit super. this work both in termux and wsl (desktop)
 # Clone this repo
 - cd ~
 - apt update
-- apt upgrade -y
 - apt install git -y
 - git clone https://github.com/Takumi123x/rou.git
 
