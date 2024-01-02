@@ -9,23 +9,17 @@ This tool just for edit super. this work both in termux and wsl (desktop)
 - apt install git -y
 - git clone https://github.com/Takumi123x/rou.git
 
-# Run this command
-- termux-setup-storage (skip this if wsl)
-- chmod +x ~/rou/toolbox.sh
-- ln -s ~/rou/toolbox.sh ~/
-
 # If root mode
 - tsu
 - cd /data/data/com.termux/files/home/
 - rm -rf ./.suroot
 - ln -s ./ ./.suroot
-- termux-setup-storage
-- cd ~
 - chmod +x ~/rou/toolbox.sh
 - ln -s ~/rou/toolbox.sh ~/
 
-# Run this tool
-~/toolbox.sh
+# Run this tool (non root)
+- chmod +x toolbox.sh
+toolbox.sh
 
 # If you dont have super.img
 - Select Build ROM
