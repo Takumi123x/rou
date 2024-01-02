@@ -12,6 +12,7 @@ This tool just for edit super. this work both in termux and wsl (desktop)
 - toolbox.sh
 
 # If root mode (Termux only)
+- Do clone repo before use root method
 - tsu
 - cd /data/data/com.termux/files/home/
 - rm -rf ./.suroot
