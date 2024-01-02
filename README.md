@@ -3,12 +3,13 @@
 This tool just for edit super. this work both in termux and wsl (desktop)
 
 # Clone this repo
+- su (linux/wsl)
 - cd ~
 - apt update
 - apt install git -y
 - git clone https://github.com/Takumi123x/rou.git
 
-# If root mode
+# If root mode (Termux only)
 - tsu
 - cd /data/data/com.termux/files/home/
 - rm -rf ./.suroot
