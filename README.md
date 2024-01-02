@@ -8,6 +8,8 @@ This tool just for edit super. this work both in termux and wsl (desktop)
 - apt update
 - apt install git -y
 - git clone https://github.com/Takumi123x/rou.git
+- chmod +x toolbox.sh
+- toolbox.sh
 
 # If root mode (Termux only)
 - tsu
@@ -16,9 +18,6 @@ This tool just for edit super. this work both in termux and wsl (desktop)
 - ln -s ./ ./.suroot
 - chmod +x ~/rou/toolbox.sh
 - ln -s ~/rou/toolbox.sh ~/
-
-# Run this tool (non root)
-- chmod +x toolbox.sh
 - toolbox.sh
 
 # If you dont have super.img
