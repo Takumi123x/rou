@@ -19,7 +19,7 @@ This tool just for edit super. this work both in termux and wsl (desktop)
 
 # Run this tool (non root)
 - chmod +x toolbox.sh
-toolbox.sh
+  toolbox.sh
 
 # If you dont have super.img
 - Select Build ROM
