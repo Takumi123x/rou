@@ -2,7 +2,7 @@
 
 This tool just for edit super. this work both in termux and wsl (desktop)
 
-# Clone this repo
+# For install this tool
 - su (Only for linux/wsl)
 - cd ~
 - apt update
@@ -21,11 +21,4 @@ This tool just for edit super. this work both in termux and wsl (desktop)
 - ln -s ~/rou/toolbox.sh ~/
 - toolbox.sh
 
-# If you dont have super.img
-- Select Build ROM
-- Choose profile
-- Open file manager
-- Paste vendor and Odm in build-kitchen and if unisoc paste vendor only
-- Paste GSI system.img in build-kitchen
-- Back to termux and select Build
-- Result will super.tar then you can flash it with odin or heimdall
+For tutorial video watch in youtube channel [TakuruKagami](https://m.youtube.com/@TakuruKagami)https://m.youtube.com/@TakuruKagami
