@@ -21,4 +21,4 @@ This tool just for edit super. this work both in termux and wsl (desktop)
 - ln -s ~/rou/toolbox.sh ~/
 - toolbox.sh
 
-For tutorial video watch in youtube channel [TakuruKagami](https://m.youtube.com/@TakuruKagami)https://m.youtube.com/@TakuruKagami
+For tutorial video watch in youtube channel [TakuruKagami](https://m.youtube.com/@TakuruKagami)
